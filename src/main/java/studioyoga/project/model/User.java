@@ -56,7 +56,7 @@ public class User implements UserDetails {
     /**
      * Contraseña cifrada del usuario.
      */
-    @Column(length = 255, nullable = false)
+    @Column(length = 60, nullable = false)
     private String password;
 
     /**

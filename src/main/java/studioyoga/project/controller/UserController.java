@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ import studioyoga.project.service.UserService;
 
 /**
  * Controlador para la gestión de usuarios en el panel de administración.
- * Permite listar, buscar, crear, editar, eliminar usuarios, así como cambiar contraseñas y gestionar imágenes de perfil.
+ * Permite listar, buscar, crear, editar, eliminar usuarios, así como cambiar
+ * contraseñas y gestionar imágenes de perfil.
  */
 @Controller
 @RequestMapping("/admin/users")
@@ -37,10 +39,10 @@ public class UserController {
     /**
      * Constructor que inyecta los servicios y repositorios necesarios.
      *
-     * @param userService Servicio de usuarios.
-     * @param rolService Servicio de roles.
+     * @param userService    Servicio de usuarios.
+     * @param rolService     Servicio de roles.
      * @param userRepository Repositorio de usuarios.
-     * @param rolRepository Repositorio de roles.
+     * @param rolRepository  Repositorio de roles.
      */
     public UserController(UserService userService,
             RolService rolService,
@@ -57,8 +59,8 @@ public class UserController {
     /**
      * Muestra la lista de usuarios, permite filtrar por nombre/apellido y rol.
      *
-     * @param name Nombre o apellido para filtrar (opcional).
-     * @param role Rol para filtrar (opcional).
+     * @param name  Nombre o apellido para filtrar (opcional).
+     * @param role  Rol para filtrar (opcional).
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de usuarios.
      */
@@ -101,10 +103,11 @@ public class UserController {
     }
 
     /**
-     * Guarda un nuevo usuario o actualiza uno existente, gestionando la imagen de perfil.
+     * Guarda un nuevo usuario o actualiza uno existente, gestionando la imagen de
+     * perfil.
      *
-     * @param user Objeto User a guardar.
-     * @param file Archivo de imagen de perfil.
+     * @param user               Objeto User a guardar.
+     * @param file               Archivo de imagen de perfil.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de usuarios.
      * @throws IOException Si ocurre un error al guardar la imagen.
@@ -130,26 +133,35 @@ public class UserController {
                     StandardCopyOption.REPLACE_EXISTING);
             user.setProfilePicture("/images/profile-pictures/" + fileName);
         }
+        // Comprobación de email duplicado solo en creación (no en edición)
+        if (user.getId() == null && userRepository.findByEmail(user.getEmail()).isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "El correo ya está registrado.");
+            return "redirect:/admin/users/new";
+        }
 
         // Mantener contraseña si es edición
         if (user.getId() != null && user.getPassword().isEmpty()) {
             User existingUser = userRepository.findById(user.getId()).orElseThrow();
             user.setPassword(existingUser.getPassword());
         }
-
-        userService.save(user);
-        redirectAttributes.addFlashAttribute("success",
-                user.getId() == null ? "Usuario creado correctamente" : "Usuario actualizado correctamente");
-
-        return "redirect:/admin/users/manageuser";
+        try {
+            userService.save(user);
+            redirectAttributes.addFlashAttribute("success",
+                    user.getId() == null ? "Usuario creado correctamente" : "Usuario actualizado correctamente");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "El correo ya está registrado.");
+            return user.getId() == null ? "redirect:/admin/users/new" : "redirect:/admin/users/edit/" + user.getId();
+        }
+          return "redirect:/admin/users/manageuser";
     }
 
     /**
      * Muestra el formulario de edición para un usuario existente.
      *
-     * @param id ID del usuario a editar.
+     * @param id    ID del usuario a editar.
      * @param model Modelo para pasar datos a la vista.
-     * @return Vista del formulario de edición de usuario o redirección si no se encuentra.
+     * @return Vista del formulario de edición de usuario o redirección si no se
+     *         encuentra.
      */
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Integer id, Model model) {
@@ -169,9 +181,10 @@ public class UserController {
     /**
      * Muestra una página de confirmación antes de eliminar un usuario.
      *
-     * @param id ID del usuario a eliminar.
+     * @param id    ID del usuario a eliminar.
      * @param model Modelo para pasar datos a la vista.
-     * @return Vista de confirmación de eliminación o redirección si no se encuentra el usuario.
+     * @return Vista de confirmación de eliminación o redirección si no se encuentra
+     *         el usuario.
      */
     @GetMapping("/confirm-delete/{id}")
     public String confirmDelete(@PathVariable Integer id, Model model) {
@@ -193,7 +206,7 @@ public class UserController {
     /**
      * Elimina un usuario y todas sus reservas asociadas.
      *
-     * @param id ID del usuario a eliminar.
+     * @param id                 ID del usuario a eliminar.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de usuarios.
      */
@@ -213,8 +226,8 @@ public class UserController {
     /**
      * Cambia la contraseña del usuario autenticado.
      *
-     * @param newPassword Nueva contraseña.
-     * @param principal Usuario autenticado.
+     * @param newPassword        Nueva contraseña.
+     * @param principal          Usuario autenticado.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección al perfil del usuario.
      */

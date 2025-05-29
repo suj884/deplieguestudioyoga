@@ -58,12 +58,29 @@ public class PasswordResetService {
         return resetToken.isPresent() && resetToken.get().getExpiryDate().isAfter(LocalDateTime.now());
     }
 
-    public void updatePassword(String token, String newPassword) {
-        PasswordResetToken resetToken = tokenRepository.findByToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("Token inválido"));
-        User user = resetToken.getUser();
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        tokenRepository.delete(resetToken);
+    // public void updatePassword(String token, String newPassword) {
+    //     PasswordResetToken resetToken = tokenRepository.findByToken(token)
+    //             .orElseThrow(() -> new IllegalArgumentException("Token inválido"));
+    //     User user = resetToken.getUser();
+    //     user.setPassword(passwordEncoder.encode(newPassword));
+    //     userRepository.save(user);
+    //     tokenRepository.delete(resetToken);
+    // }
+
+
+public void updatePassword(String token, String newPassword) {
+    PasswordResetToken resetToken = tokenRepository.findByToken(token)
+            .orElseThrow(() -> new RuntimeException("Token inválido"));
+
+    if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+        throw new RuntimeException("El token ha expirado");
     }
+
+    User user = resetToken.getUser();
+    user.setPassword(passwordEncoder.encode(newPassword)); // ¡Aquí se codifica!
+    userRepository.save(user);
+
+    tokenRepository.delete(resetToken); // Elimina el token tras usarlo
+}
+
 }
