@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import studioyoga.project.model.Reservation;
 import studioyoga.project.service.ClassesService;
+import studioyoga.project.service.NotificationService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
 
@@ -36,6 +37,8 @@ public class ReservationController {
 
     @Autowired
     private UserService userService;
+
+
 
     /**
      * Muestra la lista de reservas, permite filtrar por usuario o clase, o mostrar todas.

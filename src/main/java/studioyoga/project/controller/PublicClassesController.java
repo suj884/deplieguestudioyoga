@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import studioyoga.project.dto.ClassesDTO;
 import studioyoga.project.exception.AlreadyReservedException;
 import studioyoga.project.exception.NoSpotsAvailableException;
+import studioyoga.project.model.Classes;
 import studioyoga.project.model.User;
 import studioyoga.project.service.ClassesService;
+import studioyoga.project.service.NotificationService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
 
@@ -39,6 +41,8 @@ public class PublicClassesController {
     @Autowired
     private ReservationService reservationService;
 
+        @Autowired
+private NotificationService notificationService;
     /**
      * Muestra la lista de clases próximas agrupadas por fecha.
      *
@@ -55,28 +59,20 @@ public class PublicClassesController {
         return "user/classes";
     }
 
-    /**
-     * Permite a un usuario reservar una clase.
-     *
-     * @param id ID de la clase a reservar.
-     * @param principal Usuario autenticado.
-     * @param redirectAttributes Atributos para mensajes flash en la redirección.
-     * @return Redirección a la vista de clases con mensaje de éxito o error.
-     */
-    @PostMapping("/reserve/{id}")
-    public String reserveClass(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {
-        User user = userService.findByEmail(principal.getName());
-        try {
-            reservationService.reserveClass(user, id);
-            redirectAttributes.addFlashAttribute("success", "Reserva realizada correctamente.");
-        } catch (NoSpotsAvailableException e) {
-            redirectAttributes.addFlashAttribute("error", "No hay plazas disponibles para esta clase.");
-        } catch (AlreadyReservedException e) {
-            redirectAttributes.addFlashAttribute("error", "Ya has reservado esta clase.");
-        }
-        return "redirect:/classes";
+@PostMapping("/reserve/{id}")
+public String reserveClass(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {
+    User user = userService.findByEmail(principal.getName());
+    try {
+        Classes clase = reservationService.reserveClass(user, id);
+        notificationService.sendReservationEmail(user, clase);
+        redirectAttributes.addFlashAttribute("success", "Reserva realizada correctamente.");
+    } catch (NoSpotsAvailableException e) {
+        redirectAttributes.addFlashAttribute("error", "No hay plazas disponibles para esta clase.");
+    } catch (AlreadyReservedException e) {
+        redirectAttributes.addFlashAttribute("error", "Ya has reservado esta clase.");
     }
-
+    return "redirect:/classes";
+}
     /**
      * Muestra las reservas del usuario autenticado.
      *
@@ -102,21 +98,22 @@ public class PublicClassesController {
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de reservas del usuario o al login si no está autenticado.
      */
-    @PostMapping("/cancelReservation/{id}")
-    public String cancelReservation(@PathVariable Integer id, Principal principal,
-            RedirectAttributes redirectAttributes) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        User user = userService.findByEmail(principal.getName());
-        try {
-            reservationService.cancelReservation(user, id);
-            redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "No es posible cancelar la reserva.");
-        }
-        return "redirect:/classes/myReservations";
+  @PostMapping("/cancelReservation/{id}")
+public String cancelReservation(@PathVariable Integer id, Principal principal,
+        RedirectAttributes redirectAttributes) {
+    if (principal == null) {
+        return "redirect:/login";
     }
+    User user = userService.findByEmail(principal.getName());
+    try {
+        Classes clase = reservationService.cancelReservation(user, id);
+        notificationService.sendCancelReservationEmail(user, clase);
+        redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("error", "No es posible cancelar la reserva.");
+    }
+    return "redirect:/classes/myReservations";
+}
 
     /**
      * Muestra una página de confirmación para cancelar una reserva.

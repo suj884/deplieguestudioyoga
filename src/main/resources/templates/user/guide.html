@@ -11,11 +11,11 @@
     <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" th:href="@{/css/guide.css}">
 </head>
-<body>
+<body class="d-flex flex-column">
     <header th:replace="~{fragments/navbar :: navbar}"></header>
     <main class="flex-fill">
         <div class="container py-5 mt-5">
-            <h1 class="mb-4 text-center fw-bold" style="color:#388e3c;">Guía de Yoga</h1>
+            <h2 class="text-center">Guía de Yoga</h2>
             <div th:each="section : ${sections}" class="guide-section text-center">
                 <h2 class="guide-section-title" th:text="${section.title}">Section Title</h2>
                 <img th:if="${section.imageUrl != null}" th:src="@{${section.imageUrl}}" alt="" />

@@ -116,30 +116,30 @@ public class ReservationService {
      * @throws NoSpotsAvailableException Si no hay plazas disponibles.
      * @throws AlreadyReservedException Si el usuario ya tiene una reserva para esa clase.
      */
-    public void reserveClass(User user, Integer classId) throws NoSpotsAvailableException, AlreadyReservedException {
-        Classes yogaClass = classRepository.findById(classId)
-                .orElseThrow(() -> new RuntimeException("Class not found"));
+    // public void reserveClass(User user, Integer classId) throws NoSpotsAvailableException, AlreadyReservedException {
+    //     Classes yogaClass = classRepository.findById(classId)
+    //             .orElseThrow(() -> new RuntimeException("Class not found"));
 
-        // Check available spots
-        int reservedCount = reservationRepository.findByClassesId(yogaClass.getId()).size();
-        if (reservedCount >= yogaClass.getCapacity()) {
-            throw new NoSpotsAvailableException();
-        }
+    //     // Check available spots
+    //     int reservedCount = reservationRepository.findByClassesId(yogaClass.getId()).size();
+    //     if (reservedCount >= yogaClass.getCapacity()) {
+    //         throw new NoSpotsAvailableException();
+    //     }
 
-        // Check if already reserved
-        boolean alreadyReserved = reservationRepository.findByUser(user).stream()
-                .anyMatch(r -> r.getClasses().getId().equals(yogaClass.getId()));
-        if (alreadyReserved) {
-            throw new AlreadyReservedException();
-        }
+    //     // Check if already reserved
+    //     boolean alreadyReserved = reservationRepository.findByUser(user).stream()
+    //             .anyMatch(r -> r.getClasses().getId().equals(yogaClass.getId()));
+    //     if (alreadyReserved) {
+    //         throw new AlreadyReservedException();
+    //     }
 
-        // Create and save reservation
-        Reservation reservation = new Reservation();
-        reservation.setUser(user);
-        reservation.setClasses(yogaClass);
-        reservation.setDateReservation(LocalDateTime.now());
-        reservationRepository.save(reservation);
-    }
+    //     // Create and save reservation
+    //     Reservation reservation = new Reservation();
+    //     reservation.setUser(user);
+    //     reservation.setClasses(yogaClass);
+    //     reservation.setDateReservation(LocalDateTime.now());
+    //     reservationRepository.save(reservation);
+    // }
 
     /**
      * Cancela una reserva realizada por un usuario.
@@ -148,14 +148,14 @@ public class ReservationService {
      * @param user Usuario que cancela.
      * @param reservationId ID de la reserva a cancelar.
      */
-    public void cancelReservation(User user, Integer reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-        if (!reservation.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("You can't cancel another user's reservation");
-        }
-        reservationRepository.delete(reservation);
-    }
+    // public void cancelReservation(User user, Integer reservationId) {
+    //     Reservation reservation = reservationRepository.findById(reservationId)
+    //             .orElseThrow(() -> new RuntimeException("Reservation not found"));
+    //     if (!reservation.getUser().getId().equals(user.getId())) {
+    //         throw new RuntimeException("You can't cancel another user's reservation");
+    //     }
+    //     reservationRepository.delete(reservation);
+    // }
 
     /**
      * Activa o desactiva una reserva (cambia su estado activo).
@@ -230,4 +230,45 @@ public class ReservationService {
     public Reservation findByUserAndId(User user, Integer reservationId) {
         return reservationRepository.findByIdAndUser(reservationId, user).orElse(null);
     }
+   
+   
+    public Classes reserveClass(User user, Integer classId) throws NoSpotsAvailableException, AlreadyReservedException {
+    Classes yogaClass = classRepository.findById(classId)
+            .orElseThrow(() -> new RuntimeException("Class not found"));
+
+    // Check available spots
+    int reservedCount = reservationRepository.findByClassesId(yogaClass.getId()).size();
+    if (reservedCount >= yogaClass.getCapacity()) {
+        throw new NoSpotsAvailableException();
+    }
+
+    // Check if already reserved
+    boolean alreadyReserved = reservationRepository.findByUser(user).stream()
+            .anyMatch(r -> r.getClasses().getId().equals(yogaClass.getId()));
+    if (alreadyReserved) {
+        throw new AlreadyReservedException();
+    }
+
+    // Create and save reservation
+    Reservation reservation = new Reservation();
+    reservation.setUser(user);
+    reservation.setClasses(yogaClass);
+    reservation.setDateReservation(LocalDateTime.now());
+    reservationRepository.save(reservation);
+
+    // Devuelve la clase reservada
+    return yogaClass;
+}
+public Classes cancelReservation(User user, Integer reservationId) {
+    Reservation reservation = reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new RuntimeException("Reservation not found"));
+    if (!reservation.getUser().getId().equals(user.getId())) {
+        throw new RuntimeException("You can't cancel another user's reservation");
+    }
+    Classes claseCancelada = reservation.getClasses();
+    reservationRepository.delete(reservation);
+    // Devuelve la clase cancelada
+    return claseCancelada;
+}
+
 }

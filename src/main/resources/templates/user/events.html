@@ -11,12 +11,12 @@
     <link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 
-<body>
+<body class="d-flex flex-column">
     <!-- Incluye el navbar-fragment -->
     <header th:replace="~{fragments/navbar :: navbar}"></header>
-    <main class="flex-file">
+    <main class="flex-fill">
         <div class="container py-5 mt-5">
-            <h1 class="mb-4 text-center">Próximos Eventos</h1>
+            <h2 class="text-center">Próximos Eventos</h2>
             <!-- Si no hay eventos -->
             <div th:if="${#lists.isEmpty(events)}" class="alert alert-info text-center">
                 No hay eventos próximos.
@@ -24,7 +24,7 @@
             <!-- Listado de eventos -->
             <div class="row justify-content-center" th:unless="${#lists.isEmpty(events)}">
                 <div class="col-lg-4 col-md-6 mb-4 d-flex" th:each="event : ${events}">
-                    <div class="card event-card h-100 w-100">
+                    <div class="card h-100 w-100">
                         <img th:if="${event.imageUrl != null}" th:src="${event.imageUrl}" class="card-img-top"
                             alt="Imagen del evento">
                         <div class="card-body">
@@ -40,7 +40,6 @@
                                 class="btn btn-outline-success btn-sm">
                                 Leer más
                             </a>
-                            <!-- <p class="card-text" th:text="${event.description}">Descripción del evento</p> -->
                         </div>
                     </div>
                 </div>
