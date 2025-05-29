@@ -1,0 +1,141 @@
+/* Zen Yoga Studio Custom Styles */
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General styles */
+body {
+  background: linear-gradient(120deg, #f8f9fa 0%, #ffffff 100%);
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+
+}
+
+h1,
+h2 {
+  color: #009688;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  color: #26a69a;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+p,
+ul {
+  color: #34495e;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.zen-icon {
+  color: #80cbc4;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* content */
+/* .content {
+  max-width: 900px;
+  margin: 3rem auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(44, 62, 80, 0.08);
+  border: 1px solid #b2dfdb;
+
+} */
+/* cards */
+.card img {
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(60, 90, 60, 0.15);
+  transform: translateY(-4px) scale(1.02);
+}
+
+
+/* footer */
+.footer-zen {
+  position: relative;
+  background-color: #78C2AD;
+  /* Color minty */
+  overflow: hidden;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  color: white;
+}
+
+.footer-zen .container {
+  position: relative;
+  z-index: 1;
+  /* Para que el contenido quede encima de la ola */
+  padding-top: 3rem;
+}
+
+.footer-link,
+.footer-social {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover,
+.footer-social:hover {
+  color: #d0f0e9;
+  text-decoration: underline;
+}
+
+.footer-brand {
+  color: white;
+}
+
+.footer-quote {
+  color: #d0f0e9;
+}
+
+/* mediaqueries */
+@media (min-width: 1200px) {
+  main.flex-fill {
+    min-height: calc(100vh - 5.625rem);
+  }
+}
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.95em;
+  }
+}
+
+/* tooltip personalizado */
+.tooltip-warning {
+  --bs-tooltip-bg: #FFCE67;
+  /* Fondo amarillo Bootstrap */
+  --bs-tooltip-color: #fff;
+  /* Texto blanco */
+}

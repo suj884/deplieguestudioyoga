@@ -1,0 +1,12 @@
+<!-- Fragmento de confirmación de borrado -->
+<div th:fragment="confirmDelete(message, action, cancelUrl)">
+    <div class="alert alert-warning text-center my-4">
+        <h4 class="mb-3 text-danger">¿Estás seguro?</h4>
+        <p th:text="${message}">¿Seguro que quieres eliminar este elemento?</p>
+        <form th:action="${action}" method="post" class="d-inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+        <a th:href="${cancelUrl}" class="btn btn-secondary ms-2">Cancelar</a>
+    </div>
+</div>

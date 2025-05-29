@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.6/dist/minty/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/custom.css}">
+  <link rel="stylesheet" th:href="@{/css/blog.css}">
+
+</head>
+<body class="d-flex flex-column">
+  <!-- Navbar fragment -->
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
+  <main class="flex-fill">
+    <div class="container py-5 mt-5 d-flex flex-column">
+      <h2 class="text-center blog-title-main">Blog</h2>
+      <div class="row  justify-content-center">
+        <!-- Blog posts grid -->
+        <div class="col-lg-10">
+          <div class="row g-4">
+            <div th:each="post : ${blogPosts}" class="col-md-6 col-lg-6 mx-auto">
+              <div class="card blog-card h-100">
+                <a th:href="@{/blog/{id}(id=${post.id})}" style="text-decoration:none;">
+                  <img th:if="${post.imageUrl != null}" th:src="@{${post.imageUrl}}" class="blog-card-img-top"
+                    alt="Imagen del post" />
+                </a>
+                <div class="card-body blog-card-body">
+                  <span th:if="${post.publishedDate != null}" class="blog-card-date">
+                    <i class="bi bi-calendar-event"></i>
+                    <span th:text="${#temporals.format(post.publishedDate, 'dd/MM/yyyy')}"></span>
+                  </span>
+                  <a th:href="@{/blog/{id}(id=${post.id})}" style="text-decoration:none;">
+                    <h2 class="blog-card-title" th:text="${post.title}">Título del post</h2>
+                  </a>
+                  <p class="blog-card-summary" th:text="${post.summary}">Resumen o extracto del post...</p>
+                  <a th:href="@{/blog/{id}(id=${post.id})}" class="btn btn-outline-success btn-sm">Leer más</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Si no hay posts -->
+          <div th:if="${#lists.isEmpty(blogPosts)}" class="text-center text-muted mt-5">
+            <p>No hay entradas de blog disponibles por el momento.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Incluye el footer-fragment -->
+  <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>
