@@ -77,16 +77,15 @@ public class UserController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Boolean all,
             Model model) {
-        if (Boolean.TRUE.equals(all)) {
-            name = null;
-            role = null;
-            page = 0;
-        }
-        // Normaliza parámetros vacíos a null
-        if (name != null && name.trim().isEmpty())
-            name = null;
-        if (role != null && role.trim().isEmpty())
-            role = null;
+                if (Boolean.TRUE.equals(all)) {
+                name = null;
+                role = null;
+                page = 0;
+            }
+// Normaliza parámetros vacíos a null
+    if (name != null && name.trim().isEmpty()) name = null;
+    if (role != null && role.trim().isEmpty()) role = null;
+
 
         List<User> users = userService.findUsersBySurnameAndNameAndRole(name, role);
         List<Rol> roles = rolService.findAll();
@@ -98,6 +97,7 @@ public class UserController {
         model.addAttribute("name", name);
         model.addAttribute("role", role);
         model.addAttribute("roles", roles);
+        
 
         // Mensaje si no hay resultados
         boolean searchPerformed = (name != null && !name.isEmpty()) || (role != null && !role.isEmpty());
@@ -239,7 +239,7 @@ public class UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el usuario: " + e.getMessage());
         }
-        return RedirConstants.REDIRECT_ADMIN_USERS;
+         return RedirConstants.REDIRECT_ADMIN_USERS;
     }
 
     // ============ CAMBIO DE CONTRASEÑA ============
