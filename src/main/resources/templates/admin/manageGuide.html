@@ -35,7 +35,7 @@
                             <td th:text="${section.title}"></td>
                             <td>
                                 <img th:if="${section.imageUrl != null}" th:src="@{${section.imageUrl}}" alt="img"
-                                    style="max-width:5rem;">
+                                    style="max-width:5rem;" onerror="this.style.display='none';">
                             </td>
                             <td>
                                 <div class="d-flex flex-column flex-sm-row gap-2">

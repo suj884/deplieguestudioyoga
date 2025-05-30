@@ -34,7 +34,7 @@
 }
 
 .hero-content a.btn {
-  margin-top: 25rem;
+  margin-top: 30rem;
   /* aumenta este valor para más separación */
 }
 
@@ -52,10 +52,21 @@
   letter-spacing: 0.02em;
 }
 
-
+/* nuestras clases */
 .card-title {
   font-weight: 600;
 }
+.card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body .btn {
+  margin-top: auto;
+}
+
+
 /* carrousel */
 .carousel-img-fix {
   width: 100%;
@@ -71,27 +82,50 @@
 
 
 /* testimonios */
-.testimonial {
-  font-style: italic;
-  font-size: 1.1rem;
-  color: #444;
-  background: #fff;
-  border-radius: 1.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-  padding: 2rem 1.5rem;
-  margin-bottom: 1.5rem;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+ .testimonial {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    font-size: 0.9rem;
+    color: #333;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
 
-.testimonial .author {
-  font-size: 0.95rem;
-  color: #999;
-  margin-top: 1.2rem;
-  text-align: right;
-}
+  /* Ocultar las comillas */
+  .testimonial p {
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  /* No usamos ::before ni ::after para comillas */
+
+  .author {
+    font-weight: 600;
+    color: #198754; /* verde */
+    text-align: right;
+  }
+
+  /* Ajuste para que las tarjetas no sean muy anchas */
+  .swiper-slide {
+    max-width: 320px;
+  }
+
+  /* Opcional: espacio entre las tarjetas */
+  .swiper-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Paginación color */
+  .swiper-pagination-bullet-active {
+    background: #198754 !important;
+  }
+
+
 /* Responsive tweaks */
 /* Hero */
 @media (max-width: 768px) {

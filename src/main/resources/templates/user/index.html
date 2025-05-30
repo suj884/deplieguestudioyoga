@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.6/dist/minty/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <link rel="stylesheet" th:href="@{/css/custom.css}">
   <link rel="stylesheet" th:href="@{/css/landinpage.css}">
 </head>
@@ -30,7 +31,7 @@
         <div class="container">
           <div class="row align-items-center g-5">
             <div class="col-md-6">
-              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+              <img src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593953/meditation-concept-digital-art-style_abtqsq.jpg"
                 class="img-fluid rounded-4 shadow" alt="Estudio de yoga">
             </div>
             <div class="col-md-6">
@@ -50,37 +51,37 @@
           <div class="row g-4">
             <div class="col-md-4">
               <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=600&q=80"
+                <img src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593878/ai-generated-8993759_1280_dato0n.jpg"
                   class="card-img-top rounded-top-4" alt="Hatha Yoga">
                 <div class="card-body text-center">
                   <h5 class="card-title mb-3">Hatha Yoga</h5>
                   <p class="card-text text-muted">Equilibra cuerpo y mente con posturas suaves y respiración consciente.
                     Ideal para todos los niveles.</p>
-                  <a href="#" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
+                  <a th:href="@{/guide#hatha-yoga}" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80"
+                <img src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593950/kike-vega-F2qh3yjz6Jk-unsplash_o4m64i.jpg"
                   class="card-img-top rounded-top-4" alt="Vinyasa Flow">
                 <div class="card-body text-center">
                   <h5 class="card-title mb-3">Vinyasa Flow</h5>
                   <p class="card-text text-muted">Secuencias dinámicas que conectan movimiento y respiración.
                     Energizante y creativo.</p>
-                  <a href="#" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
+                  <a th:href="@{/guide#vinyasa-flow}" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80"
+                <img src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593874/ai-generated-8763808_1280_trkmjw.jpg"
                   class="card-img-top rounded-top-4" alt="Meditación y Mindfulness">
                 <div class="card-body text-center">
                   <h5 class="card-title mb-3">Meditación y Mindfulness</h5>
                   <p class="card-text text-muted">Aprende a calmar la mente y cultivar la atención plena. Sesiones
                     guiadas para todos.</p>
-                  <a href="#" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
+                  <a th:href="@{/guide#meditacion-y-mindfulness}" class="btn btn-outline-success rounded-pill px-4">Ver detalles</a>
                 </div>
               </div>
             </div>
@@ -89,7 +90,7 @@
       </section>
       <!-- Carrusel de eventos -->
       <section id="carrousel-eventos" class="my-5">
-        <h2>Eventos destacados</h2>
+        <h2 class="text-center fw-bold mb-4">Eventos destacados</h2>
         <div id="eventosCarousel" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div th:each="event, iterStat : ${events}"
@@ -119,37 +120,78 @@
         </div>
       </section>
       <!-- Testimonios -->
-      <section class="py-5">
-        <div class="container">
-          <h2 class="text-center fw-bold mb-4">Testimonios</h2>
-          <div class="row g-4 justify-content-center">
-            <div class="col-md-4">
-              <div class="testimonial">
-                “Studio Yoga es mi refugio semanal. Profesores atentos y ambiente inspirador.”
-                <div class="author">– María G.</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="testimonial">
-                “Las clases de meditación me han ayudado a encontrar paz en mi día a día.”
-                <div class="author">– Carlos R.</div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="testimonial">
-                “Un espacio precioso donde siempre me siento bienvenida y cuidada.”
-                <div class="author">– Laura M.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     <section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4">Reseñas</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+       <div class="swiper-slide">
+  <div class="testimonial">
+    <p>Gracias a Studio Yoga he mejorado mi flexibilidad y mi bienestar general. ¡Las clases son muy completas!</p>
+    <div class="author">– Ana P.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>El ambiente es muy acogedor y los profesores siempre están atentos a las necesidades de cada alumno.</p>
+    <div class="author">– Javier S.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>Me encanta la variedad de clases y la profesionalidad del equipo. Recomiendo Studio Yoga a todos mis amigos.</p>
+    <div class="author">– Lucía M.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>Las sesiones de meditación me han ayudado a reducir el estrés y a dormir mejor. ¡Muy agradecida!</p>
+    <div class="author">– Marta R.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>Un espacio donde realmente puedo desconectar y dedicarme tiempo. ¡Siempre salgo renovada!</p>
+    <div class="author">– Sergio T.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>La atención personalizada y el trato cercano hacen que cada clase sea especial. ¡Gracias por tanto!</p>
+    <div class="author">– Paula G.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>Studio Yoga es el lugar perfecto para empezar en el yoga o profundizar en la práctica. ¡Muy recomendable!</p>
+    <div class="author">– Diego L.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>He encontrado un grupo maravilloso y mucha motivación para seguir cuidando de mi cuerpo y mente.</p>
+    <div class="author">– Elena F.</div>
+  </div>
+</div>
+<div class="swiper-slide">
+  <div class="testimonial">
+    <p>Las instalaciones son impecables y el ambiente invita a la calma desde que entras por la puerta.</p>
+    <div class="author">– Tomás V.</div>
+  </div>
+</div>
+      </div>
+      <!-- Paginación -->
+      <!-- <div class="swiper-pagination"></div> -->
+    </div>
+  </div>
+</section>
+
       <!-- Call to action -->
       <section class="py-5 bg-success bg-opacity-10 text-center">
         <div class="container">
           <h2 class="fw-bold mb-3">¿Listo para empezar?</h2>
           <p class="fs-5 text-muted mb-4">Tu primera clase es gratuita. Reserva tu plaza y comienza tu camino.</p>
-          <a href="#" class="btn btn-success btn-lg rounded-pill px-5">Reserva tu clase gratuita</a>
+          <a th:href="@{/formContact}" class="btn btn-success btn-lg rounded-pill px-5">Reserva tu clase gratuita</a>
         </div>
       </section>
     </div>
@@ -159,6 +201,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 
 </html>

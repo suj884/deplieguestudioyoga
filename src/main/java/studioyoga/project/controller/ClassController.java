@@ -1,7 +1,5 @@
 package studioyoga.project.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import studioyoga.project.model.Classes;
@@ -33,13 +30,12 @@ public class ClassController {
     @Autowired
     private ClassesService classesService;
 
-  @GetMapping("/manageclasses")
-public String manageClasses(Model model) {
-    List<Classes> classesList = classesService.findAllOrderedByDateTime();
-    model.addAttribute("classesList", classesList);
-    return "admin/manageclasses";
-}
-
+    @GetMapping("/manageclasses")
+    public String manageClasses(Model model) {
+        List<Classes> classesList = classesService.findAllOrderedByDateTime();
+        model.addAttribute("classesList", classesList);
+        return "admin/manageclasses";
+    }
 
     /**
      * Muestra el formulario para crear una nueva clase.
@@ -52,15 +48,12 @@ public String manageClasses(Model model) {
         model.addAttribute("classes", new Classes());
         return "admin/formClasses";
     }
-
     /**
-     * Guarda una nueva clase o actualiza una existente, validando que no haya
-     * conflictos de horario ni duplicados.
+     * Guarda una clase nueva o editada, validando que no haya duplicados y que el horario sea válido.
      *
-     * @param classes            Objeto Classes a guardar.
-     * @param redirectAttributes Atributos para mensajes flash en la redirección.
-     * @return Redirección a la vista de administración de clases o al formulario en
-     *         caso de error.
+     * @param classes             Objeto Classes a guardar.
+     * @param redirectAttributes  Atributos para mensajes flash.
+     * @return Redirección a la gestión de clases o al formulario en caso de error.
      */
     @PostMapping("/save")
     public String saveClass(@ModelAttribute("classes") Classes classes, RedirectAttributes redirectAttributes) {
@@ -68,6 +61,12 @@ public String manageClasses(Model model) {
                 .getDisplayName(TextStyle.FULL, new Locale("es")).toUpperCase();
         String time = classes.getTimeInit().format(DateTimeFormatter.ofPattern("HH:mm"));
         String className = classes.getTitle();
+
+        // Depuración: imprime los valores
+        System.out.println("Día: " + dayOfWeek);
+        System.out.println("Hora: " + time);
+        System.out.println("Clase: " + className);
+
         if (!classesService.isAllowedSchedule(dayOfWeek, time, className)) {
             redirectAttributes.addFlashAttribute("error", "No puedes registrar esa clase en ese horario.");
             return "redirect:/admin/classes/new";
@@ -103,14 +102,26 @@ public String manageClasses(Model model) {
         model.addAttribute("classes", classes);
         return "admin/formClasses";
     }
-
+    /**
+     * Elimina una clase y todas las reservas asociadas.
+     *
+     * @param id                  ID de la clase a eliminar.
+     * @param redirectAttributes  Atributos para mensajes flash.
+     * @return Redirección a la gestión de clases.
+     */
     @PostMapping("/delete/{id}")
     public String deleteClass(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         classesService.deleteClassAndReservations(id);
         redirectAttributes.addFlashAttribute("success", "Clase eliminada correctamente y todas las reservas asociadas");
         return "redirect:/admin/classes/manageclasses";
     }
-
+   /**
+     * Muestra la confirmación antes de eliminar una clase, indicando si tiene reservas asociadas.
+     *
+     * @param id    ID de la clase a eliminar.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista de confirmación de eliminación.
+     */
     @GetMapping("/confirm-delete/{id}")
     public String confirmDelete(@PathVariable Integer id, Model model) {
         Classes clase = classesService.findById(id)
@@ -131,19 +142,5 @@ public String manageClasses(Model model) {
         model.addAttribute("cancelUrl", "/admin/classes/manageclasses");
         return "admin/confirm-delete";
     }
-@PostMapping("/admin/classes/createWeekly")
-public String createWeeklyClasses(
-        @RequestParam LocalDate startDate,
-        @RequestParam int weeks,
-        @RequestParam String time, // formato "HH:mm"
-        @RequestParam String className,
-        RedirectAttributes redirectAttrs) {
-
-    LocalTime classTime = LocalTime.parse(time);
-    classesService.createWeeklyClasses(startDate, weeks, classTime, className);
-
-    redirectAttrs.addFlashAttribute("success", "Clases semanales creadas correctamente");
-    return "redirect:/admin/classes";
-}
 
 }

@@ -26,21 +26,27 @@ public interface ClassRepository extends JpaRepository<Classes, Integer> {
     List<Classes> findByEventDateAfterOrderByEventDateAsc(LocalDate eventDate);
 
     /**
-     * Busca todas las clases activas y las ordena de forma ascendente por fecha de evento.
+     * Busca todas las clases activas y las ordena de forma ascendente por fecha de
+     * evento.
      *
      * @return Lista de clases activas ordenadas por fecha.
      */
     List<Classes> findByActiveTrueOrderByEventDateAsc();
 
-List<Classes> findAllByOrderByEventDateAscTimeInitAsc();
-
-
+    /**
+     * Busca todas las clases ordenadas por fecha de evento ascendente y, en caso de
+     * coincidencia,
+     * por hora de inicio ascendente.
+     *
+     * @return Lista de clases ordenadas por fecha y hora de inicio.
+     */
+    List<Classes> findAllByOrderByEventDateAscTimeInitAsc();
 
     /**
      * Cuenta cuántas clases existen en una fecha y hora de inicio específicas.
      *
      * @param eventDate Fecha del evento.
-     * @param timeInit Hora de inicio de la clase.
+     * @param timeInit  Hora de inicio de la clase.
      * @return Número de clases en esa fecha y hora.
      */
     @Query("SELECT COUNT(c) FROM Classes c WHERE c.eventDate = :eventDate AND c.timeInit = :timeInit")
@@ -51,12 +57,12 @@ List<Classes> findAllByOrderByEventDateAscTimeInitAsc();
      * excluyendo una clase con un ID determinado.
      *
      * @param eventDate Fecha del evento.
-     * @param timeInit Hora de inicio de la clase.
-     * @param id ID de la clase a excluir.
-     * @return Número de clases en esa fecha y hora, excluyendo la clase con el ID dado.
+     * @param timeInit  Hora de inicio de la clase.
+     * @param id        ID de la clase a excluir.
+     * @return Número de clases en esa fecha y hora, excluyendo la clase con el ID
+     *         dado.
      */
     @Query("SELECT COUNT(c) FROM Classes c WHERE c.eventDate = :eventDate AND c.timeInit = :timeInit AND c.id <> :id")
     int countByEventDateAndTimeInitAndIdNot(LocalDate eventDate, LocalTime timeInit, Integer id);
 
-   
 }

@@ -16,9 +16,9 @@
     <main class="flex-fill">
         <div class="container py-5 mt-5">
             <h2 class="text-center">Guía de Yoga</h2>
-            <div th:each="section : ${sections}" class="guide-section text-center">
+            <div th:each="section : ${sections}" class="guide-section text-center" th:attr="id=${#strings.replace(section.title.toLowerCase(), ' ', '-')}">
                 <h2 class="guide-section-title" th:text="${section.title}">Section Title</h2>
-                <img th:if="${section.imageUrl != null}" th:src="@{${section.imageUrl}}" alt="" />
+                <img th:if="${section.imageUrl != null}" th:src="@{${section.imageUrl}}" alt="imagen_guia" />
                 <div class="text-start" th:utext="${section.content}">Section content</div>
                 <div th:if="${section.title} == 'Orígenes del Yoga'">
                     <div class="video-responsive">

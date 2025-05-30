@@ -1,0 +1,8 @@
+.card.bg-gradient-minty {
+  /* Fondo con degradado suave en tonos Minty */
+  background: linear-gradient(135deg, #e3f9f6 0%, #f8fffc 100%);
+  /* Opcional: un poco de transparencia */
+  /* background: linear-gradient(135deg, rgba(227,249,246,0.95) 0%, rgba(248,255,252,0.95) 100%); */
+  border: none;
+  box-shadow: 0 0.5rem 1.5rem rgba(44,120,115,0.08);
+}

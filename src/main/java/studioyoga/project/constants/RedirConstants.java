@@ -12,7 +12,7 @@ public class RedirConstants {
 	public static final String REDIRECT_ADMIN_DELETE = "redirect:/admin/delete";
 	public static final String REDIRECT_ADMIN_RESERVATIONS = "redirect:/admin/reservations";
 	public static final String REDIRECT_ADMIN_CLASSES = "redirect:/admin/classes";
-	public static final String REDIRECT_ADMIN_USERS = "redirect:/admin/users/manageusers";
+	public static final String REDIRECT_ADMIN_USERS = "redirect:/admin/users/manageuser";
 	public static final String REDIRECT_ADMIN_CLASSES_CREATE = "redirect:/admin/classes/create";
 	public static final String REDIRECT_ADMIN_CLASSES_EDIT = "redirect:/admin/classes/edit";
 	public static final String REDIRECT_ADMIN_CLASSES_DELETE = "redirect:/admin/classes/delete";
