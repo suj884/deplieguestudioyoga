@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -119,6 +121,13 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+   public Page<User> findUsersByFilters(String name, String role, Pageable pageable) {
+    if (name == null && role == null) {
+        return userRepository.findAll(pageable);
+    }
+    return userRepository.findByFilters(name, role, pageable);
+}
+
 
     /**
      * Busca usuarios filtrando por nombre/apellidos y/o rol.

@@ -9,12 +9,17 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import studioyoga.project.constants.RedirConstants;
 import studioyoga.project.model.Rol;
 import studioyoga.project.model.User;
 import studioyoga.project.repository.RolRepository;
@@ -68,11 +73,27 @@ public class UserController {
     public String listUsers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String role,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Boolean all,
             Model model) {
+        if (Boolean.TRUE.equals(all)) {
+            name = null;
+            role = null;
+            page = 0;
+        }
+        // Normaliza parámetros vacíos a null
+        if (name != null && name.trim().isEmpty())
+            name = null;
+        if (role != null && role.trim().isEmpty())
+            role = null;
 
         List<User> users = userService.findUsersBySurnameAndNameAndRole(name, role);
         List<Rol> roles = rolService.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> usersPage = userService.findUsersByFilters(name, role, pageable);
 
+        model.addAttribute("usersPage", usersPage);
         model.addAttribute("users", users);
         model.addAttribute("name", name);
         model.addAttribute("role", role);
@@ -152,7 +173,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("error", "El correo ya está registrado.");
             return user.getId() == null ? "redirect:/admin/users/new" : "redirect:/admin/users/edit/" + user.getId();
         }
-          return "redirect:/admin/users/manageuser";
+        return RedirConstants.REDIRECT_ADMIN_USERS;
     }
 
     /**
@@ -168,7 +189,7 @@ public class UserController {
         User user = userService.findById(id);
         if (user == null) {
             model.addAttribute("error", "Usuario no encontrado");
-            return "redirect:/admin/users/manageuser";
+            return RedirConstants.REDIRECT_ADMIN_USERS;
         }
 
         model.addAttribute("user", user);
@@ -191,7 +212,7 @@ public class UserController {
         User user = userService.findById(id);
         if (user == null) {
             model.addAttribute("error", "Usuario no encontrado");
-            return "redirect:/admin/users/manageuser";
+            return RedirConstants.REDIRECT_ADMIN_USERS;
         }
 
         model.addAttribute("message",
@@ -218,7 +239,7 @@ public class UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el usuario: " + e.getMessage());
         }
-        return "redirect:/admin/users/manageuser";
+        return RedirConstants.REDIRECT_ADMIN_USERS;
     }
 
     // ============ CAMBIO DE CONTRASEÑA ============

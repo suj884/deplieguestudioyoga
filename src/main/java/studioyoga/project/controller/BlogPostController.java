@@ -52,7 +52,7 @@ public class BlogPostController {
         BlogPost post = new BlogPost();
         post.setPublishedDate(LocalDate.now());
         model.addAttribute("post", post);
-        return "admin/blogForm";
+        return "admin/formBlog";
     }
 
     /**
@@ -68,7 +68,7 @@ public class BlogPostController {
         Optional<BlogPost> postOpt = blogService.findById(id);
         if (postOpt.isPresent()) {
             model.addAttribute("post", postOpt.get());
-            return "admin/blogForm";
+            return "admin/formBlog";
         } else {
             redirectAttributes.addFlashAttribute("error", "No se ha encontrado el post solicitado.");
             return RedirConstants.REDIRECT_ADMIN_BLOG;

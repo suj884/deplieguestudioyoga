@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import studioyoga.project.constants.RedirConstants;
 import studioyoga.project.model.GuideSection;
 import studioyoga.project.service.GuideSectionService;
 
@@ -53,7 +54,7 @@ public class GuideController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("guideSection", new GuideSection());
-        return "admin/guideSectionForm";
+        return "admin/formGuide";
     }
 
     /**
@@ -65,7 +66,7 @@ public class GuideController {
     @PostMapping("/new")
     public String createSection(@ModelAttribute("guideSection") GuideSection section) {
         guideSectionService.saveSection(section);
-        return "redirect:/admin/guide/manageguide";
+        return RedirConstants.REDIRECT_ADMIN_GUIDE;
     }
 
     /**
@@ -79,7 +80,7 @@ public class GuideController {
     public String showEditForm(@PathVariable Long id, Model model) {
         GuideSection section = guideSectionService.getSectionById(id);
         model.addAttribute("guideSection", section);
-        return "admin/guideSectionForm";
+        return "admin/formGuide";
     }
 
     /**
@@ -93,7 +94,7 @@ public class GuideController {
     public String updateSection(@PathVariable Long id, @ModelAttribute("guideSection") GuideSection section) {
         section.setId(id); // Asegura que el ID es correcto
         guideSectionService.saveSection(section);
-        return "redirect:/admin/guide/manageguide";
+        return RedirConstants.REDIRECT_ADMIN_GUIDE;
     }
  
     /**
@@ -123,7 +124,7 @@ public class GuideController {
     public String deleteSection(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         guideSectionService.deleteSectionById(id);
         redirectAttributes.addFlashAttribute("success", "Sección eliminada correctamente.");
-        return "redirect:/admin/guide/manageguide";
+        return RedirConstants.REDIRECT_ADMIN_GUIDE;
     }
 
 }

@@ -40,7 +40,7 @@ public class BlogPostControllerTest {
     void testNewPostForm() throws Exception {
         mockMvc.perform(get("/admin/blog/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/blogForm"))
+                .andExpect(view().name("admin/formBlog"))
                 .andExpect(model().attributeExists("post"));
     }
 
@@ -51,7 +51,7 @@ public class BlogPostControllerTest {
         when(blogService.findById(1)).thenReturn(Optional.of(post));
         mockMvc.perform(get("/admin/blog/edit/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/blogForm"))
+                .andExpect(view().name("admin/formBlog"))
                 .andExpect(model().attributeExists("post"));
     }
 

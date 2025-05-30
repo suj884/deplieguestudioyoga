@@ -2,8 +2,11 @@ package studioyoga.project.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,6 +105,9 @@ public class ClassesService {
         }
         return result;
     }
+public List<Classes> findAllOrderedByDateTime() {
+    return classRepository.findAllByOrderByEventDateAscTimeInitAsc();
+}
 
     /**
      * Lista de combinaciones válidas de día, hora y nombre de clase.
@@ -163,6 +169,33 @@ public class ClassesService {
     }
 public int countReservationsForClass(Integer classId) {
     return reservationRepository.countByClassesId(classId);
+}
+
+
+public boolean canCreateClass(LocalDate eventDate, LocalTime timeInit, String className) {
+    // Día de la semana en español y mayúsculas, ej: "LUNES"
+    String dayOfWeek = eventDate.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es")).toUpperCase();
+    String time = timeInit.format(DateTimeFormatter.ofPattern("HH:mm"));
+
+    return isAllowedSchedule(dayOfWeek, time, className)
+            && !existsByDateTime(eventDate, timeInit);
+}
+public void createWeeklyClasses(LocalDate startDate, int weeksToCreate, LocalTime classTime, String className) {
+    List<LocalDate> notCreatedDates = new ArrayList<>();
+    for (int i = 0; i < weeksToCreate; i++) {
+        LocalDate classDate = startDate.plusWeeks(i);
+        if (canCreateClass(classDate, classTime, className)) {
+            Classes newClass = new Classes();
+            newClass.setEventDate(classDate);
+            newClass.setTimeInit(classTime);
+            newClass.setTitle(className);
+            // Completa los demás campos necesarios, por ejemplo capacidad, instructor, etc.
+            save(newClass);
+        } else {
+            notCreatedDates.add(classDate);
+        }
+    }
+
 }
 
 }

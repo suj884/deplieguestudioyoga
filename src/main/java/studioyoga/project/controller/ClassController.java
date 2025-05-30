@@ -1,5 +1,7 @@
 package studioyoga.project.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import studioyoga.project.model.Classes;
@@ -30,18 +33,13 @@ public class ClassController {
     @Autowired
     private ClassesService classesService;
 
-    /**
-     * Muestra la lista de todas las clases registradas.
-     *
-     * @param model Modelo para pasar datos a la vista.
-     * @return Vista de administración de clases.
-     */
-    @GetMapping("/manageclasses")
-    public String manageClasses(Model model) {
-        List<Classes> classesList = classesService.findAll();
-        model.addAttribute("classesList", classesList);
-        return "admin/manageclasses";
-    }
+  @GetMapping("/manageclasses")
+public String manageClasses(Model model) {
+    List<Classes> classesList = classesService.findAllOrderedByDateTime();
+    model.addAttribute("classesList", classesList);
+    return "admin/manageclasses";
+}
+
 
     /**
      * Muestra el formulario para crear una nueva clase.
@@ -133,5 +131,19 @@ public class ClassController {
         model.addAttribute("cancelUrl", "/admin/classes/manageclasses");
         return "admin/confirm-delete";
     }
+@PostMapping("/admin/classes/createWeekly")
+public String createWeeklyClasses(
+        @RequestParam LocalDate startDate,
+        @RequestParam int weeks,
+        @RequestParam String time, // formato "HH:mm"
+        @RequestParam String className,
+        RedirectAttributes redirectAttrs) {
+
+    LocalTime classTime = LocalTime.parse(time);
+    classesService.createWeeklyClasses(startDate, weeks, classTime, className);
+
+    redirectAttrs.addFlashAttribute("success", "Clases semanales creadas correctamente");
+    return "redirect:/admin/classes";
+}
 
 }

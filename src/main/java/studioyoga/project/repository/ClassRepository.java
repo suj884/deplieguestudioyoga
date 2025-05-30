@@ -32,6 +32,10 @@ public interface ClassRepository extends JpaRepository<Classes, Integer> {
      */
     List<Classes> findByActiveTrueOrderByEventDateAsc();
 
+List<Classes> findAllByOrderByEventDateAscTimeInitAsc();
+
+
+
     /**
      * Cuenta cuántas clases existen en una fecha y hora de inicio específicas.
      *
