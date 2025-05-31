@@ -69,7 +69,7 @@ public class UserController {
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de usuarios.
      */
-    @GetMapping("/manageuser")
+    @GetMapping("/manage-user")
     public String listUsers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String role,
@@ -105,7 +105,7 @@ public class UserController {
             model.addAttribute("info", "No existen usuarios con ese criterio");
         }
 
-        return "admin/manageuser";
+        return "admin/manage-user";
     }
 
     // ============ CREACIÓN/EDICIÓN ============
@@ -120,7 +120,7 @@ public class UserController {
     public String showCreateForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", rolRepository.findAll());
-        return "admin/formCreateEditUsers";
+        return "admin/form-create-edit-users";
     }
 
     /**
@@ -194,7 +194,7 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("roles", rolRepository.findAll());
-        return "admin/formCreateEditUsers";
+        return "admin/form-create-edit-users";
     }
 
     // ============ BORRADO ============
@@ -219,7 +219,7 @@ public class UserController {
                 "¿Seguro que quieres eliminar al usuario: " +
                         user.getFirstLastName() + " " + user.getSecondLastName() + "?");
         model.addAttribute("action", "/admin/users/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/users/manageuser");
+        model.addAttribute("cancelUrl", "/admin/users/manage-user");
 
         return "admin/confirm-delete";
     }

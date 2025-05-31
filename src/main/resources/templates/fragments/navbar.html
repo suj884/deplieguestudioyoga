@@ -47,7 +47,7 @@
 						th:text="${#strings.substringBefore(#authentication.principal.username, '@')}">
 						Usuario
 					</span>
-					<a th:href="@{/classes/myReservations}" class="btn btn-outline-primary btn-sm mx-2">
+					<a th:href="@{/classes/my-reservations}" class="btn btn-outline-primary btn-sm mx-2">
 						<i class="bi bi-calendar-check"></i> Mis reservas
 					</a>
 					<form th:action="@{/logout}" method="post" class="d-inline">

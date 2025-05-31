@@ -34,11 +34,11 @@ public class BlogPostController {
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de publicaciones del blog.
      */
-    @GetMapping("/manageblog")
+    @GetMapping("/manage-blog")
     public String manageBlog(Model model) {
         List<BlogPost> posts = blogService.findAll();
         model.addAttribute("blogPosts", posts);
-        return "admin/manageblog";
+        return "admin/manage-blog";
     }
 
     /**
@@ -52,7 +52,7 @@ public class BlogPostController {
         BlogPost post = new BlogPost();
         post.setPublishedDate(LocalDate.now());
         model.addAttribute("post", post);
-        return "admin/formBlog";
+        return "admin/form-blog";
     }
 
     /**
@@ -68,7 +68,7 @@ public class BlogPostController {
         Optional<BlogPost> postOpt = blogService.findById(id);
         if (postOpt.isPresent()) {
             model.addAttribute("post", postOpt.get());
-            return "admin/formBlog";
+            return "admin/form-blog";
         } else {
             redirectAttributes.addFlashAttribute("error", "No se ha encontrado el post solicitado.");
             return RedirConstants.REDIRECT_ADMIN_BLOG;
@@ -101,11 +101,11 @@ public class BlogPostController {
         BlogPost post = blogService.findById(id).orElse(null);
         if (post == null) {
             model.addAttribute("error", "No se encontró el post.");
-            return "redirect:/admin/blog/manageblog";
+            return "redirect:/admin/blog/manage-blog";
         }
         model.addAttribute("message", "¿Seguro que quieres eliminar el post: '" + post.getTitle() + "'?");
         model.addAttribute("action", "/admin/blog/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/blog/manageblog");
+        model.addAttribute("cancelUrl", "/admin/blog/manage-blog");
         return "admin/confirm-delete";
     }
     
@@ -120,6 +120,6 @@ public class BlogPostController {
     public String deletePost(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         blogService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Entrada de blog eliminada correctamente.");
-        return "redirect:/admin/blog/manageblog";
+        return "redirect:/admin/blog/manage-blog";
     }
 }

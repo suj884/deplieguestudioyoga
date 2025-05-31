@@ -14,7 +14,7 @@
 </head>
 <body>
 <!-- Incluye el navbar-fragment -->
-	<header th:replace="~{fragments/navbarAdmin :: navbar}"></header>
+	<header th:replace="~{fragments/navbar-admin :: navbar}"></header>
 	<div class="container py-4 mt-5">
 		<h2 th:text="${classes.id == null ? 'Nueva Clase' : 'Editar Clase'}"></h2>
 		<div th:replace="~{fragments/messages :: messages}"></div>
@@ -63,7 +63,7 @@
 			<button type="submit" class="btn btn-success">
 				<i class="bi bi-save"></i> Guardar
 			</button>
-			<a th:href="@{/admin/classes/manageclasses}" class="btn btn-secondary">Volver</a>
+			<a th:href="@{/admin/classes/manage-classes}" class="btn btn-secondary">Volver</a>
 		</form>
 	</div>
 	<!-- Incluye el footer-fragment -->

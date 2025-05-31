@@ -14,13 +14,13 @@
 
 <body class="d-flex flex-column">
 	<!-- Incluye el navbar-fragment -->
-	<header th:replace="~{fragments/navbarAdmin :: navbar}"></header>
+	<header th:replace="~{fragments/navbar-admin :: navbar}"></header>
 	<main class="flex-fill">
 		<div class="container py-5 mt-5">
 			<h2 class="text-center">Gestion de Reservas</h2>
 			<div th:replace="~{fragments/messages :: messages}"></div>
 			<div class="mb-3">
-				<form th:action="@{/admin/reservations/managereservations}" method="get" class="row g-3 mb-3">
+				<form th:action="@{/admin/reservations/manage-reservations}" method="get" class="row g-3 mb-3">
 					<div class="col-auto">
 						<input type="text" name="user" class="form-control" placeholder="Buscar por usuario">
 					</div>
@@ -31,7 +31,7 @@
 						<button type="submit" class="btn btn-primary ms-3">Buscar</button>
 					</div>
 					<div class="col-auto">
-						<a th:href="@{/admin/reservations/managereservations?all=true}"
+						<a th:href="@{/admin/reservations/manage-reservations?all=true}"
 							class="btn btn-secondary">Mostrar todas</a>
 					</div>
 				</form>
@@ -67,7 +67,7 @@
 			</div>
 			<div class="d-flex flex-column flex-sm-row gap-2 mt-3">
 				<a th:href="@{/admin/reservations/createReservation}" class="btn btn-success">Nueva Reserva</a> <a
-					th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver</a>
+					th:href="@{/admin/dash-board}" class="btn btn-secondary">Volver</a>
 			</div>
 		</div>
 	</main>

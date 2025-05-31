@@ -13,7 +13,7 @@
 </head>
 <!-- Incluye el navbar-fragment -->
 <header>
-	<div th:replace="~{fragments/navbarAdmin :: navbar}"></div>
+	<div th:replace="~{fragments/navbar-admin :: navbar}"></div>
 </header>
 <body>
 <div class="container py-4 mt-5">
@@ -38,7 +38,7 @@
             <input th:field="*{sectionOrder}" type="number" class="form-control" id="sectionOrder">
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
-        <a th:href="@{/admin/guide/manageguide}" class="btn btn-secondary ms-2">Cancelar</a>
+        <a th:href="@{/admin/guide/manage-guide}" class="btn btn-secondary ms-2">Cancelar</a>
     </form>
 
 </div>

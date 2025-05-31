@@ -29,7 +29,7 @@ class AdminControllerTest {
     void testAdminDashboard() throws Exception {
         mockMvc.perform(get("/admin"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/dashboard")); // Cambia el nombre de la vista si es diferente
+                .andExpect(view().name("admin/dash-board")); // Cambia el nombre de la vista si es diferente
     }
 
     @Test

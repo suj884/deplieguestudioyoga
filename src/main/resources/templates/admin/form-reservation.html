@@ -14,7 +14,7 @@
 
 <body>
     <!-- Incluye el navbar-fragment -->
-    <header th:replace="~{fragments/navbarAdmin :: navbar}"></header>
+    <header th:replace="~{fragments/navbar-admin :: navbar}"></header>
     <div class="container my-5">
         <h2 th:text="${reservation.id == null ? 'Nueva Reserva' : 'Editar Reserva'}"></h2>
         <div th:replace="~{fragments/messages :: messages}"></div>
@@ -32,7 +32,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-success">Guardar</button>
-            <a th:href="@{/admin/reservations/managereservations}" class="btn btn-secondary">Volver</a>
+            <a th:href="@{/admin/reservations/manage-reservations}" class="btn btn-secondary">Volver</a>
         </form>
 
     </div>

@@ -28,7 +28,7 @@ public class ContactController {
      */
     @GetMapping("/contact")
     public String showContactForm() {
-        return "formContact";
+        return "form-contact";
     }
 
     /**
@@ -55,6 +55,6 @@ public class ContactController {
         mailSender.send(mailMessage);
         redirectAttributes.addFlashAttribute("success",
                 "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.");
-        return "redirect:/formContact";
+        return "redirect:/form-contact";
     }
 }

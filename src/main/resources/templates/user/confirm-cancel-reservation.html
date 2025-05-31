@@ -16,7 +16,7 @@
     <header th:replace="~{fragments/navbar :: navbar}"></header>
     <main class="flex-fill">
         <div class="container py-5 mt-5 min-vh-100">
-            <div th:replace="~{fragments/confirmDelete :: confirmDelete(
+            <div th:replace="~{fragments/confirm-delete-f :: confirm-delete-f(
                 '¿Seguro que quieres cancelar tu reserva de ' + ${reservation.classes.title} + ' el ' + ${#temporals.format(reservation.classes.eventDate, 'dd/MM/yyyy')} + '?' ,
                 @{/classes/cancelReservation/{id}(id=${reservation.id})},
                 @{/classes}

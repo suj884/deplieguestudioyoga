@@ -27,6 +27,6 @@ class ContactControllerTest {
                 .param("email", "juan@example.com")
                 .param("mensaje", "Hola, esto es una prueba"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/formContact"));
+                .andExpect(redirectedUrl("/form-contact"));
     }
 }

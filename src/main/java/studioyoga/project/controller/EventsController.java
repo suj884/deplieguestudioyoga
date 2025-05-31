@@ -30,10 +30,10 @@ public class EventsController {
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de eventos.
      */
-    @GetMapping("/manageevents")
+    @GetMapping("/manage-events")
     public String manageEvents(Model model) {
         model.addAttribute("events", eventService.findAll());
-        return "admin/manageevents";
+        return "admin/manage-events";
     }
 
     /**
@@ -45,7 +45,7 @@ public class EventsController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("event", new Event());
-        return "admin/formEvents";
+        return "admin/form-events";
     }
 
     /**
@@ -69,7 +69,7 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
         return RedirConstants.REDIRECT_ADMIN_EVENTS;
     }
     model.addAttribute("event", eventOpt.get());
-    return "admin/formEvents";
+    return "admin/form-events";
 }
 
 
@@ -82,7 +82,7 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
     @GetMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Integer id) {
         eventService.deleteById(id);
-        return "redirect:/admin/manageevents";
+        return "redirect:/admin/manage-events";
     }
 
     /**
@@ -94,7 +94,7 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
     @GetMapping("/toggle/{id}")
     public String toggleActive(@PathVariable Integer id) {
         eventService.toggleActive(id);
-        return "redirect:/admin/events/manageevents";
+        return "redirect:/admin/events/manage-events";
     }
 
     @GetMapping("/confirm-delete/{id}")
@@ -103,7 +103,7 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
         model.addAttribute("message", "¿Seguro que quieres eliminar el evento: '" + event.getTitle() + "'?");
         model.addAttribute("action", "/admin/events/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/events/manageevents");
+        model.addAttribute("cancelUrl", "/admin/events/manage-events");
         return "admin/confirm-delete";
     }
 
@@ -112,7 +112,7 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
     public String deleteEvent(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         eventService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Evento eliminado correctamente.");
-        return "redirect:/admin/events/manageevents";
+        return "redirect:/admin/events/manage-events";
     }
 
 }

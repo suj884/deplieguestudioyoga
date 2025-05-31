@@ -45,10 +45,10 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/css/**", "/js/**", "/img/**", "/font/**",
                         "/", "/classes", "/landing", "/schedule", "/prices", "/rules", "/events", "/blog", "/guide",
-                        "/login", "/faq", "/location", "/forgotPassword", "/resetPassword")
+                        "/login", "/faq", "/location", "/forgot-password", "/reset-password")
                 .permitAll()
                 // Solo pides login para reservar o ver reservas
-                .requestMatchers("/classes/reserve/**", "/classes/myReservations", "/classes/cancelReservation/**")
+                .requestMatchers("/classes/reserve/**", "/classes/my-reservations", "/classes/cancel-reservation/**")
                 .authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/classes/**").hasRole("USER")
@@ -91,7 +91,7 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             if (authentication.getAuthorities().stream()
                     .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
-                response.sendRedirect("/admin/dashboard");
+                response.sendRedirect("/admin/dash-board");
             } else if (authentication.getAuthorities().stream()
                     .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
                 response.sendRedirect("/classes");

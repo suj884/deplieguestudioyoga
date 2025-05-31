@@ -15,7 +15,7 @@
 
 <body class="d-flex flex-column">
     <!-- Incluye el navbar-fragment -->
-    <header th:replace="~{fragments/navbarAdmin :: navbar}"></header>
+    <header th:replace="~{fragments/navbar-admin :: navbar}"></header>
     <main class="flex-fill">
         <div class="container mt-5 py-5">
             <h2 class="text-center">Gestión de entradas del Blog</h2>
@@ -54,7 +54,7 @@
             </div>
             <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
                 <a class="btn btn-success" th:href="@{/admin/blog/new}">Nueva entrada</a>
-                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver</a>
+                <a th:href="@{/admin/dash-board}" class="btn btn-secondary">Volver</a>
             </div>
         </div>
     </main>

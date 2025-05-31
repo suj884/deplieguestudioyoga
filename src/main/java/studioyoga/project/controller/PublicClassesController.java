@@ -80,14 +80,14 @@ public String reserveClass(@PathVariable Integer id, Principal principal, Redire
      * @param principal Usuario autenticado.
      * @return Vista con las reservas del usuario o redirección al login si no está autenticado.
      */
-    @GetMapping("/myReservations")
+    @GetMapping("/my-reservations")
     public String myReservations(Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/login";
         }
         User user = userService.findByEmail(principal.getName());
         model.addAttribute("reservations", reservationService.findByUser(user));
-        return "user/myReservations";
+        return "user/my-reservations";
     }
 
     /**
@@ -112,7 +112,7 @@ public String cancelReservation(@PathVariable Integer id, Principal principal,
     } catch (Exception e) {
         redirectAttributes.addFlashAttribute("error", "No es posible cancelar la reserva.");
     }
-    return "redirect:/classes/myReservations";
+    return "redirect:/classes/my-reservations";
 }
 
     /**
@@ -131,10 +131,10 @@ public String cancelReservation(@PathVariable Integer id, Principal principal,
         User user = userService.findByEmail(principal.getName());
         var reservation = reservationService.findByUserAndId(user, id);
         if (reservation == null) {
-            return "redirect:/classes/myReservations";
+            return "redirect:/classes/my-reservations";
         }
         model.addAttribute("reservation", reservation);
-        return "user/confirmCancelReservation";
+        return "user/confirm-cancel-reservation";
     }
 
 }

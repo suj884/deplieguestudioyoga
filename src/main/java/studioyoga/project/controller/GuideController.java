@@ -39,10 +39,10 @@ public class GuideController {
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de secciones de la guía.
      */
-    @GetMapping("manageguide")
+    @GetMapping("manage-guide")
     public String listGuideSections(Model model) {
         model.addAttribute("sections", guideSectionService.getAllSections());
-        return "admin/manageguide";
+        return "admin/manage-guide";
     }
 
     /**
@@ -54,7 +54,7 @@ public class GuideController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("guideSection", new GuideSection());
-        return "admin/formGuide";
+        return "admin/form-guide";
     }
 
     /**
@@ -80,7 +80,7 @@ public class GuideController {
     public String showEditForm(@PathVariable Long id, Model model) {
         GuideSection section = guideSectionService.getSectionById(id);
         model.addAttribute("guideSection", section);
-        return "admin/formGuide";
+        return "admin/form-guide";
     }
 
     /**
@@ -109,7 +109,7 @@ public class GuideController {
         GuideSection section = guideSectionService.getSectionById(id);
         model.addAttribute("message", "¿Seguro que quieres eliminar la sección: '" + section.getTitle() + "'?");
         model.addAttribute("action", "/admin/guide/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/guide/manageguide");
+        model.addAttribute("cancelUrl", "/admin/guide/manage-guide");
         return "admin/confirm-delete";
     }
 

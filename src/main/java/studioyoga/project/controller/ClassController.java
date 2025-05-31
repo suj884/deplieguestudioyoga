@@ -30,11 +30,11 @@ public class ClassController {
     @Autowired
     private ClassesService classesService;
 
-    @GetMapping("/manageclasses")
+    @GetMapping("/manage-classes")
     public String manageClasses(Model model) {
         List<Classes> classesList = classesService.findAllOrderedByDateTime();
         model.addAttribute("classesList", classesList);
-        return "admin/manageclasses";
+        return "admin/manage-classes";
     }
 
     /**
@@ -46,7 +46,7 @@ public class ClassController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("classes", new Classes());
-        return "admin/formClasses";
+        return "admin/form-classes";
     }
     /**
      * Guarda una clase nueva o editada, validando que no haya duplicados y que el horario sea válido.
@@ -86,7 +86,7 @@ public class ClassController {
         }
         classesService.save(classes);
         redirectAttributes.addFlashAttribute("success", "Clase guardada correctamente");
-        return "redirect:/admin/classes/manageclasses";
+        return "redirect:/admin/classes/manage-classes";
     }
 
     /**
@@ -100,7 +100,7 @@ public class ClassController {
     public String showEditForm(@PathVariable Integer id, Model model) {
         Classes classes = classesService.findById(id).orElseThrow(() -> new RuntimeException("Clase no encontrada"));
         model.addAttribute("classes", classes);
-        return "admin/formClasses";
+        return "admin/form-classes";
     }
     /**
      * Elimina una clase y todas las reservas asociadas.
@@ -113,7 +113,7 @@ public class ClassController {
     public String deleteClass(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         classesService.deleteClassAndReservations(id);
         redirectAttributes.addFlashAttribute("success", "Clase eliminada correctamente y todas las reservas asociadas");
-        return "redirect:/admin/classes/manageclasses";
+        return "redirect:/admin/classes/manage-classes";
     }
    /**
      * Muestra la confirmación antes de eliminar una clase, indicando si tiene reservas asociadas.
@@ -139,7 +139,7 @@ public class ClassController {
 
         model.addAttribute("message", mensaje);
         model.addAttribute("action", "/admin/classes/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/classes/manageclasses");
+        model.addAttribute("cancelUrl", "/admin/classes/manage-classes");
         return "admin/confirm-delete";
     }
 

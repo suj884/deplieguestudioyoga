@@ -26,7 +26,7 @@ public class PasswordResetController {
 
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
-        return "user/forgotPassword";
+        return "user/forgot-password";
     }
 
     @PostMapping("/forgot-password")
@@ -49,10 +49,10 @@ public class PasswordResetController {
     public String showResetPasswordForm(@RequestParam String token, Model model) {
         if (!passwordResetService.validatePasswordResetToken(token)) {
             model.addAttribute("error", "El enlace es inválido o ha expirado.");
-            return "user/resetPassword";
+            return "user/reset-password";
         }
         model.addAttribute("token", token);
-        return "user/resetPassword";
+        return "user/reset-password";
     }
 
     @PostMapping("/reset-password")

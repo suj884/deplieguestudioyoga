@@ -6,13 +6,13 @@ public class RedirConstants {
 	public static final String REDIRECT_LOGIN = "redirect:/login";
 	public static final String REDIRECT_ADMIN = "redirect:/admin";
 	public static final String REDIRECT_ADMIN_LIST = "redirect:/admin/list";
-	public static final String REDIRECT_ADMIN_PANEL = "redirect:/admin/dashboard";
+	public static final String REDIRECT_ADMIN_PANEL = "redirect:/admin/dash-board";
 	public static final String REDIRECT_ADMIN_CREATE = "redirect:/admin/create";
 	public static final String REDIRECT_ADMIN_EDIT = "redirect:/admin/edit";
 	public static final String REDIRECT_ADMIN_DELETE = "redirect:/admin/delete";
 	public static final String REDIRECT_ADMIN_RESERVATIONS = "redirect:/admin/reservations";
 	public static final String REDIRECT_ADMIN_CLASSES = "redirect:/admin/classes";
-	public static final String REDIRECT_ADMIN_USERS = "redirect:/admin/users/manageuser";
+	public static final String REDIRECT_ADMIN_USERS = "redirect:/admin/users/manage-user";
 	public static final String REDIRECT_ADMIN_CLASSES_CREATE = "redirect:/admin/classes/create";
 	public static final String REDIRECT_ADMIN_CLASSES_EDIT = "redirect:/admin/classes/edit";
 	public static final String REDIRECT_ADMIN_CLASSES_DELETE = "redirect:/admin/classes/delete";
@@ -23,15 +23,15 @@ public class RedirConstants {
 	public static final String REDIRECT_ADMIN_USERS_EDIT = "redirect:/admin/users/edit";
 	public static final String REDIRECT_ADMIN_USERS_DELETE = "redirect:/admin/users/delete";
 	public static final String REDIRECT_ADMIN_USERS_LIST = "redirect:/admin/users/list";
-	public static final String REDIRECT_ADMIN_BLOG = "redirect:/admin/blog/manageblog";
-	public static final String REDIRECT_ADMIN_EVENTS = "redirect:/admin/events/manageevents";
+	public static final String REDIRECT_ADMIN_BLOG = "redirect:/admin/blog/manage-blog";
+	public static final String REDIRECT_ADMIN_EVENTS = "redirect:/admin/events/manage-events";
 	public static final String REDIRECT_ADMIN_EVENTS_CREATE = "redirect:/admin/events/create";
-	public static final String REDIRECT_ADMIN_GUIDE = "redirect:/admin/guide/manageguide";
+	public static final String REDIRECT_ADMIN_GUIDE = "redirect:/admin/guide/manage-guide";
 
 	public static final String PATH_TO_INDEX = "/index";
 	public static final String PAGE_INDEX = "user/index";
 	public static final String PAGE_LOGIN = "user/login";
-	public static final String PAGE_ADMIN = "admin/dashboard";
+	public static final String PAGE_ADMIN = "admin/dash-board";
 
 	// Private constructor to prevent instantiation
 	private RedirConstants() {

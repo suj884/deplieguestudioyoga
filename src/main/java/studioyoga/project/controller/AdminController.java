@@ -47,7 +47,7 @@ public class AdminController {
      * @param model Modelo para pasar los datos a la vista.
      * @return Vista del panel de administración.
      */
-    @GetMapping("/dashboard")
+    @GetMapping("/dash-board")
     public String showAdminPanel(Model model) {
         long totalClass = classRepository.count();
         long totalEvents = eventRepository.count();
@@ -61,7 +61,7 @@ public class AdminController {
         model.addAttribute("totalReservations", totalReservations);
         model.addAttribute("totalGuideSections", totalGuideSections);
         model.addAttribute("totalBlog", totalBlog);
-        return "admin/dashboard";
+        return "admin/dash-board";
     }
 
 }

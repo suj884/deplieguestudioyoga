@@ -32,9 +32,9 @@ public class ClassControllerTest {
     @Test
     void testManageClasses() throws Exception {
         when(classesService.findAll()).thenReturn(List.of());
-        mockMvc.perform(get("/admin/classes/manageclasses"))
+        mockMvc.perform(get("/admin/classes/manage-classes"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/manageclasses"))
+                .andExpect(view().name("admin/manage-classes"))
                 .andExpect(model().attributeExists("classesList"));
     }
 
@@ -42,7 +42,7 @@ public class ClassControllerTest {
     void testShowCreateForm() throws Exception {
         mockMvc.perform(get("/admin/classes/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/formClasses"))
+                .andExpect(view().name("admin/form-classes"))
                 .andExpect(model().attributeExists("classes"));
     }
 
@@ -53,7 +53,7 @@ public class ClassControllerTest {
         when(classesService.findById(1)).thenReturn(Optional.of(classes));
         mockMvc.perform(get("/admin/classes/edit/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/formClasses"))
+                .andExpect(view().name("admin/form-classes"))
                 .andExpect(model().attributeExists("classes"));
     }
 
@@ -75,7 +75,7 @@ public class ClassControllerTest {
                 .param("eventDate", "2025-06-01")
                 .param("timeInit", "10:00"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/classes/manageclasses"))
+                .andExpect(redirectedUrl("/admin/classes/manage-classes"))
                 .andExpect(flash().attributeExists("success"));
     }
 
@@ -110,7 +110,7 @@ public class ClassControllerTest {
     void testDeleteClass() throws Exception {
         mockMvc.perform(get("/admin/classes/delete/1"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/classes/manageclasses"))
+                .andExpect(redirectedUrl("/admin/classes/manage-classes"))
                 .andExpect(flash().attributeExists("success"));
     }
 }

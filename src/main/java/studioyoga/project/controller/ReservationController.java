@@ -48,7 +48,7 @@ public class ReservationController {
      * @param model     Modelo para pasar datos a la vista.
      * @return Vista de administración de reservas.
      */
-    @GetMapping("/managereservations")
+    @GetMapping("/manage-reservations")
     public String manageReservations(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String className,
@@ -78,7 +78,7 @@ public class ReservationController {
             model.addAttribute("info", "No existen reservas con ese nombre");
         }
 
-        return "admin/managereservations";
+        return "admin/manage-reservations";
     }
 
     /**
@@ -92,7 +92,7 @@ public class ReservationController {
         model.addAttribute("reservation", new Reservation());
         model.addAttribute("classes", classesService.findAll());
         model.addAttribute("users", userService.findAll());
-        return "admin/formReservation";
+        return "admin/form-reservation";
     }
 
     /**
@@ -107,7 +107,7 @@ public class ReservationController {
         reservation.setDateReservation(LocalDateTime.now());
         reservationService.save(reservation);
         redirectAttributes.addFlashAttribute("message", "Reserva guardada correctamente");
-        return "redirect:/admin/managereservations";
+        return "redirect:/admin/manage-reservations";
     }
 
 @GetMapping("/editReservation/{id}")
@@ -115,12 +115,12 @@ public String showEditForm(@PathVariable Integer id, Model model) {
     Optional<Reservation> optional = reservationService.findById(id);
     if (optional.isEmpty()) {
         model.addAttribute("error", "Reserva no encontrada");
-        return "redirect:/admin/reservations/managereservations";
+        return "redirect:/admin/reservations/manage-reservations";
     }
     model.addAttribute("reservation", optional.get());
     model.addAttribute("classes", classesService.findAll());
     model.addAttribute("users", userService.findAll());
-    return "admin/formReservation";
+    return "admin/form-reservation";
 }
 
 
@@ -133,7 +133,7 @@ public String showEditForm(@PathVariable Integer id, Model model) {
     @GetMapping("/deleteReservation/{id}")
     public String deleteReservation(@PathVariable Integer id) {
         reservationService.deleteById(id);
-        return "redirect:/admin/managereservations";
+        return "redirect:/admin/manage-reservations";
     }
 
     /**
@@ -145,7 +145,7 @@ public String showEditForm(@PathVariable Integer id, Model model) {
     @GetMapping("/toggleReservation/{id}")
     public String toggleActive(@PathVariable Integer id) {
         reservationService.toggleActive(id);
-        return "redirect:/admin/reservations/managereservations";
+        return "redirect:/admin/reservations/manage-reservations";
     }
 
     @GetMapping("/confirm-delete/{id}")
@@ -154,14 +154,14 @@ public String showEditForm(@PathVariable Integer id, Model model) {
         if (!reservationOptional.isPresent()) {
             // Manejar el caso de que la reserva no exista
             model.addAttribute("error", "Reserva no encontrada");
-            return "redirect:/admin/reservations/managereservations";
+            return "redirect:/admin/reservations/manage-reservations";
         }
         Reservation reservation = reservationOptional.get();
         model.addAttribute("message", "¿Seguro que quieres eliminar la reserva de " +
                 reservation.getUser().getName() + " en la clase " +
                 reservation.getClasses().getTitle() + "?");
         model.addAttribute("action", "/admin/reservations/delete/" + id);
-        model.addAttribute("cancelUrl", "/admin/reservations/managereservations");
+        model.addAttribute("cancelUrl", "/admin/reservations/manage-reservations");
         return "admin/confirm-delete";
     }
 
@@ -169,7 +169,7 @@ public String showEditForm(@PathVariable Integer id, Model model) {
     public String deleteReservation(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         reservationService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Reserva eliminada correctamente.");
-        return "redirect:/admin/reservations/managereservations";
+        return "redirect:/admin/reservations/manage-reservations";
     }
 
 }

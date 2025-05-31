@@ -14,7 +14,7 @@
 
 <body class="d-flex flex-column">
     <!-- Incluye el navbar-fragment -->
-    <header th:replace="~{fragments/navbarAdmin :: navbar}"></header>
+    <header th:replace="~{fragments/navbar-admin :: navbar}"></header>
     <main class="flex-fill">
         <div class="container py-4 mt-5 min-vh-100">
             <h2 class="mb-4" th:text="${post.id} == null ? 'Crear Nueva Entrada' : 'Editar Entrada'"></h2>
@@ -42,7 +42,7 @@
                     <input th:field="*{publishedDate}" type="date" class="form-control" id="publishedDate" required>
                 </div>
                 <button type="submit" class="btn btn-success">Guardar</button>
-                <a th:href="@{/admin/blog/manageblog}" class="btn btn-secondary ms-2">Cancelar</a>
+                <a th:href="@{/admin/blog/manage-blog}" class="btn btn-secondary ms-2">Cancelar</a>
             </form>
         </div>
     </main>

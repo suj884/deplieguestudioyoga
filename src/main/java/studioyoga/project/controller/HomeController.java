@@ -121,7 +121,7 @@ public String eventDetail(@PathVariable Integer id, Model model) {
     Optional<Event> eventOpt = eventService.findById(id); // O como accedas a tus eventos
     if (eventOpt.isPresent()) {
         model.addAttribute("event", eventOpt.get());
-        return "user/eventsDetail"; 
+        return "user/events-detail"; 
     } else {
         return "redirect:/eventos?error=notfound";
     }
@@ -151,7 +151,7 @@ public String eventDetail(@PathVariable Integer id, Model model) {
         BlogPost post = blogService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post no encontrado"));
         model.addAttribute("post", post);
-        return "user/blogPostDetail";
+        return "user/blog-post-detail";
     }
 
     /**
@@ -191,9 +191,9 @@ public String eventDetail(@PathVariable Integer id, Model model) {
      *
      * @return Vista sobre nosotros.
      */
-    @GetMapping("/aboutUS")
+    @GetMapping("/about-us")
     public String aboutUs() {
-        return "user/aboutUs";
+        return "user/about-us";
     }
 
     /**
@@ -201,9 +201,9 @@ public String eventDetail(@PathVariable Integer id, Model model) {
      *
      * @return Vista del formulario de contacto.
      */
-    @GetMapping("/formContact")
+    @GetMapping("/form-contact")
     public String contact() {
-        return "user/formContact";
+        return "user/form-contact";
     }
 
 }

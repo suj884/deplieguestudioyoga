@@ -31,16 +31,16 @@ public class BlogPostControllerTest {
     @Test
     void testManageBlog() throws Exception {
         when(blogService.findAll()).thenReturn(List.of());
-        mockMvc.perform(get("/admin/blog/manageblog"))
+        mockMvc.perform(get("/admin/blog/manage-blog"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/manageblog"));
+                .andExpect(view().name("admin/manage-blog"));
     }
 
     @Test
     void testNewPostForm() throws Exception {
         mockMvc.perform(get("/admin/blog/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/formBlog"))
+                .andExpect(view().name("admin/form-blog"))
                 .andExpect(model().attributeExists("post"));
     }
 
@@ -51,7 +51,7 @@ public class BlogPostControllerTest {
         when(blogService.findById(1)).thenReturn(Optional.of(post));
         mockMvc.perform(get("/admin/blog/edit/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/formBlog"))
+                .andExpect(view().name("admin/form-blog"))
                 .andExpect(model().attributeExists("post"));
     }
 
@@ -60,7 +60,7 @@ public class BlogPostControllerTest {
         when(blogService.findById(99)).thenReturn(Optional.empty());
         mockMvc.perform(get("/admin/blog/edit/99"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/blog/manageblog"))
+                .andExpect(redirectedUrl("/admin/blog/manage-blog"))
                 .andExpect(flash().attributeExists("error"));
     }
 
@@ -72,7 +72,7 @@ public class BlogPostControllerTest {
                 .param("content", "Test Content")
                 .param("publishedDate", LocalDate.now().toString()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/blog/manageblog"))
+                .andExpect(redirectedUrl("/admin/blog/manage-blog"))
                 .andExpect(flash().attributeExists("success"));
     }
 
@@ -80,7 +80,7 @@ public class BlogPostControllerTest {
     void testDeletePost() throws Exception {
         mockMvc.perform(post("/admin/blog/delete/1"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/blog/manageblog"))
+                .andExpect(redirectedUrl("/admin/blog/manage-blog"))
                 .andExpect(flash().attributeExists("success"));
     }
 
@@ -103,7 +103,7 @@ public class BlogPostControllerTest {
         when(blogService.findById(99)).thenReturn(Optional.empty());
         mockMvc.perform(get("/admin/blog/confirm-delete/99"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/blog/manageblog"))
+                .andExpect(redirectedUrl("/admin/blog/manage-blog"))
                 .andExpect(flash().attributeExists("error"));
     }
 }
