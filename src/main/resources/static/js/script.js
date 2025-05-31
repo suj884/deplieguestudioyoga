@@ -13,23 +13,71 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // swiper de index.html
 const swiper = new Swiper(".mySwiper", {
-  slidesPerView: 3,
-  spaceBetween: 20,
   loop: true,
+  speed: 1000,
+  allowTouchMove: true,
   autoplay: {
-    delay: 1, // Intervalo mínimo entre slides (en ms)
+    delay: 3000, // Un poco más de tiempo para que no sea tan rápido
     disableOnInteraction: false,
   },
-  speed: 2500, // Duración de la transición (en ms)
-  allowTouchMove: true,
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: false,
-    enabled: false // Oculta la paginación
-  },
   breakpoints: {
-    0: { slidesPerView: 1 },
-    576: { slidesPerView: 2 },
-    992: { slidesPerView: 3 }
+    0: { slidesPerView: 1, spaceBetween: 20 },
+    576: { slidesPerView: 2, spaceBetween: 20 },
+    992: { slidesPerView: 3, spaceBetween: 30 }
   }
 });
+
+
+// validacion de contraseñas
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form[th\\:action="@{/reset-password}"], form[action="/reset-password"]');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    const password = form.newPassword.value;
+    const confirm = form.confirmPassword.value;
+    const errorDiv = form.querySelector('.form-error') || document.createElement('div');
+    errorDiv.className = 'form-error text-danger mt-2';
+
+    // Validación: al menos 6 caracteres, una letra y un número
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    if (!regex.test(password)) {
+      e.preventDefault();
+      errorDiv.textContent = 'La contraseña debe tener al menos 6 caracteres, incluir letras y al menos un número.';
+      form.appendChild(errorDiv);
+      return false;
+    }
+    if (password !== confirm) {
+      e.preventDefault();
+      errorDiv.textContent = 'Las contraseñas no coinciden.';
+      form.appendChild(errorDiv);
+      return false;
+    }
+    errorDiv.textContent = '';
+  });
+});
+// banner cookies
+document.addEventListener('DOMContentLoaded', function() {
+    var cookieBanner = document.getElementById('cookie-banner');
+    var acceptBtn = document.getElementById('accept-cookies');
+    var rejectBtn = document.getElementById('reject-cookies');
+
+    // Comprueba si ya hay consentimiento
+    if (!localStorage.getItem('cookieConsent')) {
+        cookieBanner.style.display = 'block';
+    }
+
+    acceptBtn.onclick = function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieBanner.style.display = 'none';
+        // Aquí puedes inicializar cookies/analítica si lo necesitas
+    };
+
+    rejectBtn.onclick = function() {
+        localStorage.setItem('cookieConsent', 'rejected');
+        cookieBanner.style.display = 'none';
+        // Aquí puedes bloquear cookies/analítica si lo necesitas
+    };
+});
+
+

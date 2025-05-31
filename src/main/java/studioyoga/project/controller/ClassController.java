@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import studioyoga.project.model.Classes;
 import studioyoga.project.service.ClassesService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Controlador para la gestión de clases en el panel de administración.
@@ -30,12 +35,18 @@ public class ClassController {
     @Autowired
     private ClassesService classesService;
 
-    @GetMapping("/manage-classes")
-    public String manageClasses(Model model) {
-        List<Classes> classesList = classesService.findAllOrderedByDateTime();
-        model.addAttribute("classesList", classesList);
-        return "admin/manage-classes";
-    }
+  @GetMapping("/manage-classes")
+public String manageClasses(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        Model model) {
+    Pageable pageable = PageRequest.of(page, size);
+    Page<Classes> classesPage = classesService.findAll(pageable);
+    model.addAttribute("classesPage", classesPage);
+    model.addAttribute("page", page);
+    model.addAttribute("size", size);
+    return "admin/manage-classes";
+}
 
     /**
      * Muestra el formulario para crear una nueva clase.

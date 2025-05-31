@@ -60,9 +60,12 @@ public class UserService {
      *
      * @return Lista de usuarios.
      */
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+   public List<User> findAll() {
+    return userRepository.findAll()
+        .stream()
+        .distinct()
+        .collect(Collectors.toList());
+}
 
     /**
      * Busca un usuario por su ID.

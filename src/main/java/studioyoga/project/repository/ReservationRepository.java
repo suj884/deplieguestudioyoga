@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import studioyoga.project.model.Reservation;
 import studioyoga.project.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Repositorio para la entidad {@link Reservation}.
@@ -90,5 +93,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
 int countByClassesId(Integer classesId);
 
-
+// Ejemplo de métodos en tu repositorio
+Page<Reservation> findByUserNameContainingIgnoreCase(String user, Pageable pageable);
+Page<Reservation> findByClassesTitleContainingIgnoreCase(String className, Pageable pageable);
+Page<Reservation> findByUserNameContainingIgnoreCaseAndClassesTitleContainingIgnoreCase(String user, String className, Pageable pageable);
 }

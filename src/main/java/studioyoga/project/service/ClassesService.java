@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import studioyoga.project.dto.ClassesDTO;
@@ -16,6 +18,9 @@ import studioyoga.project.model.AllowedClass;
 import studioyoga.project.model.Classes;
 import studioyoga.project.repository.ClassRepository;
 import studioyoga.project.repository.ReservationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Servicio para la gestión de clases de yoga.
@@ -39,9 +44,15 @@ public class ClassesService {
      *
      * @return Lista de clases.
      */
-    public List<Classes> findAll() {
-        return classRepository.findAll();
-    }
+  public List<Classes> findAll() {
+    return classRepository.findAll()
+        .stream()
+        .distinct()
+        .collect(Collectors.toList());
+}
+public Page<Classes> findAll(Pageable pageable) {
+    return classRepository.findAll(pageable);
+}
 
     /**
      * Busca una clase por su ID.

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,9 @@ import studioyoga.project.model.Reservation;
 import studioyoga.project.service.ClassesService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Controlador para la gestión de reservas en el panel de administración.
@@ -52,34 +56,33 @@ public class ReservationController {
     public String manageReservations(
             @RequestParam(required = false) String user,
             @RequestParam(required = false) String className,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Boolean all,
             Model model) {
-        List<Reservation> reservations;
-        boolean searchPerformed = false;
+       Pageable pageable = PageRequest.of(page, size);
+    Page<Reservation> reservationsPage;
 
-        if (Boolean.TRUE.equals(all)) {
-            reservations = reservationService.findAll();
-            searchPerformed = true;
-        } else if ((user != null && !user.isEmpty()) || (className != null && !className.isEmpty())) {
-            reservations = reservationService.findByUserOrClass(user, className);
-            searchPerformed = true;
-        } else {
-            // Mostrar todas por defecto
-            reservations = reservationService.findAll();
-        }
-
-        model.addAttribute("reservations", reservations);
-        model.addAttribute("searchPerformed", searchPerformed);
-
-        if (searchPerformed && user != null && user.isEmpty()) {
-            model.addAttribute("info", "No existen usuarios con ese criterio");
-        }
-        if (searchPerformed && reservations.isEmpty()) {
-            model.addAttribute("info", "No existen reservas con ese nombre");
-        }
-
-        return "admin/manage-reservations";
+    if (Boolean.TRUE.equals(all)) {
+        reservationsPage = reservationService.findAll(pageable);
+    } else if ((user != null && !user.isEmpty()) || (className != null && !className.isEmpty())) {
+        reservationsPage = reservationService.findByUserOrClass(user, className, pageable);
+    } else {
+        reservationsPage = reservationService.findAll(pageable);
     }
+
+    model.addAttribute("reservationsPage", reservationsPage);
+    model.addAttribute("user", user);
+    model.addAttribute("className", className);
+    model.addAttribute("page", page);
+    model.addAttribute("size", size);
+
+    if (reservationsPage.isEmpty()) {
+        model.addAttribute("info", "No existen reservas con ese criterio");
+    }
+
+    return "admin/manage-reservations";
+}
 
     /**
      * Muestra el formulario para crear una nueva reserva.
@@ -107,22 +110,21 @@ public class ReservationController {
         reservation.setDateReservation(LocalDateTime.now());
         reservationService.save(reservation);
         redirectAttributes.addFlashAttribute("message", "Reserva guardada correctamente");
-        return "redirect:/admin/manage-reservations";
-    }
-
-@GetMapping("/editReservation/{id}")
-public String showEditForm(@PathVariable Integer id, Model model) {
-    Optional<Reservation> optional = reservationService.findById(id);
-    if (optional.isEmpty()) {
-        model.addAttribute("error", "Reserva no encontrada");
         return "redirect:/admin/reservations/manage-reservations";
     }
-    model.addAttribute("reservation", optional.get());
-    model.addAttribute("classes", classesService.findAll());
-    model.addAttribute("users", userService.findAll());
-    return "admin/form-reservation";
-}
 
+    @GetMapping("/editReservation/{id}")
+    public String showEditForm(@PathVariable Integer id, Model model) {
+        Optional<Reservation> optional = reservationService.findById(id);
+        if (optional.isEmpty()) {
+            model.addAttribute("error", "Reserva no encontrada");
+            return "redirect:/admin/reservations/manage-reservations";
+        }
+        model.addAttribute("reservation", optional.get());
+        model.addAttribute("classes", classesService.findAll());
+        model.addAttribute("users", userService.findAll());
+        return "admin/form-reservation";
+    }
 
     /**
      * Elimina una reserva por su ID.

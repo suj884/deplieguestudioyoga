@@ -12,7 +12,6 @@
 	<link rel="stylesheet" th:href="@{/css/custom.css}">
 </head>
 
-
 <body class="d-flex flex-column">
 	<!-- Incluye el navbar-fragment -->
 	<header th:replace="~{fragments/navbar-admin :: navbar}"></header>
@@ -40,7 +39,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="clase : ${classesList}">
+					    <tr th:each="clase : ${classesPage.content}">
 							<td th:text="${clase.title}"></td>
 							<td class="d-none d-sm-table-cell" th:text="${clase.instructor}"></td>
 							<td th:text="${#temporals.format(clase.eventDate, 'dd/MM/yyyy')}"></td>
@@ -70,8 +69,43 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+<tr>
+    <td colspan="9">
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${classesPage.first} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/classes/manage-classes(page=${classesPage.number - 1}, size=${classesPage.size})}">
+                            Anterior
+                        </a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(0, classesPage.totalPages - 1)}"
+                        class="page-item" th:classappend="${i == classesPage.number} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/admin/classes/manage-classes(page=${i}, size=${classesPage.size})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${classesPage.last} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/classes/manage-classes(page=${classesPage.number + 1}, size=${classesPage.size})}">
+                            Siguiente
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="text-center text-muted mt-2">
+            Mostrando <span th:text="${classesPage.number * classesPage.size + 1}"></span> a
+            <span th:text="${(classesPage.number * classesPage.size) + classesPage.numberOfElements}"></span>
+            de <span th:text="${classesPage.totalElements}"></span> clases
+        </div>
+    </td>
+</tr>
+</tfoot>
+				</table>
 			</div>
-			</table>
 			<div class="d-flex flex-column flex-sm-row gap-2 mt-3">
 				<a th:href="@{/admin/classes/new}" class="btn btn-success">Nueva
 					Clase</a>

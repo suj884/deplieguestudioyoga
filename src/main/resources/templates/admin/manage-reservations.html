@@ -47,7 +47,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="res : ${reservations}">
+						 <tr th:each="res : ${reservationsPage.content}">
 							<td th:text="${res.user.name}"></td>
 							<td th:text="${res.classes.title}"></td>
 							<td th:text="${#temporals.format(res.dateReservation, 'dd/MM/yyyy HH:mm')}"></td>
@@ -63,6 +63,44 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+<tr>
+    <td colspan="4">
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <!-- Botón Anterior -->
+                    <li class="page-item" th:classappend="${reservationsPage.first} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/reservations/manage-reservations(user=${user}, className=${className}, page=${reservationsPage.number - 1}, size=${reservationsPage.size})}">
+                            Anterior
+                        </a>
+                    </li>
+                    <!-- Números de página -->
+                    <li th:each="i : ${#numbers.sequence(0, reservationsPage.totalPages - 1)}"
+                        class="page-item" th:classappend="${i == reservationsPage.number} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/admin/reservations/manage-reservations(user=${user}, className=${className}, page=${i}, size=${reservationsPage.size})}"
+                           th:text="${i + 1}">1</a>
+                    </li>
+                    <!-- Botón Siguiente -->
+                    <li class="page-item" th:classappend="${reservationsPage.last} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/admin/reservations/manage-reservations(user=${user}, className=${className}, page=${reservationsPage.number + 1}, size=${reservationsPage.size})}">
+                            Siguiente
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="text-center text-muted mt-2">
+            Mostrando <span th:text="${reservationsPage.number * reservationsPage.size + 1}"></span> a
+            <span th:text="${(reservationsPage.number * reservationsPage.size) + reservationsPage.numberOfElements}"></span>
+            de <span th:text="${reservationsPage.totalElements}"></span> reservas
+        </div>
+    </td>
+</tr>
+</tfoot>
 				</table>
 			</div>
 			<div class="d-flex flex-column flex-sm-row gap-2 mt-3">

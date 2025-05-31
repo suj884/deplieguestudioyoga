@@ -80,7 +80,27 @@ ul {
   box-shadow: 0 8px 24px rgba(60, 90, 60, 0.15);
   transform: translateY(-4px) scale(1.02);
 }
+/* cookies */
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #78C2AD;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
 
+.cookie-banner-buttons {
+  margin-top: 0.5rem;
+}
+
+.cookie-banner-buttons button {
+  margin: 0 0.5rem;
+}
 
 /* footer */
 .footer-zen {

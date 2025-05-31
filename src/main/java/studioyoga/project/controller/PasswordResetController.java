@@ -59,12 +59,12 @@ public class PasswordResetController {
     public String processResetPassword(@RequestParam String token,
             @RequestParam String newPassword,
             @RequestParam String confirmPassword,
+            Model model,
             RedirectAttributes redirectAttributes) {
         if (!newPassword.equals(confirmPassword)) {
-            redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden.");
-            redirectAttributes.addAttribute("token", token);
-            return "redirect:/reset-password?token=" + token;
-
+            model.addAttribute("error", "Las contraseñas no coinciden.");
+            model.addAttribute("token", token);
+            return "user/reset-password";
         }
         passwordResetService.updatePassword(token, newPassword);
         redirectAttributes.addFlashAttribute("success", "Contraseña actualizada correctamente.");

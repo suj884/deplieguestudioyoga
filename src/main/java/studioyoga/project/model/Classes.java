@@ -15,6 +15,7 @@ import lombok.*;
  */
 @Entity
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "classes")
@@ -24,6 +25,7 @@ public class Classes {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer id;
 
     /**

@@ -15,6 +15,9 @@ import studioyoga.project.model.Reservation;
 import studioyoga.project.model.User;
 import studioyoga.project.repository.ClassRepository;
 import studioyoga.project.repository.ReservationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Servicio para la gestión de reservas de clases.
@@ -107,55 +110,7 @@ public class ReservationService {
         return reservationRepository.findByClassesId(classId).size();
     }
 
-    /**
-     * Realiza una reserva de clase para un usuario.
-     * Lanza excepción si no hay plazas disponibles o si el usuario ya tiene reserva en esa clase.
-     *
-     * @param user Usuario que reserva.
-     * @param classId ID de la clase a reservar.
-     * @throws NoSpotsAvailableException Si no hay plazas disponibles.
-     * @throws AlreadyReservedException Si el usuario ya tiene una reserva para esa clase.
-     */
-    // public void reserveClass(User user, Integer classId) throws NoSpotsAvailableException, AlreadyReservedException {
-    //     Classes yogaClass = classRepository.findById(classId)
-    //             .orElseThrow(() -> new RuntimeException("Class not found"));
-
-    //     // Check available spots
-    //     int reservedCount = reservationRepository.findByClassesId(yogaClass.getId()).size();
-    //     if (reservedCount >= yogaClass.getCapacity()) {
-    //         throw new NoSpotsAvailableException();
-    //     }
-
-    //     // Check if already reserved
-    //     boolean alreadyReserved = reservationRepository.findByUser(user).stream()
-    //             .anyMatch(r -> r.getClasses().getId().equals(yogaClass.getId()));
-    //     if (alreadyReserved) {
-    //         throw new AlreadyReservedException();
-    //     }
-
-    //     // Create and save reservation
-    //     Reservation reservation = new Reservation();
-    //     reservation.setUser(user);
-    //     reservation.setClasses(yogaClass);
-    //     reservation.setDateReservation(LocalDateTime.now());
-    //     reservationRepository.save(reservation);
-    // }
-
-    /**
-     * Cancela una reserva realizada por un usuario.
-     * Solo permite cancelar reservas propias.
-     *
-     * @param user Usuario que cancela.
-     * @param reservationId ID de la reserva a cancelar.
-     */
-    // public void cancelReservation(User user, Integer reservationId) {
-    //     Reservation reservation = reservationRepository.findById(reservationId)
-    //             .orElseThrow(() -> new RuntimeException("Reservation not found"));
-    //     if (!reservation.getUser().getId().equals(user.getId())) {
-    //         throw new RuntimeException("You can't cancel another user's reservation");
-    //     }
-    //     reservationRepository.delete(reservation);
-    // }
+   
 
     /**
      * Activa o desactiva una reserva (cambia su estado activo).
@@ -270,5 +225,19 @@ public Classes cancelReservation(User user, Integer reservationId) {
     // Devuelve la clase cancelada
     return claseCancelada;
 }
+public Page<Reservation> findAll(Pageable pageable) {
+    return reservationRepository.findAll(pageable);
+}
 
+public Page<Reservation> findByUserOrClass(String user, String className, Pageable pageable) {
+    if (user != null && !user.isEmpty() && className != null && !className.isEmpty()) {
+        return reservationRepository.findByUserNameContainingIgnoreCaseAndClassesTitleContainingIgnoreCase(user, className, pageable);
+    } else if (user != null && !user.isEmpty()) {
+        return reservationRepository.findByUserNameContainingIgnoreCase(user, pageable);
+    } else if (className != null && !className.isEmpty()) {
+        return reservationRepository.findByClassesTitleContainingIgnoreCase(className, pageable);
+    } else {
+        return reservationRepository.findAll(pageable);
+    }
+}
 }

@@ -1,0 +1,49 @@
+/* Solo aplica el efecto a las cards dentro de .events-list */
+.events-list .card {
+  overflow: hidden;
+  position: relative;
+}
+
+.events-list .card-img-top {
+  transition: transform 0.5s cubic-bezier(.25,.8,.25,1), filter 0.5s;
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+  display: block;
+}
+
+.events-list .card-img-overlay-custom {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: opacity 0.4s;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 2px 8px #000;
+  pointer-events: none;
+}
+
+.events-list .card:hover .card-img-top {
+  transform: scale(1.08);
+  filter: brightness(0.7);
+}
+
+.events-list .card:hover .card-img-overlay-custom {
+  opacity: 1;
+}
+
+/* Anula el movimiento de la card solo en la página de eventos */
+.events-list .card:hover, .events-detail:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+@media (max-width: 1200px) and (min-width: 766px) {
+  .events-list .card-body {
+    text-align: center !important;
+  }
+}

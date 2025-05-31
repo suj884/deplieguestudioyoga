@@ -1,5 +1,6 @@
 package studioyoga.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import studioyoga.project.model.BlogPost;
 import studioyoga.project.model.Event;
+import studioyoga.project.model.Review;
 import studioyoga.project.service.BlogService;
 import studioyoga.project.service.EventService;
 import studioyoga.project.service.GuideSectionService;
@@ -42,17 +44,40 @@ public class HomeController {
         this.guideSectionService = guideSectionService;
     }
 
-    /**
-     * Muestra la página principal con los eventos activos.
-     *
-     * @param model Modelo para pasar datos a la vista.
-     * @return Vista de la página de inicio.
-     */
-    @GetMapping("/")
-    public String landingPage(Model model) {
-        model.addAttribute("events", eventService.findAllActive());
-        return "user/index";
-    }
+/**
+ * Muestra la página principal con los eventos activos y las reseñas.
+ *
+ * @param model Modelo para pasar datos a la vista.
+ * @return Vista de la página de inicio.
+ */
+@GetMapping("/")
+public String home(Model model) {
+    List<Review> reviews = List.of(
+        new Review("Gracias a Studio Yoga he mejorado mi flexibilidad y mi bienestar general. ¡Las clases son muy completas!", "Ana P."),
+        new Review("El ambiente es muy acogedor y los profesores siempre están atentos a las necesidades de cada alumno.", "Javier S."),
+        new Review("Me encanta la variedad de clases y la profesionalidad del equipo. Recomiendo Studio Yoga a todos mis amigos.", "Lucía M."),
+        new Review("Las sesiones de meditación me han ayudado a reducir el estrés y a dormir mejor. ¡Muy agradecida!", "Marta R."),
+        new Review("Un espacio donde realmente puedo desconectar y dedicarme tiempo. ¡Siempre salgo renovada!", "Sergio T."),
+        new Review("La atención personalizada y el trato cercano hacen que cada clase sea especial. ¡Gracias por tanto!", "Paula G."),
+        new Review("Studio Yoga es el lugar perfecto para empezar en el yoga o profundizar en la práctica. ¡Muy recomendable!", "Diego L."),
+        new Review("He encontrado un grupo maravilloso y mucha motivación para seguir cuidando de mi cuerpo y mente.", "Elena F."),
+        new Review("Las instalaciones son impecables y el ambiente invita a la calma desde que entras por la puerta.", "Tomás V."),
+        new Review("Las clases online son igual de buenas que las presenciales. ¡Muy recomendable para quienes tienen poco tiempo!", "Laura H."),
+        new Review("El equipo de Studio Yoga me ha ayudado a mantenerme motivado y constante en mi práctica. ¡Gracias por el apoyo!", "Pedro V."),
+        new Review("Me gusta mucho la variedad de horarios y la facilidad para reservar clases. Todo muy profesional.", "Sonia C."),
+        new Review("Desde que asisto a Studio Yoga, he notado una gran mejoría en mi postura y en mi energía diaria.", "Marcos D."),
+        new Review("El ambiente es relajante y siempre salgo de las clases con una sonrisa. ¡Muy agradecida!", "Isabel R.")
+    );
+  int minSlides = 9; // por ejemplo, 3*3 si slidesPerView máximo es 3
+List<Review> reviewsForSwiper = new ArrayList<>();
+while (reviewsForSwiper.size() < minSlides) {
+    reviewsForSwiper.addAll(reviews);
+}
+    model.addAttribute("reviews", reviews);
+    model.addAttribute("events", eventService.findAllActive());
+    return "user/index"; // o "index", según tu plantilla
+}
+
 
     /**
      * Muestra la página de login.
@@ -205,5 +230,6 @@ public String eventDetail(@PathVariable Integer id, Model model) {
     public String contact() {
         return "user/form-contact";
     }
+
 
 }
