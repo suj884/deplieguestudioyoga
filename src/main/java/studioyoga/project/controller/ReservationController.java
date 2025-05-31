@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import studioyoga.project.model.Reservation;
 import studioyoga.project.service.ClassesService;
-import studioyoga.project.service.NotificationService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
 
@@ -173,21 +172,4 @@ public String showEditForm(@PathVariable Integer id, Model model) {
         return "redirect:/admin/reservations/managereservations";
     }
 
-    // Métodos comentados para obtener reservas por usuario o por clase:
-    /*
-     * @GetMapping("/userReservations/{userId}")
-     * public String getUserReservations(@PathVariable Integer userId, Model model)
-     * {
-     * model.addAttribute("reservations", reservationService.findByUserId(userId));
-     * return "admin/userReservations";
-     * }
-     * 
-     * @GetMapping("/classReservations/{classId}")
-     * public String getClassReservations(@PathVariable Integer classId, Model
-     * model) {
-     * model.addAttribute("reservations",
-     * reservationService.findByClassesId(classId));
-     * return "admin/classReservations";
-     * }
-     */
 }
