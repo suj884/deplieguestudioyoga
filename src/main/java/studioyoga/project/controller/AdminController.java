@@ -11,6 +11,7 @@ import studioyoga.project.repository.ClassRepository;
 import studioyoga.project.repository.EventRepository;
 import studioyoga.project.repository.GuideSectionRepository;
 import studioyoga.project.repository.ReservationRepository;
+import studioyoga.project.repository.TicketRepository;
 import studioyoga.project.repository.UserRepository;
 
 /**
@@ -41,6 +42,9 @@ public class AdminController {
     @Autowired
     private GuideSectionRepository guideSectionRepository;
 
+    @Autowired
+    private TicketRepository ticketRepository;
+
     /**
      * Muestra el panel de administración con estadísticas generales del sistema.
      *
@@ -55,12 +59,14 @@ public class AdminController {
         long totalReservations = reservationRepository.count();
         long totalGuideSections = guideSectionRepository.count();
         long totalBlog = blogPostRepository.count();
+        long totalTickets = ticketRepository.count();
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("totalEvents", totalEvents);
         model.addAttribute("totalClass", totalClass);
         model.addAttribute("totalReservations", totalReservations);
         model.addAttribute("totalGuideSections", totalGuideSections);
         model.addAttribute("totalBlog", totalBlog);
+        model.addAttribute("totalTickets", totalTickets);
         return "admin/dash-board";
     }
 

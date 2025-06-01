@@ -21,19 +21,21 @@
         <div th:replace="~{fragments/messages :: messages}"></div>
         <form th:action="@{/admin/reservations/save}" th:object="${reservation}" method="post">
             <div class="mb-3">
-                <label class="form-label">Usuario</label>
+                <label class="form-label" for="user">Usuario</label>
                 <select th:field="*{user}" class="form-control" required>
                     <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.name}"></option>
                 </select>
             </div>
             <div class="mb-3">
-                <label class="form-label">Clase</label>
+                <label class="form-label" for="classes">Clase</label>
                 <select th:field="*{classes}" class="form-control" required>
                     <option th:each="c : ${classes}" th:value="${c.id}" th:text="${c.title}"></option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a th:href="@{/admin/reservations/manage-reservations}" class="btn btn-secondary">Volver</a>
+            <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+                <a th:href="@{/admin/reservations/manage-reservations}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+            </div>
         </form>
     </div>
      </main>

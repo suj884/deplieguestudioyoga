@@ -24,50 +24,50 @@
 			<form th:action="@{/admin/users/save}" method="post" enctype="multipart/form-data" th:object="${user}">
 				<input type="hidden" th:field="*{id}">
 				<div class="mb-3">
-					<label class="form-label">Nombre</label> <input type="text" th:field="*{name}" class="form-control"
+					<label class="form-label" for="name">Nombre</label> <input type="text" th:field="*{name}" class="form-control" id="name"
 						required>
 					<div th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Primer Apellido</label> <input type="text" th:field="*{firstLastName}"
-						class="form-control" required>
+					<label class="form-label" for="firstLastName">Primer Apellido</label> <input type="text" th:field="*{firstLastName}"
+						class="form-control" id="firstLastName" required>
 					<div th:if="${#fields.hasErrors('firstLastName')}" class="text-danger" th:errors="*{firstLastName}">
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Segundo Apellido</label> <input type="text" th:field="*{secondLastName}"
-						class="form-control">
+					<label class="form-label" for="secondLastName">Segundo Apellido</label> <input type="text" th:field="*{secondLastName}"
+						class="form-control" id="secondLastName">
 					<div th:if="${#fields.hasErrors('secondLastName')}" class="text-danger"
 						th:errors="*{secondLastName}">
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Email</label> <input type="email" th:field="*{email}" class="form-control"
+					<label class="form-label" for="email">Email</label> <input type="email" th:field="*{email}" class="form-control" id="email"
 						required>
 					<div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Contraseña</label> <input type="password" th:field="*{password}"
+					<label class="form-label" for="password">Contraseña</label> <input type="password" th:field="*{password}"
 						class="form-control" th:required="${user.id == null}"
 						placeholder="Dejar en blanco para mantener la contraseña actual">
 					<div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}">
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Teléfono</label> <input type="text" th:field="*{phoneNumber}"
-						class="form-control">
+					<label class="form-label" for="phoneNumber">Teléfono</label> <input type="text" th:field="*{phoneNumber}"
+						class="form-control" id="phoneNumber">
 					<div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger" th:errors="*{phoneNumber}">
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Fecha de registro</label>
-					<input type="date" th:field="*{registrationDate}" class="form-control">
+					<label class="form-label" for="registrationDate">Fecha de registro</label>
+					<input type="date" th:field="*{registrationDate}" class="form-control" id="registrationDate">
 					<div th:if="${#fields.hasErrors('registrationDate')}" class="text-danger"
 						th:errors="*{registrationDate}"></div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Imagen de perfil</label>
-					<input type="file" name="profilePictureFile" class="form-control mb-2">
+					<label class="form-label" for="profilePictureFile">Imagen de perfil</label>
+					<input type="file" name="profilePictureFile" class="form-control mb-2" id="profilePictureFile">
 					<div class="text-center">o</div>
 					<input type="url" th:field="*{profilePicture}" class="form-control"
 						placeholder="https://ejemplo.com/imagen.jpg">
@@ -77,31 +77,33 @@
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Habilitado</label> <input type="checkbox" th:field="*{enabled}"
-						class="form-check-input">
+					<label class="form-label" for="enabled">Habilitado</label> <input type="checkbox" th:field="*{enabled}"
+						class="form-check-input" id="enabled">
 					<div th:if="${#fields.hasErrors('enabled')}" class="text-danger" th:errors="*{enabled}">
 					</div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Código de verificación</label> <input type="text"
-						th:field="*{verificationCode}" class="form-control">
+					<label class="form-label" for="verificationCode">Código de verificación</label> <input type="text"
+						th:field="*{verificationCode}" class="form-control" id="verificationCode">
 					<div th:if="${#fields.hasErrors('verificationCode')}" class="text-danger"
 						th:errors="*{verificationCode}"></div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Rol</label>
+					<label class="form-label" for="rol">Rol</label>
 					<select th:field="*{rol}" class="form-control" required>
 						<option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.name}"></option>
 					</select>
 					<div th:if="${#fields.hasErrors('rol')}" class="text-danger" th:errors="*{rol}"></div>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Notas</label>
-					<textarea th:field="*{notes}" class="form-control" rows="3"></textarea>
+					<label class="form-label" for="notes">Notas</label>
+					<textarea th:field="*{notes}" class="form-control" rows="3" id="notes"></textarea>
 					<div th:if="${#fields.hasErrors('notes')}" class="text-danger" th:errors="*{notes}"></div>
 				</div>
-				<button type="submit" class="btn btn-success">Guardar</button>
-				<a th:href="@{/admin/users/manage-user}" class="btn btn-secondary ms-2">Cancelar</a>
+				<div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+					<button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+					<a th:href="@{/admin/users/manage-user}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+				</div>
 			</form>
 		</div>
 	</main>

@@ -28,4 +28,7 @@ public class TicketService {
         ticket.setEstado(nuevoEstado);
         ticketRepository.save(ticket);
     }
+public long countAllTickets() {
+    return ticketRepository.count();
+}
 }

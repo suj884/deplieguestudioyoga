@@ -39,8 +39,10 @@
                     <label for="sectionOrder" class="form-label">Orden</label>
                     <input th:field="*{sectionOrder}" type="number" class="form-control" id="sectionOrder">
                 </div>
-                <button type="submit" class="btn btn-success">Guardar</button>
-                <a th:href="@{/admin/guide/manage-guide}" class="btn btn-secondary ms-2">Cancelar</a>
+                <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+                    <a th:href="@{/admin/guide/manage-guide}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+                </div>
             </form>
 
         </div>

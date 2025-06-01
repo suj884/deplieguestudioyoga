@@ -39,7 +39,7 @@
                       th:text="${post.title}">Título del post</a>
                   </h2>
                   <p class="blog-card-summary" th:text="${post.summary}">Resumen o extracto del post...</p>
-                  <a th:href="@{/blog/{id}(id=${post.id})}" class="btn btn-outline-success btn-sm">Leer más</a>
+                  <a th:href="@{/blog/{id}(id=${post.id})}" class="btn btn-outline-primary rounded-pill btn-sm">Leer más</a>
                 </div>
               </div>
             </div>

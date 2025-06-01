@@ -22,7 +22,7 @@
                 <img th:if="${event.imageUrl != null}" th:src="${event.imageUrl}" class="card-img-top"
                     alt="Imagen del evento">
                 <div class="card-body">
-                    <h2 class="card-title" th:text="${event.title}">Título del evento</h2>
+                    <h2 class="card-title text-center" th:text="${event.title}">Título del evento</h2>
                     <p>
                         <strong>Fecha:</strong>
                         <span th:text="${#temporals.format(event.eventDate, 'dd/MM/yyyy')}"></span><br>
@@ -30,7 +30,7 @@
                         <span th:text="${event.location}"></span>
                     </p>
                     <p th:text="${event.description}">Descripción del evento</p>
-                    <a th:href="@{/events}" class="btn btn-outline-success back-link">
+                    <a th:href="@{/events}" class="btn btn-outline-primary rounded-pill back-link">
                     <i class="bi bi-arrow-left"></i> Volver a eventos
                 </a>
                 </div>

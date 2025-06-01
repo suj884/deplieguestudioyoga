@@ -23,49 +23,51 @@
 			<form th:object="${classes}" th:action="@{/admin/classes/save}" method="post">
 				<input type="hidden" th:field="*{id}">
 				<div class="mb-3">
-					<label class="form-label">Título</label> <input type="text" th:field="*{title}" class="form-control"
+					<label class="form-label" for="title">Título</label> <input type="text" th:field="*{title}" class="form-control" id="title"
 						required>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Descripción</label>
-					<textarea th:field="*{description}" class="form-control" rows="3" required></textarea>
+					<label class="form-label" for="description">Descripción</label>
+					<textarea th:field="*{description}" class="form-control" rows="3" id="description" required></textarea>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Instructor</label> <input type="text" th:field="*{instructor}"
-						class="form-control">
+					<label class="form-label" for="instructor">Instructor</label> <input type="text" th:field="*{instructor}"
+						class="form-control" id="instructor">
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Imagen (URL)</label> <input type="url" th:field="*{imageUrl}"
-						class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
+					<label class="form-label" for="imageUrl">Imagen (URL)</label> <input type="url" th:field="*{imageUrl}"
+						class="form-control" id="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Fecha</label>
-					<input type="date" th:field="*{eventDate}" class="form-control" required>
+					<label class="form-label" for="eventDate">Fecha</label>
+					<input type="date" th:field="*{eventDate}" class="form-control" id="eventDate" required>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Hora de inicio</label> <input type="time" th:field="*{timeInit}"
-						class="form-control" required>
+					<label class="form-label" for="timeInit">Hora de inicio</label> <input type="time" th:field="*{timeInit}"
+						class="form-control" id="timeInit" required>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Hora de fin</label> <input type="time" th:field="*{timeEnd}"
-						class="form-control" required>
+					<label class="form-label" for="timeEnd">Hora de fin</label> <input type="time" th:field="*{timeEnd}"
+						class="form-control" id="timeEnd" required>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Ubicación</label> <input type="text" th:field="*{location}"
-						class="form-control">
+					<label class="form-label" for="location">Ubicación</label> <input type="text" th:field="*{location}"
+						class="form-control" id="location">
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Capacidad</label> <input type="number" th:field="*{capacity}"
-						class="form-control" min="1" required>
+					<label class="form-label" for="capacity">Capacidad</label> <input type="number" th:field="*{capacity}"
+						class="form-control" id="capacity" min="1" required>
 				</div>
 				<div class="mb-3">
-					<label class="form-label">Activa</label> <input type="checkbox" th:field="*{active}"
-						class="form-check-input">
+					<label class="form-label" for="active">Activa</label> <input type="checkbox" th:field="*{active}"
+						class="form-check-input" id="active">
 				</div>
-				<button type="submit" class="btn btn-success">
-					<i class="bi bi-save"></i> Guardar
-				</button>
-				<a th:href="@{/admin/classes/manage-classes}" class="btn btn-secondary">Volver</a>
+				<div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+					<button type="submit" class="btn btn-success">
+						<i class="bi bi-save"></i> Guardar
+					</button>
+					<a th:href="@{/admin/classes/manage-classes}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+				</div>
 			</form>
 		</div>
 	</main>

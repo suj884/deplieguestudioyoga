@@ -19,7 +19,6 @@ import studioyoga.project.model.Classes;
 import studioyoga.project.repository.ClassRepository;
 import studioyoga.project.repository.ReservationRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**

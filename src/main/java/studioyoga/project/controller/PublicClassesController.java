@@ -2,6 +2,7 @@ package studioyoga.project.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,21 +44,24 @@ public class PublicClassesController {
 
         @Autowired
 private NotificationService notificationService;
-    /**
-     * Muestra la lista de clases próximas agrupadas por fecha.
-     *
-     * @param model Modelo para pasar datos a la vista.
-     * @return Vista con las clases disponibles para los usuarios.
-     */
-    @GetMapping
-    public String showClasses(Model model) {
-        List<ClassesDTO> classesList = classesService.findUpcomingClassesWithSpots();
-        Map<LocalDate, List<ClassesDTO>> clasesPorFecha = classesList.stream()
-                .collect(Collectors.groupingBy(dto -> dto.getClasses().getEventDate(), LinkedHashMap::new,
-                        Collectors.toList()));
-        model.addAttribute("clasesPorFecha", clasesPorFecha);
-        return "user/classes";
-    }
+
+@GetMapping
+public String showClasses(Model model) {
+    List<ClassesDTO> classesList = classesService.findUpcomingClassesWithSpots();
+    Map<LocalDate, List<ClassesDTO>> clasesPorFecha = classesList.stream()
+        .collect(Collectors.groupingBy(
+            dto -> dto.getClasses().getEventDate(),
+            LinkedHashMap::new,
+            Collectors.collectingAndThen(
+                Collectors.toList(),
+                l -> l.stream()
+                      .sorted(Comparator.comparing(c -> c.getClasses().getTimeInit()))
+                      .collect(Collectors.toList())
+            )
+        ));
+    model.addAttribute("clasesPorFecha", clasesPorFecha);
+    return "user/classes";
+}
 
 @PostMapping("/reserve/{id}")
 public String reserveClass(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {

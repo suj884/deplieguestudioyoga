@@ -17,8 +17,8 @@
     <!-- Incluye el navbar-fragment -->
     <header th:replace="~{fragments/navbar-admin :: navbar}"></header>
     <main class="flex-fill">
-        <div class="container py-5 mt-5 d-flex flex-column">
-            <h1 class="text-center">Panel de Administración</h1>
+        <div class="container py-5 mt-5 mh-100">
+            <h1 class="text-center fs-3 fs-md-1">Panel de Administración</h1>
             <section>
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
                     <!-- Clases -->
@@ -93,7 +93,7 @@
                                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                                     <h5 class="card-title">Blog</h5>
                                     <i class="bi bi-journal-text admin-card-icon"></i>
-                                    <h6 class="card-title">Post registradas</h6>
+                                    <h6 class="card-title">Post registrados</h6>
                                     <span class="mx-3" th:text="${totalBlog}">0</span>
                                 </div>
                             </div>

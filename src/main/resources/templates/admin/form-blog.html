@@ -41,8 +41,10 @@
                     <label for="publishedDate" class="form-label">Fecha de publicación</label>
                     <input th:field="*{publishedDate}" type="date" class="form-control" id="publishedDate" required>
                 </div>
-                <button type="submit" class="btn btn-success">Guardar</button>
-                <a th:href="@{/admin/blog/manage-blog}" class="btn btn-secondary ms-2">Cancelar</a>
+                <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+                    <a th:href="@{/admin/blog/manage-blog}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+                </div>
             </form>
         </div>
     </main>

@@ -64,11 +64,12 @@
                     <input type="checkbox" th:field="*{active}" class="form-check-input" id="active" />
                     <label class="form-check-label" for="active">Activo</label>
                 </div>
-
-                <button type="submit" class="btn btn-success">
-                    <i class="bi bi-save"></i> Guardar
-                </button>
-                <a th:href="@{/admin/events/manage-events}" class="btn btn-secondary">Cancelar</a>
+                <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                    <a th:href="@{/admin/events/manage-events}" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Cancelar</a>
+                </div>
             </form>
         </div>
     </main>
