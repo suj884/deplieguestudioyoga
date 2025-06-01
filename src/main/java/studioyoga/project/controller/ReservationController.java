@@ -1,7 +1,6 @@
 package studioyoga.project.controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +20,15 @@ import studioyoga.project.service.ClassesService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**
  * Controlador para la gestión de reservas en el panel de administración.
+ * <p>
  * Permite listar, buscar, crear, editar, eliminar y activar/desactivar
  * reservas.
+ * Todas las rutas de este controlador están bajo el prefijo
+ * "/admin/reservations".
  */
 @Controller
 @RequestMapping("/admin/reservations")
@@ -48,6 +49,8 @@ public class ReservationController {
      *
      * @param user      Nombre del usuario para filtrar (opcional).
      * @param className Nombre de la clase para filtrar (opcional).
+     * @param page      Número de página.
+     * @param size      Tamaño de página.
      * @param all       Si es true, muestra todas las reservas.
      * @param model     Modelo para pasar datos a la vista.
      * @return Vista de administración de reservas.
@@ -60,29 +63,29 @@ public class ReservationController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Boolean all,
             Model model) {
-       Pageable pageable = PageRequest.of(page, size);
-    Page<Reservation> reservationsPage;
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Reservation> reservationsPage;
 
-    if (Boolean.TRUE.equals(all)) {
-        reservationsPage = reservationService.findAll(pageable);
-    } else if ((user != null && !user.isEmpty()) || (className != null && !className.isEmpty())) {
-        reservationsPage = reservationService.findByUserOrClass(user, className, pageable);
-    } else {
-        reservationsPage = reservationService.findAll(pageable);
+        if (Boolean.TRUE.equals(all)) {
+            reservationsPage = reservationService.findAll(pageable);
+        } else if ((user != null && !user.isEmpty()) || (className != null && !className.isEmpty())) {
+            reservationsPage = reservationService.findByUserOrClass(user, className, pageable);
+        } else {
+            reservationsPage = reservationService.findAll(pageable);
+        }
+
+        model.addAttribute("reservationsPage", reservationsPage);
+        model.addAttribute("user", user);
+        model.addAttribute("className", className);
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+
+        if (reservationsPage.isEmpty()) {
+            model.addAttribute("info", "No existen reservas con ese criterio");
+        }
+
+        return "admin/manage-reservations";
     }
-
-    model.addAttribute("reservationsPage", reservationsPage);
-    model.addAttribute("user", user);
-    model.addAttribute("className", className);
-    model.addAttribute("page", page);
-    model.addAttribute("size", size);
-
-    if (reservationsPage.isEmpty()) {
-        model.addAttribute("info", "No existen reservas con ese criterio");
-    }
-
-    return "admin/manage-reservations";
-}
 
     /**
      * Muestra el formulario para crear una nueva reserva.
@@ -113,6 +116,14 @@ public class ReservationController {
         return "redirect:/admin/reservations/manage-reservations";
     }
 
+    /**
+     * Muestra el formulario para editar una reserva existente.
+     *
+     * @param id    ID de la reserva a editar.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista del formulario de edición de reserva o redirección si no se
+     *         encuentra.
+     */
     @GetMapping("/editReservation/{id}")
     public String showEditForm(@PathVariable Integer id, Model model) {
         Optional<Reservation> optional = reservationService.findById(id);
@@ -150,6 +161,14 @@ public class ReservationController {
         return "redirect:/admin/reservations/manage-reservations";
     }
 
+    /**
+     * Muestra la vista de confirmación antes de eliminar una reserva.
+     *
+     * @param id    ID de la reserva a eliminar.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista de confirmación de eliminación o redirección si no se
+     *         encuentra.
+     */
     @GetMapping("/confirm-delete/{id}")
     public String confirmDelete(@PathVariable Integer id, Model model) {
         Optional<Reservation> reservationOptional = reservationService.findById(id);
@@ -167,6 +186,13 @@ public class ReservationController {
         return "admin/confirm-delete";
     }
 
+    /**
+     * Elimina una reserva por su ID tras confirmación (vía POST).
+     *
+     * @param id                 ID de la reserva a eliminar.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
+     * @return Redirección a la vista de administración de reservas.
+     */
     @PostMapping("/delete/{id}")
     public String deleteReservation(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         reservationService.deleteById(id);

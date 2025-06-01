@@ -16,8 +16,12 @@ import studioyoga.project.repository.UserRepository;
 
 /**
  * Controlador para la administración del sistema.
- * Proporciona acceso al panel de administración y muestra estadísticas generales del sistema,
- * como el total de usuarios, eventos, clases, reservas, secciones de la guía y publicaciones del blog.
+ * Proporciona acceso al panel de administración y muestra estadísticas
+ * generales del sistema,
+ * como el total de usuarios, eventos, clases, reservas, secciones de la guía y
+ * publicaciones del blog.
+ * <p>
+ * Todas las rutas de este controlador están bajo el prefijo "/admin".
  */
 @Controller
 @RequestMapping("/admin")
@@ -25,28 +29,31 @@ import studioyoga.project.repository.UserRepository;
 public class AdminController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository; // Repositorio para acceder a los usuarios
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventRepository eventRepository; // Repositorio para acceder a los eventos
 
     @Autowired
-    private BlogPostRepository blogPostRepository;
+    private BlogPostRepository blogPostRepository; // Repositorio para acceder a las publicaciones del blog
 
     @Autowired
-    private ClassRepository classRepository;
+    private ClassRepository classRepository; // Repositorio para acceder a las clases
 
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository; // Repositorio para acceder a las reservas
 
     @Autowired
-    private GuideSectionRepository guideSectionRepository;
+    private GuideSectionRepository guideSectionRepository; // Repositorio para acceder a las secciones de la guía
 
     @Autowired
-    private TicketRepository ticketRepository;
+    private TicketRepository ticketRepository; // Repositorio para acceder a los tickets
 
     /**
      * Muestra el panel de administración con estadísticas generales del sistema.
+     * Añade al modelo los totales de usuarios, eventos, clases, reservas, secciones
+     * de la guía,
+     * publicaciones del blog e incidencias (tickets).
      *
      * @param model Modelo para pasar los datos a la vista.
      * @return Vista del panel de administración.

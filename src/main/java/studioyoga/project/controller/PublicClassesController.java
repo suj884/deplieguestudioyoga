@@ -26,8 +26,16 @@ import studioyoga.project.service.UserService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * Controlador para la gestión pública de clases.
- * Permite a los usuarios ver clases disponibles, reservar, consultar y cancelar sus reservas.
+ * Procesa el formulario de nueva contraseña.
+ * Valida que las contraseñas coincidan y actualiza la contraseña del usuario.
+ *
+ * @param token              Token de restablecimiento.
+ * @param newPassword        Nueva contraseña.
+ * @param confirmPassword    Confirmación de la nueva contraseña.
+ * @param model              Modelo para pasar datos a la vista.
+ * @param redirectAttributes Atributos para mensajes flash.
+ * @return Redirección al login si tiene éxito, o vuelve al formulario si hay
+ *         error.
  */
 @Controller
 @RequestMapping("/classes")
@@ -42,47 +50,62 @@ public class PublicClassesController {
     @Autowired
     private ReservationService reservationService;
 
-        @Autowired
-private NotificationService notificationService;
+    @Autowired
+    private NotificationService notificationService;
 
-@GetMapping
-public String showClasses(Model model) {
-    List<ClassesDTO> classesList = classesService.findUpcomingClassesWithSpots();
-    Map<LocalDate, List<ClassesDTO>> clasesPorFecha = classesList.stream()
-        .collect(Collectors.groupingBy(
-            dto -> dto.getClasses().getEventDate(),
-            LinkedHashMap::new,
-            Collectors.collectingAndThen(
-                Collectors.toList(),
-                l -> l.stream()
-                      .sorted(Comparator.comparing(c -> c.getClasses().getTimeInit()))
-                      .collect(Collectors.toList())
-            )
-        ));
-    model.addAttribute("clasesPorFecha", clasesPorFecha);
-    return "user/classes";
-}
-
-@PostMapping("/reserve/{id}")
-public String reserveClass(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {
-    User user = userService.findByEmail(principal.getName());
-    try {
-        Classes clase = reservationService.reserveClass(user, id);
-        notificationService.sendReservationEmail(user, clase);
-        redirectAttributes.addFlashAttribute("success", "Reserva realizada correctamente.");
-    } catch (NoSpotsAvailableException e) {
-        redirectAttributes.addFlashAttribute("error", "No hay plazas disponibles para esta clase.");
-    } catch (AlreadyReservedException e) {
-        redirectAttributes.addFlashAttribute("error", "Ya has reservado esta clase.");
+    /**
+     * Muestra la lista de clases disponibles agrupadas por fecha y ordenadas por
+     * hora.
+     *
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista con las clases disponibles.
+     */
+    @GetMapping
+    public String showClasses(Model model) {
+        List<ClassesDTO> classesList = classesService.findUpcomingClassesWithSpots();
+        Map<LocalDate, List<ClassesDTO>> clasesPorFecha = classesList.stream()
+                .collect(Collectors.groupingBy(
+                        dto -> dto.getClasses().getEventDate(),
+                        LinkedHashMap::new,
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                l -> l.stream()
+                                        .sorted(Comparator.comparing(c -> c.getClasses().getTimeInit()))
+                                        .collect(Collectors.toList()))));
+        model.addAttribute("clasesPorFecha", clasesPorFecha);
+        return "user/classes";
     }
-    return "redirect:/classes";
-}
+
+    /**
+     * Permite a un usuario reservar una clase.
+     *
+     * @param id                 ID de la clase a reservar.
+     * @param principal          Usuario autenticado.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
+     * @return Redirección a la vista de clases con mensaje de éxito o error.
+     */
+    @PostMapping("/reserve/{id}")
+    public String reserveClass(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {
+        User user = userService.findByEmail(principal.getName());
+        try {
+            Classes clase = reservationService.reserveClass(user, id);
+            notificationService.sendReservationEmail(user, clase);
+            redirectAttributes.addFlashAttribute("success", "Reserva realizada correctamente.");
+        } catch (NoSpotsAvailableException e) {
+            redirectAttributes.addFlashAttribute("error", "No hay plazas disponibles para esta clase.");
+        } catch (AlreadyReservedException e) {
+            redirectAttributes.addFlashAttribute("error", "Ya has reservado esta clase.");
+        }
+        return "redirect:/classes";
+    }
+
     /**
      * Muestra las reservas del usuario autenticado.
      *
-     * @param model Modelo para pasar datos a la vista.
+     * @param model     Modelo para pasar datos a la vista.
      * @param principal Usuario autenticado.
-     * @return Vista con las reservas del usuario o redirección al login si no está autenticado.
+     * @return Vista con las reservas del usuario o redirección al login si no está
+     *         autenticado.
      */
     @GetMapping("/my-reservations")
     public String myReservations(Model model, Principal principal) {
@@ -97,34 +120,35 @@ public String reserveClass(@PathVariable Integer id, Principal principal, Redire
     /**
      * Permite a un usuario cancelar una reserva.
      *
-     * @param id ID de la reserva a cancelar.
-     * @param principal Usuario autenticado.
+     * @param id                 ID de la reserva a cancelar.
+     * @param principal          Usuario autenticado.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
-     * @return Redirección a la vista de reservas del usuario o al login si no está autenticado.
+     * @return Redirección a la vista de reservas del usuario o al login si no está
+     *         autenticado.
      */
-  @PostMapping("/cancelReservation/{id}")
-public String cancelReservation(@PathVariable Integer id, Principal principal,
-        RedirectAttributes redirectAttributes) {
-    if (principal == null) {
-        return "redirect:/login";
+    @PostMapping("/cancelReservation/{id}")
+    public String cancelReservation(@PathVariable Integer id, Principal principal,
+            RedirectAttributes redirectAttributes) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findByEmail(principal.getName());
+        try {
+            Classes clase = reservationService.cancelReservation(user, id);
+            notificationService.sendCancelReservationEmail(user, clase);
+            redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No es posible cancelar la reserva.");
+        }
+        return "redirect:/classes/my-reservations";
     }
-    User user = userService.findByEmail(principal.getName());
-    try {
-        Classes clase = reservationService.cancelReservation(user, id);
-        notificationService.sendCancelReservationEmail(user, clase);
-        redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
-    } catch (Exception e) {
-        redirectAttributes.addFlashAttribute("error", "No es posible cancelar la reserva.");
-    }
-    return "redirect:/classes/my-reservations";
-}
 
     /**
      * Muestra una página de confirmación para cancelar una reserva.
      *
-     * @param id ID de la reserva a cancelar.
+     * @param id        ID de la reserva a cancelar.
      * @param principal Usuario autenticado.
-     * @param model Modelo para pasar datos a la vista.
+     * @param model     Modelo para pasar datos a la vista.
      * @return Vista de confirmación de cancelación o redirección si no corresponde.
      */
     @GetMapping("/confirm-cancel/{id}")

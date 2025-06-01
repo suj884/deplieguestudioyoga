@@ -18,8 +18,11 @@ import studioyoga.project.model.BlogPost;
 import studioyoga.project.service.BlogService;
 
 /**
- * Controlador para la gestión de publicaciones del blog en el panel de administración.
+ * Controlador para la gestión de publicaciones del blog en el panel de
+ * administración.
+ * <p>
  * Permite listar, crear, editar, guardar y eliminar entradas del blog.
+ * Todas las rutas de este controlador están bajo el prefijo "/admin/blog".
  */
 @Controller
 @RequestMapping("/admin/blog")
@@ -58,10 +61,11 @@ public class BlogPostController {
     /**
      * Muestra el formulario para editar una publicación existente.
      *
-     * @param id ID de la publicación a editar.
-     * @param model Modelo para pasar datos a la vista.
+     * @param id                 ID de la publicación a editar.
+     * @param model              Modelo para pasar datos a la vista.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
-     * @return Vista del formulario de edición o redirección si no se encuentra la publicación.
+     * @return Vista del formulario de edición o redirección si no se encuentra la
+     *         publicación.
      */
     @GetMapping("/edit/{id}")
     public String editPostForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -78,7 +82,7 @@ public class BlogPostController {
     /**
      * Guarda una nueva publicación o actualiza una existente.
      *
-     * @param post Objeto BlogPost a guardar.
+     * @param post               Objeto BlogPost a guardar.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de publicaciones.
      */
@@ -88,13 +92,14 @@ public class BlogPostController {
         redirectAttributes.addFlashAttribute("success", "Entrada de blog guardada correctamente.");
         return RedirConstants.REDIRECT_ADMIN_BLOG;
     }
-    
+
     /**
      * Muestra una página de confirmación antes de eliminar una publicación.
      *
-     * @param id ID de la publicación a eliminar.
+     * @param id    ID de la publicación a eliminar.
      * @param model Modelo para pasar datos a la vista.
-     * @return Vista de confirmación de eliminación o redirección si no se encuentra la publicación.
+     * @return Vista de confirmación de eliminación o redirección si no se encuentra
+     *         la publicación.
      */
     @GetMapping("/confirm-delete/{id}")
     public String confirmDelete(@PathVariable Integer id, Model model) {
@@ -108,11 +113,11 @@ public class BlogPostController {
         model.addAttribute("cancelUrl", "/admin/blog/manage-blog");
         return "admin/confirm-delete";
     }
-    
+
     /**
      * Elimina una publicación del blog.
      *
-     * @param id ID de la publicación a eliminar.
+     * @param id                 ID de la publicación a eliminar.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de publicaciones.
      */

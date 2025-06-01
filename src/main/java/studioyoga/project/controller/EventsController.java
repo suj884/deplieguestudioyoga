@@ -14,8 +14,10 @@ import studioyoga.project.service.EventService;
 
 /**
  * Controlador para la gestión de eventos en el panel de administración.
+ * <p>
  * Permite listar, crear, editar, guardar, eliminar y activar/desactivar
  * eventos.
+ * Todas las rutas de este controlador están bajo el prefijo "/admin/events".
  */
 @Controller
 @RequestMapping("/admin/events")
@@ -51,7 +53,8 @@ public class EventsController {
     /**
      * Guarda un evento nuevo o editado.
      *
-     * @param event Objeto Event a guardar.
+     * @param event              Objeto Event a guardar.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de eventos.
      */
     @PostMapping("/save")
@@ -61,22 +64,31 @@ public class EventsController {
         return RedirConstants.REDIRECT_ADMIN_EVENTS;
     }
 
-@GetMapping("/edit/{id}")
-public String showEditForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-    Optional<Event> eventOpt = eventService.findById(id);
-    if (!eventOpt.isPresent()) {
-        redirectAttributes.addFlashAttribute("error", "Evento no encontrado");
-        return RedirConstants.REDIRECT_ADMIN_EVENTS;
+    /**
+     * Muestra el formulario para editar un evento existente.
+     *
+     * @param id                 ID del evento a editar.
+     * @param model              Modelo para pasar datos a la vista.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
+     * @return Vista del formulario de edición de evento o redirección si no se
+     *         encuentra.
+     */
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+        Optional<Event> eventOpt = eventService.findById(id);
+        if (!eventOpt.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Evento no encontrado");
+            return RedirConstants.REDIRECT_ADMIN_EVENTS;
+        }
+        model.addAttribute("event", eventOpt.get());
+        return "admin/form-events";
     }
-    model.addAttribute("event", eventOpt.get());
-    return "admin/form-events";
-}
-
 
     /**
-     * Elimina un evento por su ID.
+     * Elimina el evento por su ID tras confirmación.
      *
-     * @param id ID del evento a eliminar.
+     * @param id                 ID del evento a eliminar.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de eventos.
      */
     @GetMapping("/delete/{id}")
@@ -97,6 +109,13 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
         return "redirect:/admin/events/manage-events";
     }
 
+    /**
+     * Muestra la vista de confirmación antes de eliminar un evento.
+     *
+     * @param id    ID del evento a eliminar.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista de confirmación de eliminación.
+     */
     @GetMapping("/confirm-delete/{id}")
     public String confirmDelete(@PathVariable Integer id, Model model) {
         Event event = eventService.findById(id)
@@ -107,12 +126,17 @@ public String showEditForm(@PathVariable Integer id, Model model, RedirectAttrib
         return "admin/confirm-delete";
     }
 
-    // Eliminar el evento (POST)
+    /**
+     * Elimina el evento por su ID tras confirmación (vía POST).
+     *
+     * @param id                 ID del evento a eliminar.
+     * @param redirectAttributes Atributos para mensajes flash en la redirección.
+     * @return Redirección a la vista de administración de eventos.
+     */
     @PostMapping("/delete/{id}")
     public String deleteEvent(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         eventService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Evento eliminado correctamente.");
         return "redirect:/admin/events/manage-events";
     }
-
 }

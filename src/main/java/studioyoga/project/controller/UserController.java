@@ -29,8 +29,10 @@ import studioyoga.project.service.UserService;
 
 /**
  * Controlador para la gestión de usuarios en el panel de administración.
+ * <p>
  * Permite listar, buscar, crear, editar, eliminar usuarios, así como cambiar
  * contraseñas y gestionar imágenes de perfil.
+ * Todas las rutas de este controlador están bajo el prefijo "/admin/users".
  */
 @Controller
 @RequestMapping("/admin/users")
@@ -66,6 +68,9 @@ public class UserController {
      *
      * @param name  Nombre o apellido para filtrar (opcional).
      * @param role  Rol para filtrar (opcional).
+     * @param page  Número de página.
+     * @param size  Tamaño de página.
+     * @param all   Si es true, muestra todos los usuarios.
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de administración de usuarios.
      */
@@ -77,15 +82,16 @@ public class UserController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Boolean all,
             Model model) {
-                if (Boolean.TRUE.equals(all)) {
-                name = null;
-                role = null;
-                page = 0;
-            }
-// Normaliza parámetros vacíos a null
-    if (name != null && name.trim().isEmpty()) name = null;
-    if (role != null && role.trim().isEmpty()) role = null;
-
+        if (Boolean.TRUE.equals(all)) {
+            name = null;
+            role = null;
+            page = 0;
+        }
+        // Normaliza parámetros vacíos a null
+        if (name != null && name.trim().isEmpty())
+            name = null;
+        if (role != null && role.trim().isEmpty())
+            role = null;
 
         List<User> users = userService.findUsersBySurnameAndNameAndRole(name, role);
         List<Rol> roles = rolService.findAll();
@@ -97,7 +103,6 @@ public class UserController {
         model.addAttribute("name", name);
         model.addAttribute("role", role);
         model.addAttribute("roles", roles);
-        
 
         // Mensaje si no hay resultados
         boolean searchPerformed = (name != null && !name.isEmpty()) || (role != null && !role.isEmpty());
@@ -138,7 +143,6 @@ public class UserController {
             @ModelAttribute User user,
             @RequestParam("profilePictureFile") MultipartFile file,
             RedirectAttributes redirectAttributes) throws IOException {
-
         // Lógica de subida de imagen
         if (!file.isEmpty()) {
             String uploadDir = "src/main/resources/static/images/profile-pictures/";
@@ -159,7 +163,6 @@ public class UserController {
             redirectAttributes.addFlashAttribute("error", "El correo ya está registrado.");
             return "redirect:/admin/users/new";
         }
-
         // Mantener contraseña si es edición
         if (user.getId() != null && user.getPassword().isEmpty()) {
             User existingUser = userRepository.findById(user.getId()).orElseThrow();
@@ -239,7 +242,7 @@ public class UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el usuario: " + e.getMessage());
         }
-         return RedirConstants.REDIRECT_ADMIN_USERS;
+        return RedirConstants.REDIRECT_ADMIN_USERS;
     }
 
     // ============ CAMBIO DE CONTRASEÑA ============

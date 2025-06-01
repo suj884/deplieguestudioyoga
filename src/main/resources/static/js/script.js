@@ -17,9 +17,10 @@ const swiper = new Swiper(".mySwiper", {
   speed: 1000,
   allowTouchMove: true,
   autoplay: {
-    delay: 3000, // Un poco más de tiempo para que no sea tan rápido
+    delay: 2500, // Un poco más de tiempo para que no sea tan rápido
     disableOnInteraction: false,
   },
+  centeredSlides: true,
   breakpoints: {
     0: { slidesPerView: 1, spaceBetween: 20 },
     576: { slidesPerView: 2, spaceBetween: 20 },

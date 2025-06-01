@@ -11,8 +11,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Controlador para la gestión del formulario de contacto.
+ * <p>
  * Permite enviar mensajes de contacto por correo electrónico al administrador
  * del sitio.
+ * Gestiona las rutas "/contact" (GET y POST).
  */
 @Controller
 public class ContactController {
@@ -20,9 +22,9 @@ public class ContactController {
     @Autowired
     private JavaMailSender mailSender;
 
-
-     /**
-     * Muestra el formulario de contacto para que el usuario pueda enviar un mensaje.
+    /**
+     * Muestra el formulario de contacto para que el usuario pueda enviar un
+     * mensaje.
      *
      * @return Nombre de la vista del formulario de contacto.
      */
@@ -34,6 +36,8 @@ public class ContactController {
     /**
      * Procesa el envío del formulario de contacto y envía un correo electrónico al
      * administrador.
+     * El correo se envía a una dirección fija y se añade un mensaje flash de éxito
+     * para el usuario.
      *
      * @param nombre             Nombre del remitente.
      * @param email              Email del remitente.

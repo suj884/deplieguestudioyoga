@@ -2,7 +2,6 @@ package studioyoga.project.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import studioyoga.project.model.Classes;
 import studioyoga.project.service.ClassesService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**
  * Controlador para la gestión de clases en el panel de administración.
+ * <p>
  * Permite listar, crear, editar y eliminar clases, así como validar horarios y
  * evitar duplicados.
+ * Todas las rutas de este controlador están bajo el prefijo "/admin/classes".
  */
 @Controller
 @RequestMapping("/admin/classes")
@@ -35,18 +35,26 @@ public class ClassController {
     @Autowired
     private ClassesService classesService;
 
-  @GetMapping("/manage-classes")
-public String manageClasses(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
-        Model model) {
-    Pageable pageable = PageRequest.of(page, size);
-    Page<Classes> classesPage = classesService.findAll(pageable);
-    model.addAttribute("classesPage", classesPage);
-    model.addAttribute("page", page);
-    model.addAttribute("size", size);
-    return "admin/manage-classes";
-}
+    /**
+     * Muestra la lista paginada de clases para administración.
+     *
+     * @param page  Número de página.
+     * @param size  Tamaño de página.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista de administración de clases.
+     */
+    @GetMapping("/manage-classes")
+    public String manageClasses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Classes> classesPage = classesService.findAll(pageable);
+        model.addAttribute("classesPage", classesPage);
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
+        return "admin/manage-classes";
+    }
 
     /**
      * Muestra el formulario para crear una nueva clase.
@@ -59,11 +67,13 @@ public String manageClasses(
         model.addAttribute("classes", new Classes());
         return "admin/form-classes";
     }
+
     /**
-     * Guarda una clase nueva o editada, validando que no haya duplicados y que el horario sea válido.
+     * Guarda una clase nueva o editada, validando que no haya duplicados y que el
+     * horario sea válido.
      *
-     * @param classes             Objeto Classes a guardar.
-     * @param redirectAttributes  Atributos para mensajes flash.
+     * @param classes            Objeto Classes a guardar.
+     * @param redirectAttributes Atributos para mensajes flash.
      * @return Redirección a la gestión de clases o al formulario en caso de error.
      */
     @PostMapping("/save")
@@ -72,11 +82,6 @@ public String manageClasses(
                 .getDisplayName(TextStyle.FULL, new Locale("es")).toUpperCase();
         String time = classes.getTimeInit().format(DateTimeFormatter.ofPattern("HH:mm"));
         String className = classes.getTitle();
-
-        // Depuración: imprime los valores
-        System.out.println("Día: " + dayOfWeek);
-        System.out.println("Hora: " + time);
-        System.out.println("Clase: " + className);
 
         if (!classesService.isAllowedSchedule(dayOfWeek, time, className)) {
             redirectAttributes.addFlashAttribute("error", "No puedes registrar esa clase en ese horario.");
@@ -113,11 +118,12 @@ public String manageClasses(
         model.addAttribute("classes", classes);
         return "admin/form-classes";
     }
+
     /**
      * Elimina una clase y todas las reservas asociadas.
      *
-     * @param id                  ID de la clase a eliminar.
-     * @param redirectAttributes  Atributos para mensajes flash.
+     * @param id                 ID de la clase a eliminar.
+     * @param redirectAttributes Atributos para mensajes flash.
      * @return Redirección a la gestión de clases.
      */
     @PostMapping("/delete/{id}")
@@ -126,8 +132,10 @@ public String manageClasses(
         redirectAttributes.addFlashAttribute("success", "Clase eliminada correctamente y todas las reservas asociadas");
         return "redirect:/admin/classes/manage-classes";
     }
-   /**
-     * Muestra la confirmación antes de eliminar una clase, indicando si tiene reservas asociadas.
+
+    /**
+     * Muestra la confirmación antes de eliminar una clase, indicando si tiene
+     * reservas asociadas.
      *
      * @param id    ID de la clase a eliminar.
      * @param model Modelo para pasar datos a la vista.

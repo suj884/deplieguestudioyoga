@@ -17,6 +17,13 @@ import studioyoga.project.model.User;
 import studioyoga.project.repository.UserRepository;
 import studioyoga.project.service.PasswordResetService;
 
+/**
+ * Controlador para la gestión del proceso de restablecimiento de contraseña.
+ * <p>
+ * Permite solicitar el restablecimiento, enviar el email con el enlace y
+ * actualizar la contraseña.
+ * Gestiona las rutas "/forgot-password" y "/reset-password".
+ */
 @Controller
 public class PasswordResetController {
     @Autowired
@@ -24,11 +31,25 @@ public class PasswordResetController {
     @Autowired
     private PasswordResetService passwordResetService;
 
+    /**
+     * Muestra el formulario para solicitar el restablecimiento de contraseña.
+     *
+     * @return Vista del formulario de solicitud de restablecimiento.
+     */
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
         return "user/forgot-password";
     }
 
+    /**
+     * Procesa la solicitud de restablecimiento de contraseña.
+     * Si el email existe, envía un correo con el enlace de restablecimiento.
+     *
+     * @param email              Email del usuario.
+     * @param request            Objeto HttpServletRequest para construir la URL.
+     * @param redirectAttributes Atributos para mensajes flash.
+     * @return Redirección al formulario de solicitud con mensaje de éxito.
+     */
     @PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam String email, HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
@@ -45,6 +66,15 @@ public class PasswordResetController {
 
     }
 
+    /**
+     * Muestra el formulario para establecer una nueva contraseña usando el token
+     * recibido por email.
+     *
+     * @param token Token de restablecimiento.
+     * @param model Modelo para pasar datos a la vista.
+     * @return Vista del formulario de nueva contraseña o mensaje de error si el
+     *         token no es válido.
+     */
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam String token, Model model) {
         if (!passwordResetService.validatePasswordResetToken(token)) {
@@ -55,6 +85,18 @@ public class PasswordResetController {
         return "user/reset-password";
     }
 
+    /**
+     * Procesa el formulario de nueva contraseña.
+     * Valida que las contraseñas coincidan y actualiza la contraseña del usuario.
+     *
+     * @param token              Token de restablecimiento.
+     * @param newPassword        Nueva contraseña.
+     * @param confirmPassword    Confirmación de la nueva contraseña.
+     * @param model              Modelo para pasar datos a la vista.
+     * @param redirectAttributes Atributos para mensajes flash.
+     * @return Redirección al login si tiene éxito, o vuelve al formulario si hay
+     *         error.
+     */
     @PostMapping("/reset-password")
     public String processResetPassword(@RequestParam String token,
             @RequestParam String newPassword,

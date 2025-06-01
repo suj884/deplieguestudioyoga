@@ -14,8 +14,11 @@ import studioyoga.project.model.GuideSection;
 import studioyoga.project.service.GuideSectionService;
 
 /**
- * Controlador para la gestión de secciones de la guía en el panel de administración.
+ * Controlador para la gestión de secciones de la guía en el panel de
+ * administración.
+ * <p>
  * Permite listar, crear, editar y eliminar secciones de la guía.
+ * Todas las rutas de este controlador están bajo el prefijo "/admin/guide".
  */
 @Controller
 @RequestMapping("/admin/guide")
@@ -72,7 +75,7 @@ public class GuideController {
     /**
      * Muestra el formulario de edición para una sección existente.
      *
-     * @param id ID de la sección a editar.
+     * @param id    ID de la sección a editar.
      * @param model Modelo para pasar datos a la vista.
      * @return Vista del formulario de edición de sección.
      */
@@ -86,7 +89,7 @@ public class GuideController {
     /**
      * Procesa el formulario de edición de una sección de la guía.
      *
-     * @param id ID de la sección a editar.
+     * @param id      ID de la sección a editar.
      * @param section Objeto GuideSection actualizado.
      * @return Redirección a la vista de administración de secciones.
      */
@@ -96,11 +99,11 @@ public class GuideController {
         guideSectionService.saveSection(section);
         return RedirConstants.REDIRECT_ADMIN_GUIDE;
     }
- 
+
     /**
      * Muestra una página de confirmación antes de eliminar una sección de la guía.
      *
-     * @param id ID de la sección a eliminar.
+     * @param id    ID de la sección a eliminar.
      * @param model Modelo para pasar datos a la vista.
      * @return Vista de confirmación de eliminación.
      */
@@ -114,11 +117,13 @@ public class GuideController {
     }
 
     /**
-     * Elimina una sección de la guía por su ID y redirige a la administración de secciones.
+     * Elimina una sección de la guía por su ID y redirige a la administración de
+     * secciones.
      *
-     * @param id ID de la sección a eliminar.
+     * @param id                 ID de la sección a eliminar.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
-     * @return Redirección a la vista de administración de secciones con mensaje de éxito.
+     * @return Redirección a la vista de administración de secciones con mensaje de
+     *         éxito.
      */
     @PostMapping("/delete/{id}")
     public String deleteSection(@PathVariable Long id, RedirectAttributes redirectAttributes) {
