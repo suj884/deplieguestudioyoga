@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Normas y recomendaciones</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.6/dist/minty/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
+      <link rel="icon" type="image/x-icon" th:href="@{/images/profile-pictures/logo.ico}">
+      <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.6/dist/minty/bootstrap.min.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="preload" as="style" th:href="@{/css/custom.css}" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 
 <body class="d-flex flex-column">
@@ -38,12 +39,10 @@
                 sesión.
                 Las clases perdidas pueden recuperarse dentro del mismo mes.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">access_time</span>Asistencia y Puntualidad</h3>
             <h3 class="section-subtitle">Antes de la Clase</h3>
             <p>Te recomendamos llegar con al menos 10 minutos de antelación para prepararte y comenzar puntualmente.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">self_improvement</span>Práctica Segura y Respetuosa</h3>
             <h3 class="section-subtitle">Durante la Práctica</h3>
             <p>Escucha a tu cuerpo y respeta tus límites. No dudes en informar al instructor sobre cualquier molestia o
@@ -54,7 +53,6 @@
             <h3 class="section-subtitle">Material y Equipamiento</h3>
             <p>Disponemos de esterillas y accesorios, pero puedes traer tu propio material si lo prefieres.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">clean_hands</span>Higiene y Cuidado Personal</h3>
             <h3 class="section-subtitle">Preparación para la Clase</h3>
             <p>Por respeto a todos, acude aseado y con ropa cómoda y limpia.</p>
@@ -62,15 +60,12 @@
             <p>Si tienes alguna condición médica, consulta con tu médico antes de comenzar la práctica y comunícalo al
                 instructor.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">notifications_off</span>Antes de la Clase</h3>
             <p>Apaga o silencia dispositivos móviles para evitar interrupciones.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">done_all</span>Después de la Clase</h3>
             <p>Recoge tu material y deja el espacio limpio para el siguiente grupo.</p>
             <hr class="section-divider">
-
             <h3  class="text-center"><span class="material-icons zen-icon">gavel</span>Comportamiento y Sanciones</h3>
             <h3 class="section-subtitle">Respeto y convivencia</h3>
             <p>
@@ -84,7 +79,6 @@
                 a la plataforma será suspendido durante una semana como medida disciplinaria.
             </p>
             <hr class="section-divider">
-
             <h3 class="text-center"><span class="material-icons zen-icon">favorite</span>Principio de Ahimsa en la Práctica</h3>
             <p>Practica con compasión hacia ti mismo y hacia los demás, fomentando un ambiente de respeto y armonía.</p>
         </div>

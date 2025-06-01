@@ -5,12 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Studio Yoga - Bienvenido</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/images/profile-pictures/logo.ico}">
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.6/dist/minty/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link rel="stylesheet" th:href="@{/css/custom.css}">
-  <link rel="stylesheet" th:href="@{/css/landinpage.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+  <link rel="preload" as="style" th:href="@{/css/custom.css}" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" th:href="@{/css/landinpage.css}" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="image"
+    href="https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_1200/v1748450931/hero_h2xni1.jpg">
+  <link rel="preconnect" href="https://res.cloudinary.com">
 </head>
 
 <body class="d-flex flex-column">
@@ -46,53 +49,71 @@
         </div>
       </section>
       <!-- Clases -->
-      <section id="clases" class="py-5">
-        <div class="container">
-          <h2 class="text-center fw-bold mb-5">Clases para todos los niveles</h2>
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img
-                  src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593878/ai-generated-8993759_1280_dato0n.jpg"
-                  class="card-img-top rounded-top-4" alt="Hatha Yoga">
-                <div class="card-body text-center">
-                  <h5 class="card-title mb-3">Hatha Yoga</h5>
-                  <p class="card-text text-muted">Equilibra cuerpo y mente con posturas suaves y respiración consciente.
-                    Ideal para todos los niveles.</p>
-                  <a th:href="@{/guide#hatha-yoga}" class="btn btn-outline-success rounded-pill px-4">Saber más</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img
-                  src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593950/kike-vega-F2qh3yjz6Jk-unsplash_o4m64i.jpg"
-                  class="card-img-top rounded-top-4" alt="Vinyasa Flow">
-                <div class="card-body text-center">
-                  <h5 class="card-title mb-3">Vinyasa Flow</h5>
-                  <p class="card-text text-muted">Secuencias dinámicas que conectan movimiento y respiración.
-                    Energizante y creativo.</p>
-                  <a th:href="@{/guide#vinyasa-flow}" class="btn btn-outline-success rounded-pill px-4">Saber más</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card border-0 shadow-sm rounded-4 h-100">
-                <img
-                  src="https://res.cloudinary.com/dr5e7n5yp/image/upload/v1748593874/ai-generated-8763808_1280_trkmjw.jpg"
-                  class="card-img-top rounded-top-4" alt="Meditación y Mindfulness">
-                <div class="card-body text-center">
-                  <h5 class="card-title mb-3">Meditación y Mindfulness</h5>
-                  <p class="card-text text-muted">Aprende a calmar la mente y cultivar la atención plena. Sesiones
-                    guiadas para todos.</p>
-                  <a th:href="@{/guide#meditacion-y-mindfulness}"
-                    class="btn btn-outline-success rounded-pill px-4">Saber más</a>
-                </div>
-              </div>
-            </div>
+    <section id="clases" class="py-5">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">Clases para todos los niveles</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <img
+            src="https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593878/ai-generated-8993759_1280_dato0n.jpg"
+            srcset="
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593878/ai-generated-8993759_1280_dato0n.jpg 400w,
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_800/v1748593878/ai-generated-8993759_1280_dato0n.jpg 800w
+            "
+            sizes="(max-width: 600px) 400px, 800px"
+            width="400" height="220"
+            class="card-img-top rounded-top-4"
+            alt="Hatha Yoga">
+          <div class="card-body text-center">
+            <h3 class="card-title mb-3">Hatha Yoga</h3>
+            <p class="card-text text-muted flex-grow-1">Equilibra cuerpo y mente con posturas suaves y respiración consciente. Ideal para todos los niveles.</p>
+            <a th:href="@{/guide#hatha-yoga}" class="btn btn-outline-success rounded-pill px-4">Saber más</a>
           </div>
         </div>
-      </section>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <img
+            src="https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593950/kike-vega-F2qh3yjz6Jk-unsplash_o4m64i.jpg"
+            srcset="
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593950/kike-vega-F2qh3yjz6Jk-unsplash_o4m64i.jpg 400w,
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_800/v1748593950/kike-vega-F2qh3yjz6Jk-unsplash_o4m64i.jpg 800w
+            "
+            sizes="(max-width: 600px) 400px, 800px"
+            width="400" height="220"
+            class="card-img-top rounded-top-4"
+            alt="Vinyasa Flow">
+          <div class="card-body text-center">
+            <h3 class="card-title mb-3">Vinyasa Flow</h3>
+            <p class="card-text text-muted flex-grow-1">Secuencias dinámicas que conectan movimiento y respiración. Energizante y creativo.</p>
+            <a th:href="@{/guide#vinyasa-flow}" class="btn btn-outline-success rounded-pill px-4">Saber más</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+          <img
+            src="https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593874/ai-generated-8763808_1280_trkmjw.jpg"
+            srcset="
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_400/v1748593874/ai-generated-8763808_1280_trkmjw.jpg 400w,
+              https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_800/v1748593874/ai-generated-8763808_1280_trkmjw.jpg 800w
+            "
+            sizes="(max-width: 600px) 400px, 800px"
+            width="400" height="220"
+            class="card-img-top rounded-top-4"
+            alt="Meditación y Mindfulness">
+          <div class="card-body text-center">
+            <h3 class="card-title mb-3">Meditación y Mindfulness</h3>
+            <p class="card-text text-muted flex-grow-1">Aprende a calmar la mente y cultivar la atención plena. Sesiones guiadas para todos.</p>
+            <a th:href="@{/guide#meditacion-y-mindfulness}" class="btn btn-outline-success rounded-pill px-4">Saber más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       <!-- Carrusel de eventos -->
       <section id="carrousel-eventos" class="my-5">
         <h2 class="text-center fw-bold mb-4">Eventos destacados</h2>
@@ -123,7 +144,7 @@
             <span class="visually-hidden">Siguiente</span>
           </button>
         </div>
-        <!-- Botón para ver todos los eventos -->
+        <!-- Botón para ver los eventos -->
         <div class="text-center mt-4">
           <a th:href="@{/events}" class="btn btn-success btn-lg rounded-pill px-5">
             Eventos
@@ -160,10 +181,11 @@
   <!-- Incluye el footer-fragment -->
   <footer th:replace="~{fragments/footer :: footer}"></footer>
   <div th:replace="~{fragments/cookies :: cookie-banner}"></div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script th:src="@{/js/script.js}"></script>
+  <script rel="async" th:src="@{/js/script.js}"></script>
 </body>
 
 </html>

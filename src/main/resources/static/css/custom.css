@@ -10,6 +10,7 @@
 body {
   background: linear-gradient(120deg, #f8f9fa 0%, #ffffff 100%);
   font-family: 'Segoe UI', 'Arial', sans-serif;
+  font-display: swap;
 
 }
 
@@ -43,7 +44,7 @@ h3 {
 
 p,
 ul {
-  color: #34495e;
+  color: #2c3e50;
   font-size: 1.05rem;
   line-height: 1.7;
 }
@@ -59,17 +60,6 @@ ul {
   vertical-align: middle;
 }
 
-/* content */
-/* .content {
-  max-width: 900px;
-  margin: 3rem auto;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2.5rem 2rem;
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(44, 62, 80, 0.08);
-  border: 1px solid #b2dfdb;
-
-} */
 /* cards */
 .card img {
   max-height: 220px;
