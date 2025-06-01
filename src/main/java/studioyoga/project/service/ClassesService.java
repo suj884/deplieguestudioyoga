@@ -43,15 +43,22 @@ public class ClassesService {
      *
      * @return Lista de clases.
      */
-  public List<Classes> findAll() {
-    return classRepository.findAll()
-        .stream()
-        .distinct()
-        .collect(Collectors.toList());
-}
-public Page<Classes> findAll(Pageable pageable) {
-    return classRepository.findAll(pageable);
-}
+    public List<Classes> findAll() {
+        return classRepository.findAll()
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Obtiene una página de clases según la paginación especificada.
+     *
+     * @param pageable Objeto que define la información de paginación y orden.
+     * @return Página de clases correspondiente a los parámetros de paginación.
+     */
+    public Page<Classes> findAll(Pageable pageable) {
+        return classRepository.findAll(pageable);
+    }
 
     /**
      * Busca una clase por su ID.

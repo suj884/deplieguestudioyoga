@@ -60,12 +60,12 @@ public class UserService {
      *
      * @return Lista de usuarios.
      */
-   public List<User> findAll() {
-    return userRepository.findAll()
-        .stream()
-        .distinct()
-        .collect(Collectors.toList());
-}
+    public List<User> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+    }
 
     /**
      * Busca un usuario por su ID.
@@ -124,13 +124,21 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
-   public Page<User> findUsersByFilters(String name, String role, Pageable pageable) {
-    if (name == null && role == null) {
-        return userRepository.findAll(pageable);
-    }
-    return userRepository.findByFilters(name, role, pageable);
-}
 
+    /**
+     * Busca usuarios filtrando por nombre/apellido y/o rol, con paginación.
+     *
+     * @param name     Nombre o apellido para filtrar (opcional).
+     * @param role     Rol para filtrar (opcional).
+     * @param pageable Objeto de paginación.
+     * @return Página de usuarios que cumplen los criterios.
+     */
+    public Page<User> findUsersByFilters(String name, String role, Pageable pageable) {
+        if (name == null && role == null) {
+            return userRepository.findAll(pageable);
+        }
+        return userRepository.findByFilters(name, role, pageable);
+    }
 
     /**
      * Busca usuarios filtrando por nombre/apellidos y/o rol.

@@ -42,7 +42,7 @@ public class EventService {
      * Busca un evento por su ID.
      *
      * @param id ID del evento.
-     * @return El evento si existe, o null si no se encuentra.
+     * @return Un {@link Optional} con el evento si existe, o vacío si no se encuentra. 
      */
     public Optional<Event> findById(Integer id) {
         return eventRepository.findById(id);
