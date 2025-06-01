@@ -49,11 +49,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
          */
         List<User> findByRol_Name(String roleName);
 
-        @Query("SELECT u FROM User u WHERE " +
-                        "(:name IS NULL OR LOWER(CONCAT(u.firstLastName, ' ', u.secondLastName, ' ', u.name)) LIKE LOWER(CONCAT('%', :name, '%'))) AND "
-                        +
-                        "(:role IS NULL OR u.rol.name = :role)")
-
         /**
          * Busca usuarios filtrando por nombre/apellidos y/o rol, con paginación.
          *
@@ -62,9 +57,20 @@ public interface UserRepository extends JpaRepository<User, Integer> {
          * @param pageable Información de paginación.
          * @return Página de usuarios que cumplen los criterios.
          */
+        @Query("SELECT u FROM User u WHERE " +
+                        "(:name IS NULL OR LOWER(CONCAT(u.firstLastName, ' ', u.secondLastName, ' ', u.name)) LIKE LOWER(CONCAT('%', :name, '%'))) AND "
+                        +
+                        "(:role IS NULL OR u.rol.name = :role)")
         Page<User> findByFilters(@Param("name") String name, @Param("role") String role, Pageable pageable);
 
-        // Método para contar resultados
+        /**
+         * Cuenta el número de usuarios que cumplen los filtros de nombre/apellidos y/o
+         * rol.
+         *
+         * @param name Nombre o apellidos para filtrar (opcional).
+         * @param role Rol para filtrar (opcional).
+         * @return Número de usuarios que cumplen los criterios.
+         */
         @Query("SELECT COUNT(u) FROM User u WHERE " +
                         "(LOWER(u.firstLastName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
                         "LOWER(u.secondLastName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +

@@ -32,23 +32,24 @@ import studioyoga.project.service.GuideSectionService;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private EventService eventService;
+    @Autowired EventService eventService;
 
     private final GuideSectionService guideSectionService;
 
-    @Autowired
-    private BlogService blogService;
+    @Autowired BlogService blogService;
 
     /**
      * Constructor que inyecta el servicio de secciones de la guía.
      *
      * @param guideSectionService Servicio de secciones de la guía.
+     * @param eventService Servicio de eventos.
+     * @param blogService Servicio de blog.
      */
-    public HomeController(GuideSectionService guideSectionService) {
-        this.guideSectionService = guideSectionService;
-    }
-
+   public HomeController(EventService eventService, GuideSectionService guideSectionService, BlogService blogService) {
+    this.eventService = eventService;
+    this.guideSectionService = guideSectionService;
+    this.blogService = blogService;
+   }
     /**
      * Muestra la página principal con los eventos activos y las reseñas.
      *

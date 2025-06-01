@@ -1,112 +1,154 @@
 package studioyoga.project.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.*;
+import org.springframework.ui.Model;
 
-
-@WebMvcTest(HomeController.class)
-@org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc(addFilters = false) // Desactiva filtros de seguridad
+import studioyoga.project.model.BlogPost;
+import studioyoga.project.model.Event;
+import studioyoga.project.service.BlogService;
+import studioyoga.project.service.EventService;
+import studioyoga.project.service.GuideSectionService;
 
 class HomeControllerTest {
 
-       @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private EventService eventService;
 
-    @org.springframework.boot.test.mock.mockito.MockBean
-    private studioyoga.project.service.EventService eventService;
+    @Mock
+    private GuideSectionService guideSectionService;
 
-    @org.springframework.boot.test.mock.mockito.MockBean
-    private studioyoga.project.service.BlogService blogService;
+    @Mock
+    private BlogService blogService;
 
-    @org.springframework.boot.test.mock.mockito.MockBean
-    private studioyoga.project.service.GuideSectionService guideSectionService;
+    @Mock
+    private Model model;
+
+    @InjectMocks
+    private HomeController controller;
     
-    @BeforeEach
-    void setUp() {
-        // Configuración inicial si es necesaria
+@BeforeEach
+void setUp() {
+    MockitoAnnotations.openMocks(this);
+    controller = new HomeController(eventService, guideSectionService, blogService);
+}
+
+    @Test
+    void testHome() {
+        when(eventService.findAllActive()).thenReturn(List.of(new Event()));
+        String view = controller.home(model);
+        verify(model).addAttribute(eq("reviews"), anyList());
+        verify(model).addAttribute(eq("events"), anyList());
+        assertThat(view).isEqualTo("user/index");
     }
 
     @Test
-    void testLandingPage() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/index"));
+    void testLogin() {
+        assertThat(controller.login()).isEqualTo("user/login");
     }
 
     @Test
-    void testLoginPage() throws Exception {
-        mockMvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/login"));
+    void testRegister() {
+        assertThat(controller.register()).isEqualTo("user/formRegister");
     }
 
     @Test
-    void testRegisterPage() throws Exception {
-        mockMvc.perform(get("/formRegister"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/formRegister"));
+    void testSchedule() {
+        assertThat(controller.schedule()).isEqualTo("user/schedule");
     }
 
     @Test
-    void testSchedulePage() throws Exception {
-        mockMvc.perform(get("/schedule"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/schedule"));
+    void testPrices() {
+        assertThat(controller.prices()).isEqualTo("user/prices");
     }
 
     @Test
-    void testPricesPage() throws Exception {
-        mockMvc.perform(get("/prices"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/prices"));
+    void testRules() {
+        assertThat(controller.rules()).isEqualTo("user/rules");
     }
 
     @Test
-    void testRulesPage() throws Exception {
-        mockMvc.perform(get("/rules"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/rules"));
+    void testEvents() {
+        when(eventService.findAllActive()).thenReturn(List.of(new Event()));
+        String view = controller.events(model);
+        verify(model).addAttribute(eq("events"), anyList());
+        assertThat(view).isEqualTo("user/events");
     }
 
     @Test
-    void testEventsPage() throws Exception {
-        mockMvc.perform(get("/events"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/events"));
+    void testEventDetailFound() {
+        Event event = new Event();
+        when(eventService.findById(1)).thenReturn(Optional.of(event));
+        String view = controller.eventDetail(1, model);
+        verify(model).addAttribute("event", event);
+        assertThat(view).isEqualTo("user/events-detail");
     }
 
     @Test
-    void testBlogPage() throws Exception {
-        mockMvc.perform(get("/blog"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/blog"));
+    void testEventDetailNotFound() {
+        when(eventService.findById(2)).thenReturn(Optional.empty());
+        String view = controller.eventDetail(2, model);
+        assertThat(view).isEqualTo("redirect:/eventos?error=notfound");
     }
 
     @Test
-    void testGuidePage() throws Exception {
-        mockMvc.perform(get("/guide"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/guide"));
+    void testShowBlog() {
+        when(blogService.findAllPublishedOrdered()).thenReturn(List.of(new BlogPost()));
+        String view = controller.showBlog(model);
+        verify(model).addAttribute(eq("blogPosts"), anyList());
+        assertThat(view).isEqualTo("user/blog");
     }
 
     @Test
-    void testFaqPage() throws Exception {
-        mockMvc.perform(get("/faq"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/faq"));
+    void testShowBlogPostDetailFound() {
+        BlogPost post = new BlogPost();
+        when(blogService.findById(1)).thenReturn(Optional.of(post));
+        String view = controller.showBlogPostDetail(1, model);
+        verify(model).addAttribute("post", post);
+        assertThat(view).isEqualTo("user/blog-post-detail");
     }
 
     @Test
-    void testLocationPage() throws Exception {
-        mockMvc.perform(get("/location"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/location"));
+    void testShowBlogPostDetailNotFound() {
+        when(blogService.findById(5)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> controller.showBlogPostDetail(5, model))
+            .isInstanceOf(RuntimeException.class)
+            .hasMessageContaining("Post no encontrado");
+    }
+
+    @Test
+    void testShowYogaGuide() {
+        when(guideSectionService.getAllSections()).thenReturn(List.of());
+        String view = controller.showYogaGuide(model);
+        verify(model).addAttribute(eq("sections"), anyList());
+        assertThat(view).isEqualTo("user/guide");
+    }
+
+    @Test
+    void testFaq() {
+        assertThat(controller.faq()).isEqualTo("user/faq");
+    }
+
+    @Test
+    void testLocation() {
+        assertThat(controller.location()).isEqualTo("user/location");
+    }
+
+    @Test
+    void testAboutUs() {
+        assertThat(controller.aboutUs()).isEqualTo("user/about-us");
+    }
+
+    @Test
+    void testContact() {
+        assertThat(controller.contact()).isEqualTo("user/form-contact");
     }
 }
