@@ -37,23 +37,24 @@
 								<!-- Hora -->
 								<div class="clase-hora" th:text="${#strings.substring(claseDTO.classes.timeInit,0,5)}">
 								</div>
-								<!-- Info -->
+								<!-- Info + Instructor -->
 								<div class="clase-info">
-									<span th:text="${claseDTO.classes.title}"></span>
-									<span class="clase-plazas"
-										th:text="'(' + ${claseDTO.spotsLeft} + '/' + ${claseDTO.classes.capacity} + ')'"></span>
-								</div>
-								<div>
-									<span class="clase-instructor" th:text="${claseDTO.classes.instructor}"></span>
+									<div>
+										<span th:text="${claseDTO.classes.title}"></span>
+										<span class="clase-plazas"
+											th:text="'(' + ${claseDTO.spotsLeft} + '/' + ${claseDTO.classes.capacity} + ')'"></span>
+									</div>
+									<div class="clase-instructor" th:text="${claseDTO.classes.instructor}"></div>
 								</div>
 								<!-- Reservar -->
 								<div class="clase-reservar">
 									<form th:if="${claseDTO.spotsLeft > 0}"
 										th:action="@{/classes/reserve/{id}(id=${claseDTO.classes.id})}" method="post"
 										style="display:inline;">
-										<button type="submit"
-											class="btn btn-link link-primary text-decoration-none p-0">
-											Reservar
+										<button type="submit" class="btn btn-link link-primary text-decoration-none p-0"
+											th:disabled="${idsReservados.contains(claseDTO.classes.id)}">
+											<span
+												th:text="${idsReservados.contains(claseDTO.classes.id) ? 'Reservada' : 'Reservar'}"></span>
 										</button>
 									</form>
 									<span th:if="${claseDTO.spotsLeft == 0}" class="text-danger">Completa</span>
@@ -71,4 +72,5 @@
 		integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
 		crossorigin="anonymous"></script>
 </body>
+
 </html>

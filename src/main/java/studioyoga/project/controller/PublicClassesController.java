@@ -26,16 +26,8 @@ import studioyoga.project.service.UserService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * Procesa el formulario de nueva contraseña.
- * Valida que las contraseñas coincidan y actualiza la contraseña del usuario.
- *
- * @param token              Token de restablecimiento.
- * @param newPassword        Nueva contraseña.
- * @param confirmPassword    Confirmación de la nueva contraseña.
- * @param model              Modelo para pasar datos a la vista.
- * @param redirectAttributes Atributos para mensajes flash.
- * @return Redirección al login si tiene éxito, o vuelve al formulario si hay
- *         error.
+ * Controlador para gestionar las clases públicas del estudio de yoga.
+ * Permite a los usuarios ver clases disponibles, reservar y cancelar reservas.
  */
 @Controller
 @RequestMapping("/classes")
@@ -54,14 +46,16 @@ public class PublicClassesController {
     private NotificationService notificationService;
 
     /**
-     * Muestra la lista de clases disponibles agrupadas por fecha y ordenadas por
-     * hora.
+     * Muestra las clases disponibles para los usuarios.
+     * Agrupa las clases por fecha y ordena por hora de inicio.
      *
-     * @param model Modelo para pasar datos a la vista.
+     * @param model     Modelo para pasar datos a la vista.
+     * @param principal Usuario autenticado, puede ser nulo si no hay usuario
+     *                  autenticado.
      * @return Vista con las clases disponibles.
      */
     @GetMapping
-    public String showClasses(Model model) {
+    public String showClasses(Model model, Principal principal) {
         List<ClassesDTO> classesList = classesService.findUpcomingClassesWithSpots();
         Map<LocalDate, List<ClassesDTO>> clasesPorFecha = classesList.stream()
                 .collect(Collectors.groupingBy(
@@ -73,6 +67,17 @@ public class PublicClassesController {
                                         .sorted(Comparator.comparing(c -> c.getClasses().getTimeInit()))
                                         .collect(Collectors.toList()))));
         model.addAttribute("clasesPorFecha", clasesPorFecha);
+        if (principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            List<Integer> idsReservados = reservationService.findByUser(user)
+                    .stream()
+                    .map(reserva -> reserva.getClasses().getId())
+                    .collect(Collectors.toList());
+            model.addAttribute("idsReservados", idsReservados);
+        } else {
+            model.addAttribute("idsReservados", List.of());
+        }
+
         return "user/classes";
     }
 

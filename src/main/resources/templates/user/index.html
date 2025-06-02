@@ -109,7 +109,6 @@
           </div>
         </div>
       </section>
-
       <!-- Carrusel de eventos -->
       <section id="carrousel-eventos" class="my-5">
         <h2 class="text-center fw-bold mb-4">Eventos destacados</h2>
@@ -117,11 +116,11 @@
           <div class="carousel-inner">
             <div th:each="event, iterStat : ${events}"
               th:class="'carousel-item position-relative' + (${iterStat.index} == 0 ? ' active' : '')">
-              <img th:src="${event.imageUrl}" class="d-block w-100 carousel-img-fix" alt="events">
+              <img th:src="${event.imageUrl}" class="d-block w-100 carousel-img-fix rounded-4" alt="events">
               <!-- Texto superpuesto -->
               <div class="carousel-caption d-none d-md-block bg-primary bg-opacity-25 rounded p-3">
-                <h5 th:text="${event.title}">Título del evento</h5>
-                <p class="text-dark">
+                <h4 class=" text-light " th:text="${event.title}">Título del evento</h4>
+                <p class="text-light">
                   <strong>Fecha:</strong>
                   <span th:text="${#temporals.format(event.eventDate, 'dd/MM/yyyy')}">01/01/2025</span><br>
                   <strong>Lugar:</strong>
