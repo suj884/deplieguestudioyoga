@@ -1,11 +1,11 @@
-/* hero */
+/* =========================
+   HERO
+   ========================= */
 .hero-yoga {
   width: 100vw;
   min-height: 100vh;
-  /* Ocupa toda la altura de la ventana */
   background: url('https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_1200/v1748450931/hero_h2xni1.jpg') center/cover no-repeat;
   background-size: cover;
-  /* La imagen cubre todo el área, sin distorsión */
   color: #fff;
   position: relative;
   display: flex;
@@ -15,64 +15,65 @@
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
 }
-
 .hero-yoga::before {
   content: "";
   position: absolute;
   inset: 0;
-  /* background: rgba(20, 40, 40, 0.45); */
 }
-
 .hero-yoga .container {
   position: relative;
   z-index: 2;
 }
-
 .hero-yoga h1,
 .hero-yoga p {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
-
 .hero-content a.btn {
   margin-top: 30rem;
   /* aumenta este valor para más separación */
 }
 
+/* =========================
+   SOBRE NOSOTROS - CLASES
+   ========================= */
 .rounded-4 {
   border-radius: 1.5rem !important;
 }
 
+/* =========================
+   CLASES
+   ========================= */
 .shadow-sm {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.07) !important;
 }
-
-.btn-outline-success.rounded-pill {
+.btn-outline-primary.rounded-pill {
   border-width: 2px;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 
-/* nuestras clases */
+/* =========================
+   NUESTRAS CLASES
+   ========================= */
 .card-title {
   font-weight: 600;
 }
 .card-body {
-  flex-grow: 1;           /* Hace que el body ocupe el espacio restante */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
-
 .card-body .btn {
   margin-top: auto;
 }
 .card-img-top {
-  height: 220px;          /* Altura fija para todas las imágenes */
-  object-fit: cover;      /* Recorta la imagen sin deformar */
-  width: 100%;            /* Ancho total */
-  display: block;         /* Evita espacios debajo */
+  height: 220px;
+  object-fit: cover;
+  width: 100%;
+  display: block;
 }
 .card-text {
-  flex-grow: 1;           /* Hace que el texto ocupe espacio para empujar el botón abajo */
+  flex-grow: 1;
 }
 @media (max-width: 768px) {
   .card-img-top {
@@ -80,71 +81,76 @@
   }
 }
 
-
-
-/* carrousel */
+/* =========================
+   CAROUSEL
+   ========================= */
 .carousel-img-fix {
   width: 100%;
-  max-height: 45rem;      /* Altura máxima en escritorio */
-  height: 50vw;           /* Altura relativa al ancho de pantalla */
+  max-height: 45rem;
+  height: 50vw;
   object-fit: cover;
   object-position: center;
   background: #eee;
   transition: max-height 0.3s;
 }
-
-/* testimonios */
- .testimonial {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
-    font-size: 0.9rem;
-    color: #333;
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
+@media (max-width: 768px) {
+  .carousel-img-fix {
+    height: 45vw;
+    max-height: 250px;
   }
-
-  /* Ocultar las comillas */
-  .testimonial p {
-    margin-bottom: 1rem;
-    position: relative;
+}
+@media (max-width: 480px) {
+  .carousel-img-fix {
+    height: 55vw;
+    max-height: 180px;
   }
-  /* No usamos ::before ni ::after para comillas */
+}
 
-  .author {
-    font-weight: 600;
-    color: #198754; /* verde */
-    text-align: right;
-  }
+/* =========================
+   TESTIMONIOS
+   ========================= */
+.testimonial {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+  font-size: 0.9rem;
+  color: #2c3e50;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.testimonial p {
+  margin-bottom: 1rem;
+  position: relative;
+}
+.author {
+  font-weight: 600;
+  color: #198754;
+  text-align: right;
+}
+.swiper-slide {
+  max-width: 320px;
+}
+.swiper-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.swiper-pagination-bullet-active {
+  background: #198754 !important;
+}
 
-  /* Ajuste para que las tarjetas no sean muy anchas */
-  .swiper-slide {
-    max-width: 320px;
-  }
-
-  /* Opcional: espacio entre las tarjetas */
-  .swiper-wrapper {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  /* Paginación color */
-  .swiper-pagination-bullet-active {
-    background: #198754 !important;
-  }
-
-
-/* Responsive tweaks */
-/* Hero */
+/* =========================
+   RESPONSIVE TWEAKS
+   ========================= */
 @media (max-width: 768px) {
   .hero-yoga {
-    min-height: 35vh; /* Menos altura aún */
+    min-height: 40vh;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    background: url('https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_480/v1748549207/hero-mobile-rec_nw6yxv.jpg') center top / contain no-repeat;
   }
   .hero-content.container {
     padding-top: 2rem !important;
@@ -160,8 +166,8 @@
   .hero-yoga .mb-5 {
     margin-bottom: 1.5rem !important;
   }
-}
 
+}
 @media (max-width: 480px) {
   .hero-yoga {
     min-height: 50vh;
@@ -173,32 +179,10 @@
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
-    .hero-content a.btn {
+  .hero-content a.btn {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     font-size: 1rem;
     margin-top: 15rem;
   }
 }
-@media (max-width: 768px) {
-  .hero-yoga {
-    min-height: 40vh;
-    background: url('https://res.cloudinary.com/dr5e7n5yp/image/upload/f_auto,q_auto,w_480/v1748549207/hero-mobile-rec_nw6yxv.jpg') center top / contain no-repeat;
-  }
-}
-
-
-/* Carrousel */
-@media (max-width: 768px) {
-  .carousel-img-fix {
-    height: 45vw;         /* Un poco más alto en móviles */
-    max-height: 250px;    /* Limita la altura máxima */
-  }
-}
-@media (max-width: 480px) {
-  .carousel-img-fix {
-    height: 55vw;
-    max-height: 180px;
-  }
-}
-

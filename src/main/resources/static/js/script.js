@@ -12,25 +12,24 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 // swiper de index.html
-const swiper = new Swiper(".mySwiper", {
-  loop: true,
-  speed: 1000,
-  allowTouchMove: true,
-  autoplay: {
-    delay: 2500, // Un poco más de tiempo para que no sea tan rápido
-    disableOnInteraction: false,
-  },
-  centeredSlides: true,
-  breakpoints: {
-    0: { slidesPerView: 1, spaceBetween: 20 },
-    576: { slidesPerView: 2, spaceBetween: 20 },
-    992: { slidesPerView: 3, spaceBetween: 30 }
-  }
-});
-
-
+if (typeof Swiper !== "undefined") {
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    speed: 1000,
+    allowTouchMove: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    centeredSlides: true,
+    breakpoints: {
+      0: { slidesPerView: 1, spaceBetween: 20 },
+      576: { slidesPerView: 2, spaceBetween: 20 },
+      992: { slidesPerView: 3, spaceBetween: 30 }
+    }
+  });
+}
 // validacion de contraseñas
-
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form[th\\:action="@{/reset-password}"], form[action="/reset-password"]');
   if (!form) return;
@@ -63,22 +62,40 @@ document.addEventListener('DOMContentLoaded', function() {
     var acceptBtn = document.getElementById('accept-cookies');
     var rejectBtn = document.getElementById('reject-cookies');
 
-    // Comprueba si ya hay consentimiento
-    if (!localStorage.getItem('cookieConsent')) {
-        cookieBanner.style.display = 'block';
+    // Solo continúa si existen los elementos
+    if (cookieBanner && acceptBtn && rejectBtn) {
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieBanner.style.display = 'block';
+        }
+
+        acceptBtn.onclick = function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.style.display = 'none';
+        };
+
+        rejectBtn.onclick = function() {
+            localStorage.setItem('cookieConsent', 'rejected');
+            cookieBanner.style.display = 'none';
+        };
     }
-
-    acceptBtn.onclick = function() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        cookieBanner.style.display = 'none';
-        // Aquí puedes inicializar cookies/analítica si lo necesitas
-    };
-
-    rejectBtn.onclick = function() {
-        localStorage.setItem('cookieConsent', 'rejected');
-        cookieBanner.style.display = 'none';
-        // Aquí puedes bloquear cookies/analítica si lo necesitas
-    };
 });
+// Toggle de visibilidad de contraseñas
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggle-password').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = btn.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            const icon = btn.querySelector('i');
+            if (input) {
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+                icon.classList.toggle('bi-eye');
+                icon.classList.toggle('bi-eye-slash');
+            }
+        });
+    });
+});
+
 
 

@@ -1,18 +1,29 @@
 <!-- fragments/footer.html -->
-<footer class="footer-zen mt-auto">
+<footer class="footer-zen mt-auto" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <div class="container text-center py-5">
     <div class="mb-3">
-      <a th:href="@{/}" class="footer-brand fs-4 fw-bold" style="text-decoration:none; color: #fff;">
+      <!-- Enlace para usuario normal -->
+      <a th:href="@{/}" class="footer-brand fs-4 fw-bold"
+         style="text-decoration:none; color: #fff;"
+         sec:authorize="!hasRole('ADMIN')">
+        <span class="material-icons align-middle" style="font-size:1.5em;vertical-align:middle;">spa</span>
+        Studio Yoga
+      </a>
+      <!-- Enlace para administrador -->
+      <a th:href="@{/admin/dash-board}" class="footer-brand fs-4 fw-bold"
+         style="text-decoration:none; color: #fff;"
+         sec:authorize="hasRole('ADMIN')">
         <span class="material-icons align-middle" style="font-size:1.5em;vertical-align:middle;">spa</span>
         Studio Yoga
       </a>
     </div>
     <div class="mb-3 container-fluid d-flex justify-content-center">
-      <a th:href="@{/about-us}" class="footer-link mx-2">Quiénes somos</a>
-      <a th:href="@{/classes}" class="footer-link mx-2 ">Clases</a>
-      <a th:href="@{/events}" class="footer-link mx-2">Eventos</a>
-      <a th:href="@{/blog}" class="footer-link mx-2  d-none d-sm-table-cell">Blog</a>
-      <a th:href="@{/form-contact}" class="footer-link mx-2">Contacto</a>
+     <!-- Enlaces solo para usuarios normales -->
+      <a th:href="@{/about-us}" class="footer-link mx-2" sec:authorize="!hasRole('ADMIN')">Quiénes somos</a>
+      <a th:href="@{/classes}" class="footer-link mx-2" sec:authorize="!hasRole('ADMIN')">Clases</a>
+      <a th:href="@{/events}" class="footer-link mx-2" sec:authorize="!hasRole('ADMIN')">Eventos</a>
+      <a th:href="@{/blog}" class="footer-link mx-2 d-none d-sm-table-cell" sec:authorize="!hasRole('ADMIN')">Blog</a>
+      <a th:href="@{/form-contact}" class="footer-link mx-2" sec:authorize="!hasRole('ADMIN')">Contacto</a>
     </div>
     <div class="mb-3">
       <a href="https://instagram.com/" target="_blank" class="footer-social mx-2" aria-label="Instagram">

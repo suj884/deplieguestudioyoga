@@ -1,17 +1,17 @@
 /* Zen Yoga Studio Custom Styles */
-/* Reset some default styles */
+
+/* ========== RESET ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* General styles */
+/* ========== GENERAL STYLES ========== */
 body {
   background: linear-gradient(120deg, #f8f9fa 0%, #ffffff 100%);
   font-family: 'Segoe UI', 'Arial', sans-serif;
   font-display: swap;
-
 }
 
 h1,
@@ -60,7 +60,7 @@ ul {
   vertical-align: middle;
 }
 
-/* cards */
+/* ========== CARDS ========== */
 .card img {
   max-height: 220px;
   object-fit: cover;
@@ -70,7 +70,45 @@ ul {
   box-shadow: 0 8px 24px rgba(60, 90, 60, 0.15);
   transform: translateY(-4px) scale(1.02);
 }
-/* cookies */
+/* ========== RULES ========== */
+
+.section-divider {
+  height: 2px;
+  background: linear-gradient(90deg, #b2dfdb 0%, #fff 100%);
+  border: none;
+  margin: 2.5rem 0 2rem 0;
+}
+h3.section-subtitle {
+  margin-top: 1.5rem;
+  color: #26a69a;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* ========== FORMULARIO DE CONTACTO ========== */
+.card.bg-gradient-minty {
+  /* Fondo con degradado suave en tonos Minty */
+  background: linear-gradient(135deg, #e3f9f6 0%, #f8fffc 100%);
+  border: none;
+  box-shadow: 0 0.5rem 1.5rem rgba(44,120,115,0.08);
+}
+/* ========== ESTILO PARA PREGUNTAS FRECUENTES (FAQ) ========== */
+.faq-question {
+  font-weight: 700;
+  margin-top: 1.5rem;
+  line-height: 1.3;
+}
+/* ========== ABOUT US ========== */
+    .team-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+/* ========== COOKIES BANNER ========== */
 #cookie-banner {
   position: fixed;
   bottom: 0;
@@ -83,16 +121,13 @@ ul {
   display: none;
   z-index: 1000;
 }
-
 .cookie-banner-buttons {
   margin-top: 0.5rem;
 }
-
 .cookie-banner-buttons button {
   margin: 0 0.5rem;
 }
-
-/* footer */
+/* ========== FOOTER ========== */
 .footer-zen {
   position: relative;
   background-color: #78C2AD;
@@ -101,36 +136,30 @@ ul {
   font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
   color: white;
 }
-
 .footer-zen .container {
   position: relative;
   z-index: 1;
   /* Para que el contenido quede encima de la ola */
   padding-top: 3rem;
 }
-
 .footer-link,
 .footer-social {
   color: white;
   text-decoration: none;
   transition: color 0.2s;
 }
-
 .footer-link:hover,
 .footer-social:hover {
   color: #d0f0e9;
   text-decoration: underline;
 }
-
 .footer-brand {
   color: white;
 }
-
 .footer-quote {
   color: #d0f0e9;
 }
-
-/* mediaqueries */
+/* ========== MEDIA QUERIES ========== */
 @media (min-width: 1200px) {
   main.flex-fill {
     min-height: calc(100vh - 5.625rem);
@@ -141,8 +170,7 @@ ul {
     font-size: 0.95em;
   }
 }
-
-/* tooltip personalizado */
+/* ========== TOOLTIP PERSONALIZADO ========== */
 .tooltip-warning {
   --bs-tooltip-bg: #FFCE67;
   /* Fondo amarillo Bootstrap */

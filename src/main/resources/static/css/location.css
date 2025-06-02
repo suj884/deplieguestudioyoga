@@ -1,39 +1,6 @@
-.location-section {
-	background: #f8f9fa; /* Fondo muy claro, propio de Minty */
-	border-radius: 16px;
-	padding: 2.5rem 1.5rem;
-	margin-top: 2rem;
-	box-shadow: 0 2px 12px rgba(26, 188, 156, 0.08); /* Sombra con el verde Minty */
-	border: 1px solid #a2dedc; /* Borde suave Minty */
-}
-
-
-.address-highlight {
-	font-size: 1.1em;
-	color: #16a085; /* Verde más oscuro de Minty */
-	font-weight: 500;
-	margin-bottom: 1rem;
-}
-
-.map-responsive {
-	overflow: hidden;
-	padding-bottom: 56.25%;
-	position: relative;
-	height: 0;
-	border-radius: 14px;
-	box-shadow: 0 2px 8px rgba(26, 188, 156, 0.07);
-	border: 1px solid #a2dedc;
-}
-
-.map-responsive iframe {
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	border: 0;
-}
-
+/* =========================
+   TÍTULOS Y LISTAS
+   ========================= */
 h5.text-success {
 	color: #1abc9c !important; /* Usar el verde Minty para los títulos */
 }
@@ -48,4 +15,47 @@ li {
 
 .text-muted {
 	color: #7b8a8b !important;
+}
+/* =========================
+   SECCIÓN UBICACIÓN
+   ========================= */
+.location-section {
+    background: #f8f9fa; /* Fondo muy claro, propio de Minty */
+    border-radius: 16px;
+    padding: 2.5rem 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 2px 12px rgba(26, 188, 156, 0.08); /* Sombra con el verde Minty */
+    border: 1px solid #a2dedc; /* Borde suave Minty */
+}
+
+/* =========================
+   DESTACADO DE DIRECCIÓN
+   ========================= */
+.address-highlight {
+    font-size: 1.1em;
+    color: #16a085; /* Verde más oscuro de Minty */
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* =========================
+   MAPA RESPONSIVE
+   ========================= */
+.map-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(26, 188, 156, 0.07);
+    border: 1px solid #a2dedc;
+}
+
+.map-responsive iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }

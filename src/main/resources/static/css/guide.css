@@ -1,3 +1,6 @@
+/* =========================
+   SECCIÓN GUÍA PRINCIPAL
+   ========================= */
 .guide-section {
     background: #fff;
     border-radius: 16px;
@@ -5,6 +8,13 @@
     padding: 2rem 1.5rem;
     margin-bottom: 2.5rem;
 }
+
+.guide-section-title {
+    color: #388e3c;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+}
+
 .guide-section img {
     max-width: 100%;
     width: 40rem;
@@ -12,13 +22,10 @@
     margin-bottom: 1rem;
     box-shadow: 0 2px 8px rgba(60, 90, 60, 0.10);
 }
-.guide-section-title {
-    color: #388e3c;
-    font-weight: bold;
-    margin-bottom: 1.2rem;
-}
 
-/* Responsive YouTube iframe */
+/* =========================
+   VIDEO RESPONSIVE (YouTube)
+   ========================= */
 .guide-section .video-responsive {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
@@ -26,6 +33,7 @@
     height: 0;
     margin-bottom: 1.5rem;
 }
+
 .guide-section .video-responsive iframe {
     position: absolute;
     top: 0;
@@ -36,7 +44,9 @@
     box-shadow: 0 2px 8px rgba(60, 90, 60, 0.10);
 }
 
-/* Mejoras para móvil */
+/* =========================
+   RESPONSIVE (MÓVIL)
+   ========================= */
 @media (max-width: 576px) {
     .guide-section {
         padding: 1.2rem 0.5rem;

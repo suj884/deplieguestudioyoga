@@ -1,8 +1,12 @@
+/* =========================
+   TARJETAS DE PRECIOS
+   ========================= */
 .price-card {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-bottom: 2rem;
   transition: box-shadow 0.2s, transform 0.2s;
+  cursor: default; /* Importante: no mostrar pointer */
 }
 
 .price-title {
@@ -22,6 +26,9 @@
   font-weight: 600;
 }
 
+/* =========================
+   RESPONSIVE
+   ========================= */
 @media (max-width: 767.98px) {
   .price-card {
     margin-bottom: 1.5rem;

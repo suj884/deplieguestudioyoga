@@ -22,6 +22,6 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError() {
         // Puedes devolver una vista personalizada, por ejemplo:
-        return "error/custom-error";
+        return "/error";
     }
 }
