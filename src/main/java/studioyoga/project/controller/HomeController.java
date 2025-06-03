@@ -32,24 +32,27 @@ import studioyoga.project.service.GuideSectionService;
 @Controller
 public class HomeController {
 
-    @Autowired EventService eventService;
+    @Autowired
+    EventService eventService;
 
     private final GuideSectionService guideSectionService;
 
-    @Autowired BlogService blogService;
+    @Autowired
+    BlogService blogService;
 
     /**
      * Constructor que inyecta el servicio de secciones de la guía.
      *
      * @param guideSectionService Servicio de secciones de la guía.
-     * @param eventService Servicio de eventos.
-     * @param blogService Servicio de blog.
+     * @param eventService        Servicio de eventos.
+     * @param blogService         Servicio de blog.
      */
-   public HomeController(EventService eventService, GuideSectionService guideSectionService, BlogService blogService) {
-    this.eventService = eventService;
-    this.guideSectionService = guideSectionService;
-    this.blogService = blogService;
-   }
+    public HomeController(EventService eventService, GuideSectionService guideSectionService, BlogService blogService) {
+        this.eventService = eventService;
+        this.guideSectionService = guideSectionService;
+        this.blogService = blogService;
+    }
+
     /**
      * Muestra la página principal con los eventos activos y las reseñas.
      *
@@ -73,6 +76,9 @@ public class HomeController {
                         "Marta R."),
                 new Review("Un espacio donde realmente puedo desconectar y dedicarme tiempo. ¡Siempre salgo renovada!",
                         "Sergio T."),
+                new Review(
+                        "Desde que asisto a Studio Yoga, he notado una gran mejoría en mi postura y en mi energía diaria.",
+                        "Marcos D."),
                 new Review(
                         "La atención personalizada y el trato cercano hacen que cada clase sea especial. ¡Gracias por tanto!",
                         "Paula G."),
@@ -99,11 +105,12 @@ public class HomeController {
                         "Marcos D."),
                 new Review("El ambiente es relajante y siempre salgo de las clases con una sonrisa. ¡Muy agradecida!",
                         "Isabel R."));
-        int minSlides = 9; // por ejemplo, 3*3 si slidesPerView máximo es 3
+        int minSlides = 15; // por ejemplo, 3*3 si slidesPerView máximo es 3
         List<Review> reviewsForSwiper = new ArrayList<>();
         while (reviewsForSwiper.size() < minSlides) {
             reviewsForSwiper.addAll(reviews);
         }
+        reviewsForSwiper = reviewsForSwiper.subList(0, minSlides);
         model.addAttribute("reviews", reviewsForSwiper);
         model.addAttribute("events", eventService.findAllActive());
         return "user/index"; // o "index", según tu plantilla

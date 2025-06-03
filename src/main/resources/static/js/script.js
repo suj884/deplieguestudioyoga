@@ -15,15 +15,17 @@ document.addEventListener('DOMContentLoaded', function () {
 if (typeof Swiper !== "undefined") {
   const swiper = new Swiper(".mySwiper", {
     loop: true,
-    speed: 1000,
+     speed: 1000,
     allowTouchMove: true,
     autoplay: {
-      delay: 2500,
+      delay: 2000,
       disableOnInteraction: false,
     },
     centeredSlides: true,
+      slidesPerView: 1,
+    spaceBetween: 20,
     breakpoints: {
-      0: { slidesPerView: 1, spaceBetween: 20 },
+     
       576: { slidesPerView: 2, spaceBetween: 20 },
       992: { slidesPerView: 3, spaceBetween: 30 }
     }

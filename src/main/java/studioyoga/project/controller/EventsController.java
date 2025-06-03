@@ -88,7 +88,6 @@ public class EventsController {
      * Elimina el evento por su ID tras confirmación.
      *
      * @param id                 ID del evento a eliminar.
-     * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la vista de administración de eventos.
      */
     @GetMapping("/delete/{id}")
