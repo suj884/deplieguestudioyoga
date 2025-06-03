@@ -1,0 +1,10 @@
+studioyoga.project
+studioyoga.project.config
+studioyoga.project.constants
+studioyoga.project.controller
+studioyoga.project.dto
+studioyoga.project.exception
+studioyoga.project.model
+studioyoga.project.model.enums
+studioyoga.project.repository
+studioyoga.project.service
