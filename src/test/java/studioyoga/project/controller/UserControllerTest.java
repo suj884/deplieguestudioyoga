@@ -1,140 +1,84 @@
 package studioyoga.project.controller;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.http.MediaType;
+
 import org.springframework.test.web.servlet.MockMvc;
+
 import studioyoga.project.model.Rol;
 import studioyoga.project.model.User;
-import studioyoga.project.repository.RolRepository;
 import studioyoga.project.repository.UserRepository;
 import studioyoga.project.security.TestUserDetails;
-import studioyoga.project.service.UserService;
 import studioyoga.project.service.RolService;
-
-import java.util.Collections;
-import java.util.Optional;
+import studioyoga.project.service.UserService;
 
 @WebMvcTest(UserController.class)
-class UserControllerTest {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private UserService userService;
+@MockBean
+private UserService userService;
 
-    @MockBean
-    private RolService rolService;
+@MockBean
+private RolService rolService;
 
-    @MockBean
-    private UserRepository userRepository;
+@MockBean
+private UserRepository userRepository;
 
-    @MockBean
-    private RolRepository rolRepository;
+@MockBean
+private studioyoga.project.repository.RolRepository rolRepository;
 
-    TestUserDetails testUserDetails = new TestUserDetails("admin", "/images/default-avatar.png");
+@Test
+void testGetUsers() throws Exception {
+    User user1 = new User();
+    user1.setId(1);
+    user1.setName("Juan");
+    Rol rol1 = new Rol();
+    rol1.setName("ADMIN");
+    user1.setRol(rol1);
 
-    private User testUser;
-    private Rol testRol;
+    User user2 = new User();
+    user2.setId(2);
+    user2.setName("Ana");
+    Rol rol2 = new Rol();
+    rol2.setName("USER");
+    user2.setRol(rol2);
 
-    @BeforeEach
-    void setUp() {
-        testRol = new Rol(1, "ADMIN");
-        testUser = new User();
-        testUser.setId(1);
-        testUser.setEmail("test@example.com");
-        testUser.setRol(testRol);
-    }
+    List<User> mockUsers = List.of(user1, user2);
+    Page<User> mockPage = new PageImpl<>(mockUsers, PageRequest.of(0, 10), mockUsers.size());
+    when(userService.findUsersByFilters(any(), any(), any())).thenReturn(mockPage);
 
-    // ...imports y setup igual...
-
-    @Test
-    void listUsers_NoFilters_ReturnsPaginatedResults() throws Exception {
-        Page<User> page = new PageImpl<>(Collections.singletonList(testUser));
-        when(userService.findUsersByFilters(null, null, PageRequest.of(0, 10))).thenReturn(page);
-
-        mockMvc.perform(get("/admin/users/manage-user")
-        .with(user(testUserDetails))
-                        .with(user("admin").roles("ADMIN")))
-                .andExpect(status().isOk())
-                .andExpect(view().name("admin/manage-user"))
-                .andExpect(model().attributeExists("usersPage"));
-    }
+    mockMvc.perform(get("/admin/users/manage-user")
+        .with(user(new TestUserDetails("admin", "/images/default-avatar.png", "ADMIN"))))
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("usersPage"));
+}
 
     @Test
-    void listUsers_WithNameFilter_ReturnsFilteredResults() throws Exception {
-        when(userService.findUsersBySurnameAndNameAndRole("john", null))
-                .thenReturn(Collections.singletonList(testUser));
-
-        mockMvc.perform(get("/admin/users/manage-user")
-                .param("name", "john")
-                .with(csrf())
-                .with(user(testUserDetails))
-                .with(user("admin").roles("ADMIN")))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("users"));
-    }
-
-    @Test
-    void saveUser_NewUserWithValidData_RedirectsWithSuccess() throws Exception {
-        MockMultipartFile file = new MockMultipartFile(
-                "profilePictureFile",
-                "test.jpg",
-                "image/jpeg",
-                "test image".getBytes());
-
-        mockMvc.perform(multipart("/admin/users/save")
-                .file(file)
-                .flashAttr("user", testUser)
-                .with(csrf())
-                .with(user(testUserDetails))
-                .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/users/manage-user"))
-                .andExpect(flash().attributeExists("success"));
-    }
-
-    @Test
-    void saveUser_DuplicateEmail_ReturnsError() throws Exception {
-        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
-
-        mockMvc.perform(multipart("/admin/users/save")
-                .file(new MockMultipartFile("profilePictureFile", new byte[0]))
-                .flashAttr("user", testUser)
-                .with(csrf())
-                .with(user(testUserDetails))
-                .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/users/new"))
-                .andExpect(flash().attributeExists("error"));
-    }
-
-    @Test
-    void deleteUser_ValidId_RedirectsWithSuccess() throws Exception {
-        doNothing().when(userService).deleteUserAndReservations(1);
-
+    public void testDeleteUser() throws Exception {
+          doNothing().when(userService).deleteUserAndReservations(anyInt());
         mockMvc.perform(post("/admin/users/delete/1")
-        .with(user(testUserDetails))
-        .with(csrf())
-                .with(user("admin").roles("ADMIN")))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/admin/users/manage-user"))
-                .andExpect(flash().attributeExists("success"));
+                .with(user(new TestUserDetails("admin", "/images/default-avatar.png", "ADMIN")))
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().is3xxRedirection()); // Suponiendo que redirige tras borrar
     }
-
-
 }

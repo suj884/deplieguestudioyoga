@@ -35,12 +35,16 @@ public class UserService {
     private TicketRepository ticketRepository;
 
     /**
-     * Constructor que inyecta el repositorio de usuarios.
+     * Constructor que inyecta los repositorios necesarios.
      *
-     * @param userRepository Repositorio de usuarios.
+     * @param userRepository       Repositorio de usuarios.
+     * @param ticketRepository     Repositorio de tickets.
+     * @param reservationService   Servicio de reservas.
      */
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, TicketRepository ticketRepository, ReservationService reservationService) {
         this.userRepository = userRepository;
+        this.ticketRepository = ticketRepository;
+        this.reservationService = reservationService;
     }
 
     /**
