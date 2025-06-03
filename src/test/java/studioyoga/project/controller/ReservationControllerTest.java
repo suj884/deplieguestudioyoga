@@ -13,7 +13,6 @@ import studioyoga.project.service.ClassesService;
 import studioyoga.project.service.ReservationService;
 import studioyoga.project.service.UserService;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;

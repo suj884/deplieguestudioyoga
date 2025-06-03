@@ -1,8 +1,6 @@
 package studioyoga.project.controller;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -33,12 +31,10 @@ class EventsControllerTest {
     @InjectMocks
     private EventsController eventsController;
 
-    private MockMvc mockMvc;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(eventsController).build();
+        MockMvcBuilders.standaloneSetup(eventsController).build();
     }
 
     @Test
