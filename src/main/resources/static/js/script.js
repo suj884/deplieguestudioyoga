@@ -22,10 +22,8 @@ if (typeof Swiper !== "undefined") {
       disableOnInteraction: false,
     },
     centeredSlides: true,
-      slidesPerView: 1,
-    spaceBetween: 20,
     breakpoints: {
-     
+           0: { slidesPerView: 1, spaceBetween: 20 },
       576: { slidesPerView: 2, spaceBetween: 20 },
       992: { slidesPerView: 3, spaceBetween: 30 }
     }

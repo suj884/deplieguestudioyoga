@@ -107,7 +107,7 @@
 }
 
 /* =========================
-   TESTIMONIOS
+   RESEÑAS
    ========================= */
 .testimonial {
   background: #fff;
@@ -132,8 +132,11 @@
   text-align: right;
 }
 .swiper-slide {
-  max-width: 320px;
+  width: auto;
+  display: flex;
+  justify-content: center;
 }
+
 .swiper-wrapper {
   padding-left: 10px;
   padding-right: 10px;
