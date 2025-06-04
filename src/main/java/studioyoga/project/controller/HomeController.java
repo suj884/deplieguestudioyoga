@@ -105,12 +105,13 @@ public class HomeController {
                         "Marcos D."),
                 new Review("El ambiente es relajante y siempre salgo de las clases con una sonrisa. ¡Muy agradecida!",
                         "Isabel R."));
-        int minSlides = 9; // por ejemplo, 3*3 si slidesPerView máximo es 3
+        int slidesPerView = 3; // por ejemplo, 3*3 si slidesPerView máximo es 3
+        int required = slidesPerView * 3;
         List<Review> reviewsForSwiper = new ArrayList<>();
-        while (reviewsForSwiper.size() < minSlides) {
+        while (reviewsForSwiper.size() < 30) {
             reviewsForSwiper.addAll(reviews);
         }
-    
+    reviewsForSwiper = reviewsForSwiper.subList(0, required);
         model.addAttribute("reviews", reviewsForSwiper);
         model.addAttribute("events", eventService.findAllActive());
         return "user/index"; // o "index", según tu plantilla

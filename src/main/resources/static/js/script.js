@@ -11,24 +11,19 @@ document.addEventListener('DOMContentLoaded', function () {
     new bootstrap.Tooltip(tooltipTriggerEl);
   });
 });
-// swiper de index.html
-if (typeof Swiper !== "undefined") {
-  const swiper = new Swiper(".mySwiper", {
-    loop: true,
-     speed: 1000,
-    allowTouchMove: true,
-    autoplay: {
-      delay: 2000,
-      disableOnInteraction: false,
-    },
-    centeredSlides: true,
-    breakpoints: {
-           0: { slidesPerView: 1, spaceBetween: 20 },
-      576: { slidesPerView: 2, spaceBetween: 20 },
-      992: { slidesPerView: 3, spaceBetween: 30 }
-    }
-  });
-}
+// Inicializa el slider de Swiper para la sección de reseñas
+const swiper = new Swiper(".mySwiper", {
+  loop: true,
+  freeMode: true,
+  speed: 2000, // velocidad más lenta = desplazamiento continuo más suave
+  autoplay: {
+    delay: 0, // clave para movimiento continuo
+    disableOnInteraction: false,
+  },
+  slidesPerView: "auto", // deja que los slides tengan su propio ancho
+  spaceBetween: 30,
+});
+
 // validacion de contraseñas
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form[th\\:action="@{/reset-password}"], form[action="/reset-password"]');

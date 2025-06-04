@@ -123,6 +123,8 @@ public class UserController {
      */
     @GetMapping("/new")
     public String showCreateForm(Model model) {
+        User user = new User();
+        user.setEnabled(true);
         model.addAttribute("user", new User());
         model.addAttribute("roles", rolRepository.findAll());
         return "admin/form-create-edit-users";
