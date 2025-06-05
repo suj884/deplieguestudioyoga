@@ -34,13 +34,16 @@ public class ContactController {
     }
 
     /**
-     * Procesa el envío del formulario de contacto y envía un correo electrónico al
-     * administrador.
-     * El correo se envía a una dirección fija y se añade un mensaje flash de éxito
-     * para el usuario.
+     * Procesa el envío del formulario de contacto.
+     * <p>
+     * Envía un correo electrónico al administrador con los datos del mensaje
+     * recibido
+     * y, adicionalmente, envía un correo de confirmación al usuario que ha
+     * rellenado el formulario.
+     * Añade un mensaje flash de éxito para mostrar al usuario tras la redirección.
      *
-     * @param nombre             Nombre del remitente.
-     * @param email              Email del remitente.
+     * @param nombre             Nombre del remitente introducido en el formulario.
+     * @param email              Correo electrónico del remitente.
      * @param mensaje            Mensaje enviado por el usuario.
      * @param redirectAttributes Atributos para mensajes flash en la redirección.
      * @return Redirección a la página de contacto con mensaje de éxito.
@@ -51,14 +54,30 @@ public class ContactController {
             @RequestParam String email,
             @RequestParam String mensaje,
             RedirectAttributes redirectAttributes) {
+
+        // Correo al administrador
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo("studioyogasevilla@gmail.com");
         mailMessage.setSubject("Nuevo mensaje de contacto de " + nombre);
         mailMessage.setText("Nombre: " + nombre + "\nEmail: " + email + "\n\nMensaje:\n" + mensaje);
-
         mailSender.send(mailMessage);
+
+        // Correo de confirmación al usuario
+        SimpleMailMessage confirmationMessage = new SimpleMailMessage();
+        confirmationMessage.setTo(email);
+        confirmationMessage.setSubject("Confirmación de contacto - Studio Yoga");
+        confirmationMessage.setText(
+                "Hola " + nombre + ",\n\n" +
+                        "Hemos recibido tu mensaje y te responderemos lo antes posible.\n\n" +
+                        "Este es un resumen de tu mensaje:\n" +
+                        mensaje + "\n\n" +
+                        "Gracias por ponerte en contacto con Studio Yoga.\n\n" +
+                        "Un saludo,\nEl equipo de Studio Yoga");
+        mailSender.send(confirmationMessage);
+
         redirectAttributes.addFlashAttribute("success",
                 "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.");
         return "redirect:/form-contact";
     }
+
 }

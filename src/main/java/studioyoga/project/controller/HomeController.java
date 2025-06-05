@@ -278,5 +278,25 @@ public class HomeController {
     public String contact() {
         return "user/form-contact";
     }
+/**
+ * Muestra la página de Política de Cookies.
+ *
+ * @return Nombre de la vista correspondiente a la política de cookies.
+ */
+    @GetMapping("/user/cookie-policy")
+    public String cookiePolicy() {
+        return "user/cookie-policy";
+    }
+
+/**
+ * Muestra la página de Política de Privacidad.
+ *
+ * @return Nombre de la vista correspondiente a la política de privacidad.
+ */
+@GetMapping("/user/privacy-policy")
+public String showPrivacyPolicy() {
+    return "user/privacy-policy";
+}
+
 
 }

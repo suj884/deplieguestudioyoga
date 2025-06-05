@@ -60,6 +60,29 @@ ul {
   vertical-align: middle;
 }
 
+.toggle-password {
+  cursor: pointer;
+}
+
+/* ========== privacy-policy - cookie-policy ========== */
+
+.bg-policy {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background: #f9f9f9;
+  color: #222;
+}
+
+.container-policy {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0001;
+}
+
+
 /* ========== CARDS ========== */
 .card img {
   max-height: 220px;
@@ -70,6 +93,7 @@ ul {
   box-shadow: 0 8px 24px rgba(60, 90, 60, 0.15);
   transform: translateY(-4px) scale(1.02);
 }
+
 /* ========== RULES ========== */
 
 .section-divider {
@@ -78,6 +102,7 @@ ul {
   border: none;
   margin: 2.5rem 0 2rem 0;
 }
+
 h3.section-subtitle {
   margin-top: 1.5rem;
   color: #26a69a;
@@ -91,23 +116,26 @@ h3.section-subtitle {
   /* Fondo con degradado suave en tonos Minty */
   background: linear-gradient(135deg, #e3f9f6 0%, #f8fffc 100%);
   border: none;
-  box-shadow: 0 0.5rem 1.5rem rgba(44,120,115,0.08);
+  box-shadow: 0 0.5rem 1.5rem rgba(44, 120, 115, 0.08);
 }
+
 /* ========== ESTILO PARA PREGUNTAS FRECUENTES (FAQ) ========== */
 .faq-question {
   font-weight: 700;
   margin-top: 1.5rem;
   line-height: 1.3;
 }
+
 /* ========== ABOUT US ========== */
-    .team-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid #e0e0e0;
-            margin-bottom: 1rem;
-        }
+.team-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #e0e0e0;
+  margin-bottom: 1rem;
+}
+
 /* ========== COOKIES BANNER ========== */
 #cookie-banner {
   position: fixed;
@@ -121,12 +149,15 @@ h3.section-subtitle {
   display: none;
   z-index: 1000;
 }
+
 .cookie-banner-buttons {
   margin-top: 0.5rem;
 }
+
 .cookie-banner-buttons button {
   margin: 0 0.5rem;
 }
+
 /* ========== FOOTER ========== */
 .footer-zen {
   position: relative;
@@ -136,40 +167,48 @@ h3.section-subtitle {
   font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
   color: white;
 }
+
 .footer-zen .container {
   position: relative;
   z-index: 1;
   /* Para que el contenido quede encima de la ola */
   padding-top: 3rem;
 }
+
 .footer-link,
 .footer-social {
   color: white;
   text-decoration: none;
   transition: color 0.2s;
 }
+
 .footer-link:hover,
 .footer-social:hover {
   color: #d0f0e9;
   text-decoration: underline;
 }
+
 .footer-brand {
   color: white;
 }
+
 .footer-quote {
   color: #d0f0e9;
 }
+
 /* ========== MEDIA QUERIES ========== */
 @media (min-width: 1200px) {
   main.flex-fill {
     min-height: calc(100vh - 5.625rem);
   }
 }
+
 @media (max-width: 768px) {
   .table-responsive {
     font-size: 0.95em;
   }
 }
+
 /* ========== TOOLTIP PERSONALIZADO ========== */
 .tooltip-warning {
   --bs-tooltip-bg: #FFCE67;
