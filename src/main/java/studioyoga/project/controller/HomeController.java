@@ -127,17 +127,7 @@ public class HomeController {
         return "user/login";
     }
 
-    /**
-     * Muestra el formulario de registro de usuario.
-     *
-     * @return Vista del formulario de registro.
-     */
-    @GetMapping("/formRegister")
-    public String register() {
-        return "user/formRegister";
-    }
-
-    /**
+      /**
      * Muestra la página de horarios.
      *
      * @return Vista de horarios.

@@ -56,11 +56,6 @@ void setUp() {
     }
 
     @Test
-    void testRegister() {
-        assertThat(controller.register()).isEqualTo("user/formRegister");
-    }
-
-    @Test
     void testSchedule() {
         assertThat(controller.schedule()).isEqualTo("user/schedule");
     }
