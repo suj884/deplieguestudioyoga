@@ -17,7 +17,7 @@ Plataforma web para la gestión integral de clases y eventos de yoga, con funcio
 
 ### Para usuarios registrados
 
-- **Registro y gestión de cuentas personales**
+- **Solicitud de registro y gestión de cuentas personales**
 - **Consulta del catálogo de clases y eventos disponibles**
 - **Reserva y cancelación de clases y eventos**
 - **Acceso a contenido informativo (blog y guía para principiantes)**

@@ -223,7 +223,7 @@
       ├── <code>BlogServiceTest.java</code>  
       ├── <code>ClassesServiceTest.java</code>  
       ├── <code>CustomUserDetailsServiceTest.java</code>  
-      ├── <code>eservationServiceTest.java</code> <!-- (parece que hay un typo aquí, debería ser ReservationServiceTest.java) -->  
+      ├── <code>ReservationServiceTest.java</code> 
       ├── <code>GuideSectionServiceTest.java</code>  
       ├── <code>NotificationServiceTest.java</code>  
       ├── <code>PasswordResetServiceTest.java</code>  
